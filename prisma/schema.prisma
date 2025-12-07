@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  generatedFileExtension = "ts"
+  importFileExtension = "ts"
+  moduleFormat = "esm"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model User {
+  id          String    @id @default(cuid())
+  role        UserRole
+  name        String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  phoneNumber String?   @unique
+  password    String?
+  email       String?
+  resetToken  String?   @unique
+  companyId   String?
+  sessions    Session[]
+  tickets     Ticket[]
+  company     Company?  @relation(fields: [companyId], references: [id])
+}
+
+model Ticket {
+  id              String     @id @default(cuid())
+  userId          String
+  restaurantId    String
+  scannedAt       DateTime
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  ticketNumber    Int        @default(autoincrement())
+  sessionId       String?
+  immatriculation String?
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [id])
+  session         Session?   @relation(fields: [sessionId], references: [id])
+  user            User       @relation(fields: [userId], references: [id])
+}
+
+model Restaurant {
+  id          String    @id @default(cuid())
+  name        String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  ticketPrice String?
+  companyId   String?
+  company     Company?  @relation(fields: [companyId], references: [id])
+  sessions    Session[]
+  tickets     Ticket[]
+}
+
+model Session {
+  id           String     @id @default(cuid())
+  userId       String
+  endAt        DateTime?
+  restaurantId String
+  createdAt    DateTime   @default(now())
+  startedAt    DateTime?
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tickets      Ticket[]
+}
+
+model Company {
+  id          String       @id @default(cuid())
+  name        String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  cgu         Json?
+  restaurants Restaurant[]
+  users       User[]
+}
+
+enum UserRole {
+  VALET
+  CLIENT
+  ADMIN
+}

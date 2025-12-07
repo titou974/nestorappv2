@@ -1,0 +1,29 @@
+"use client";
+import LoadingModal from "@/components/home/loadingmodal";
+import Navbar from "@/components/navbar";
+import { StringsFR } from "@/constants/fr_string";
+import { Restaurant } from "@/types/site";
+import { useEffect, useTransition } from "react";
+import { createTicketAction } from "./actions";
+
+export default function CreateTicket({ siteData }: { siteData: Restaurant }) {
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    startTransition(async () => {
+      await createTicketAction(siteData.id, siteData.companyId);
+    });
+  }, []);
+
+  return (
+    <>
+      <Navbar
+        subtitle={StringsFR.welcomeTo}
+        title={siteData.name}
+        isLoading={false}
+        transparent
+      />
+      <LoadingModal isOpen={true} title={StringsFR.creationOfYourTicket} />
+    </>
+  );
+}

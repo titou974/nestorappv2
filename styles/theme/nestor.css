@@ -1,0 +1,141 @@
+/* src/themes/nestor.css */
+@layer base {
+  /* nestor Light (mapped from NextUI light theme) */
+  [data-theme="nestor"] {
+    color-scheme: light;
+
+    /* Primitive Colors (Do not change between light and dark) */
+    --white: oklch(100% 0 0);
+    --black: oklch(0% 0 0);
+    --snow: oklch(0.9911 0 0);
+    --eclipse: oklch(0.2103 0.0059 285.89);
+
+    /* Spacing & Layout */
+    --spacing: 0.25rem;
+    --border-width: 0px;
+    --field-border-width: var(--border-width);
+    --disabled-opacity: 0.5;
+    --ring-offset-width: 2px;
+    --cursor-interactive: pointer;
+    --cursor-disabled: not-allowed;
+
+    /* Radius */
+    --radius: 0.75rem;
+    --field-radius: calc(var(--radius) * 1.5);
+
+    /* Base Colors (from NextUI light) */
+    --background: #e7e7e7; /* NextUI light background */
+    --foreground: #000000; /* NextUI light foreground */
+
+    /* Surface: Used for non-overlay components */
+    --surface: #ffffff; /* secondary / neutral in config */
+    --surface-foreground: var(--foreground);
+
+    /* Overlay: Used for floating/overlay components */
+    --overlay: #ffffff;
+    --overlay-foreground: var(--foreground);
+
+    --muted: #6b7280; /* neutral_content from config */
+    --scrollbar: #000000; /* opacity value in config */
+
+    --default: #ffffff;
+    --default-foreground: var(--foreground);
+
+    /* nestor accent (primary from NextUI light) */
+    --accent: #0675c3; /* primary.DEFAULT */
+    --accent-foreground: #ffffff; /* primary.foreground */
+
+    /* Form Field Defaults */
+    --field-background: var(--surface);
+    --field-foreground: var(--foreground);
+    --field-placeholder: var(--muted);
+    --field-border: transparent;
+
+    /* Status (kept compatible) */
+    --success: oklch(0.7329 0.1935 150.81);
+    --success-foreground: var(--eclipse);
+
+    --warning: oklch(0.7819 0.1585 72.33);
+    --warning-foreground: var(--eclipse);
+
+    --danger: oklch(0.6532 0.2328 25.74);
+    --danger-foreground: var(--snow);
+
+    /* Component Colors */
+    --segment: var(--surface);
+    --segment-foreground: var(--foreground);
+
+    /* Misc */
+    --border: oklch(0.5 0.06 230 / 22%);
+    --separator: oklch(92% 0.004 286.32);
+    --focus: var(--accent);
+    --link: var(--accent);
+
+    /* Shadows */
+    --surface-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04),
+      0 1px 2px 0 rgba(0, 0, 0, 0.06), 0 0 1px 0 rgba(0, 0, 0, 0.06);
+    --overlay-shadow: 0 4px 16px 0 rgba(24, 24, 27, 0.08),
+      0 8px 24px 0 rgba(24, 24, 27, 0.09);
+    --field-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04),
+      0 1px 2px 0 rgba(0, 0, 0, 0.06), 0 0 1px 0 rgba(0, 0, 0, 0.06);
+
+    /* Skeleton Default Global Animation */
+    --skeleton-animation: shimmer; /* Possible values: shimmer, pulse, none */
+  }
+
+  /* nestor Dark (mapped from NextUI dark theme) */
+  [data-theme="nestor-dark"] {
+    color-scheme: dark;
+
+    /* Base Colors (from NextUI dark) */
+    --background: #000000; /* NextUI dark background */
+    --foreground: #ffffff; /* global foreground in dark config */
+
+    /* Surface: Used for non-overlay components */
+    --surface: #414141; /* neutral in dark config */
+    --surface-foreground: var(--foreground);
+
+    /* Overlay: Used for floating/overlay components */
+    --overlay: #414141;
+    --overlay-foreground: var(--foreground);
+
+    --muted: #d1d5db; /* neutral_content from dark config */
+    --scrollbar: #d1d5db;
+
+    --default: #414141;
+    --default-foreground: var(--foreground);
+
+    /* nestor accent (primary from NextUI dark) */
+    --accent: #e7fe55; /* primary.DEFAULT */
+    --accent-foreground: #000000; /* primary.foreground for dark primary */
+
+    /* Form Field Defaults */
+    --field-background: var(--default);
+    --field-foreground: var(--foreground);
+
+    /* Status */
+    --success: oklch(0.7329 0.1935 150.81);
+    --success-foreground: var(--eclipse);
+
+    --warning: oklch(0.8203 0.1388 76.34);
+    --warning-foreground: var(--eclipse);
+
+    --danger: oklch(0.594 0.1967 24.63);
+    --danger-foreground: var(--snow);
+
+    /* Component Colors */
+    --segment: oklch(0.3964 0.01 285.93);
+    --segment-foreground: var(--foreground);
+
+    /* Misc */
+    --border: oklch(1 0 0 / 0%);
+    --separator: oklch(22% 0.006 286.033);
+    --focus: var(--accent);
+    --link: var(--accent);
+
+    /* Shadows */
+    --surface-shadow: 0 0 0 0 transparent inset;
+    --overlay-shadow: 0 0 0 0 transparent inset;
+    --field-shadow: 0 0 0 0 transparent inset;
+  }
+}
