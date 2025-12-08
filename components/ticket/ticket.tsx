@@ -42,7 +42,7 @@ const TicketDrawer = ({
                 {ticketData?.scannedAt &&
                   formatDateToFrench(ticketData.scannedAt)}
                 <p className="font-semibold italic">
-                  au {ticketData?.restaurant.name}
+                  {StringsFR.at} {ticketData?.restaurant.name}
                 </p>
               </div>
             </div>

@@ -1,0 +1,50 @@
+"use client";
+import { Button, Link } from "@heroui/react";
+import FooterBarLayout from "../layouts/footerbarlayout";
+import { StringsFR } from "@/constants/fr_string";
+import { EnvelopeIcon } from "@heroicons/react/20/solid";
+import EmailModal from "./EmailModal";
+import { ApiTicket, CguPart } from "@/types/site";
+import { useState } from "react";
+
+export default function FooterTicket({
+  ticketData,
+  cgu,
+}: {
+  ticketData: ApiTicket;
+  cgu: CguPart[] | null | undefined;
+}) {
+  const [emailModal, setEmailModal] = useState(false);
+
+  return (
+    <>
+      <FooterBarLayout>
+        <Button
+          // onClick={(e) => setEmailModal(true)}
+          className="fill-primary-foreground w-full"
+          size="lg"
+        >
+          {StringsFR.receiveByEmail}
+          <EnvelopeIcon width={20} />
+        </Button>
+        <Link
+          href="https://tally.so/r/3qKl18"
+          target="_blank"
+          className="text-center text-sm text-accent transition-all hover:font-bold hover:underline"
+        >
+          {StringsFR.problemContactUs}
+        </Link>
+      </FooterBarLayout>
+      <EmailModal
+        companyCgu={cgu}
+        isOpen={emailModal}
+        setIsOpen={(e) => setEmailModal(e)}
+        siteName={ticketData?.restaurant.name}
+        scannedAt={ticketData?.scannedAt}
+        ticketPrice={ticketData?.restaurant.ticketPrice}
+        ticketNumber={ticketData?.ticketNumber}
+        userId={ticketData?.user.id}
+      />
+    </>
+  );
+}

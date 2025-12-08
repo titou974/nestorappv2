@@ -166,7 +166,7 @@ export interface ApiTicket {
   restaurant: {
     id: string;
     name: string;
-    ticketPrice: string | null;
+    ticketPrice: string;
   };
   user: ApiUser;
 }
@@ -181,9 +181,30 @@ export interface ApiRestaurant {
   } | null;
 }
 
+export interface EmailProps {
+  siteName: string;
+  scannedAt: string;
+  ticketPrice: string;
+  ticketNumber: number;
+  email: string;
+  companyCgu?: CguPart[] | null;
+}
+
+export interface EmailTemplateProps {
+  siteName: string;
+  scannedAt: string;
+  ticketPrice: string;
+  ticketNumber: number;
+  companyCgu?: CguPart[] | null;
+
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  userId: string;
+}
+
 // Fonctions utilitaires pour convertir les dates
 export function convertPrismaDates<
-  T extends { createdAt: Date; updatedAt: Date }
+  T extends { createdAt: Date; updatedAt: Date },
 >(data: T): T {
   return {
     ...data,
@@ -193,7 +214,7 @@ export function convertPrismaDates<
 }
 
 export function convertApiDates<
-  T extends { createdAt: string; updatedAt: string }
+  T extends { createdAt: string; updatedAt: string },
 >(
   data: T
 ): Omit<T, "createdAt" | "updatedAt"> & { createdAt: Date; updatedAt: Date } {

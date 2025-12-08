@@ -1,7 +1,5 @@
-import Navbar from "@/components/navbar";
 import { getCompany } from "@/utils/company/getCompany";
 import getTicket from "@/utils/ticket/getTicket";
-import Link from "next/link";
 import Ticket from "./Ticket";
 
 export default async function TicketPage({
