@@ -1,19 +1,34 @@
 "use server";
-import createTicket from "@/utils/ticket/createTicket";
+import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
-export async function createTicketAction(siteId: string, companyId: string) {
+export async function createTicket(siteId: string, companyId: string) {
+  let ticketId: string | null = null;
   try {
-    const data = await createTicket(siteId);
-    if (data.ticketId && companyId) {
-      redirect(`/ticket?ticket=${data.ticketId}&c=${companyId}`);
-    }
+    const newUser = await prisma.user.create({
+      data: {
+        role: "CLIENT",
+      },
+    });
+    const newTicket = await prisma.ticket.create({
+      data: {
+        userId: newUser.id,
+        restaurantId: siteId,
+        scannedAt: new Date(),
+      },
+    });
 
-    if (data.ticketId) {
-      redirect(`/ticket?ticket=${data.ticketId}`);
-    }
+    ticketId = newTicket.id;
   } catch (error) {
     console.error("Error in createTicketAction:", error);
     throw error;
+  }
+
+  if (ticketId && companyId) {
+    redirect(`/ticket?ticket=${ticketId}&c=${companyId}`);
+  }
+
+  if (ticketId) {
+    redirect(`/ticket?ticket=${ticketId}`);
   }
 }
