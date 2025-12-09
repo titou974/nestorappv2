@@ -20,7 +20,7 @@ export default function FooterTicket({
     <>
       <FooterBarLayout>
         <Button
-          // onClick={(e) => setEmailModal(true)}
+          onClick={() => setEmailModal(true)}
           className="fill-primary-foreground w-full"
           size="lg"
         >

@@ -1,14 +1,19 @@
 "use client";
 
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import type { MouseEvent } from "react";
-import { toast } from "react-toastify";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { useState, useActionState, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 import { EmailTemplateProps } from "@/types/site";
 import { StringsFR } from "@/constants/fr_string";
-import { Button, Input } from "@heroui/react";
+import { Button, FieldError, Input, Label, TextField } from "@heroui/react";
+import { AnimatePresence, motion } from "framer-motion";
+import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
+import sendTicketByEmail from "@/app/(client)/ticket/actions";
+
+const initialState = {
+  message: "",
+};
 
 export default function EmailModal({
   isOpen,
@@ -21,137 +26,141 @@ export default function EmailModal({
   companyCgu,
 }: EmailTemplateProps) {
   const [email, setEmail] = useState("");
-  const [loadingEmail, setLoadingEmail] = useState(false);
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
-  };
+  const [state, formAction, pending] = useActionState(
+    sendTicketByEmail.bind(null, userId, {
+      siteName,
+      scannedAt,
+      ticketPrice,
+      ticketNumber,
+      companyCgu,
+    }),
+    initialState
+  );
 
-  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
-    setLoadingEmail(true);
-    if (!validateEmail(email)) {
-      toast.error("Email Invalide", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      setLoadingEmail(false);
-      return null;
-    } else {
-      try {
-        await axios.patch(`/api/user/${userId}`, {
-          email: email,
-        });
-      } catch (error) {
-        console.log("sauvegarde de l'email fail", error);
-      }
-      try {
-        await axios.post("/api/sendticket", {
-          email: email,
-          siteName: siteName,
-          scannedAt: scannedAt,
-          ticketNumber: ticketNumber,
-          ticketPrice: ticketPrice,
-          companyCgu: companyCgu,
-        });
-        toast.success("Ticket envoyé ! Pensez à vérifier vos spams", {
-          position: "top-center",
-          autoClose: 7000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        closeModal();
-        setLoadingEmail(false);
-      } catch (error) {
-        console.log("erreur de mail", error.message);
-        toast.error("Un bug à eu lieu lors de l'envoi de votre ticket...", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        setLoadingEmail(false);
-      }
-    }
-  };
+  // const handleSubmit = async () => {
+  //   setLoadingEmail(true);
+  //   if (!validateEmail(email)) {
+  //     toast.error("Email Invalide", {
+  //       position: "top-center",
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //     });
+  //     setLoadingEmail(false);
+  //     return null;
+  //   } else {
+  //     try {
+  //       await axios.patch(`/api/user/${userId}`, {
+  //         email: email,
+  //       });
+  //     } catch (error) {
+  //       console.log("sauvegarde de l'email fail", error);
+  //     }
+  //     try {
+  //       await axios.post("/api/sendticket", {
+  //         email: email,
+  //         siteName: siteName,
+  //         scannedAt: scannedAt,
+  //         ticketNumber: ticketNumber,
+  //         ticketPrice: ticketPrice,
+  //         companyCgu: companyCgu,
+  //       });
+  //       toast.success("Ticket envoyé ! Pensez à vérifier vos spams", {
+  //         position: "top-center",
+  //         autoClose: 7000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+  //       closeModal();
+  //       setLoadingEmail(false);
+  //     } catch (error) {
+  //       console.log("erreur de mail", error.message);
+  //       toast.error("Un bug à eu lieu lors de l'envoi de votre ticket...", {
+  //         position: "top-center",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+  //       setLoadingEmail(false);
+  //     }
+  //   }
+  // };
 
-  function closeModal() {
-    if (!loadingEmail) {
-      setIsOpen(false);
-    }
-  }
+  useEffect(() => {
+    console.log("message", state?.message, state?.errors);
+  });
 
   return (
     <>
-      <div></div>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+      <AnimatePresence>
+        {isOpen && (
+          <Dialog
+            static
+            open={isOpen}
+            onClose={() => setIsOpen(false)}
+            className="relative z-50"
           >
-            <div className="fixed inset-0 bg-opacity/25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/30"
+            />
+            <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+              <DialogPanel
+                as={motion.div}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="max-w-md w-full space-y-8 bg-white p-6 shadow-xl rounded-2xl flex flex-col items-center justify-center"
               >
-                <Dialog.Panel className="w-full max-w-md transform space-y-8 overflow-hidden rounded-2xl bg-neutral p-6 text-center align-middle text-base shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="font-medium leading-6 text-foreground"
-                  >
-                    {StringsFR.enterYourEmail}
-                  </Dialog.Title>
-                  <Input
-                    value={email}
-                    onValueChange={setEmail}
-                    variant="flat"
-                    type="email"
-                    label="Email"
-                    placeholder="nestor@gmail.com"
-                  />
-                  <Button
-                    radius="full"
-                    color="primary"
-                    onClick={(e) => handleSubmit(e)}
-                    isLoading={loadingEmail}
-                  >
+                <DialogTitle className="text-lg font-semibold text-foreground">
+                  {StringsFR.enterYourEmail}
+                </DialogTitle>
+                <form
+                  action={formAction}
+                  className="flex flex-col space-y-6 w-full items-center"
+                >
+                  <div className="flex flex-col gap-1 w-full">
+                    <Label htmlFor="input-type-email">
+                      {StringsFR.emailLabel}
+                    </Label>
+                    <TextField isInvalid={!!state?.errors}>
+                      <Input
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        type="email"
+                        name="email"
+                        required
+                        placeholder={StringsFR.emailPlaceholder}
+                        className="w-full bg-neutral-200 hover:bg-neutral-300"
+                      />
+                      <FieldError>L'email est invalide</FieldError>
+                    </TextField>
+                  </div>
+                  <Button type="submit" isPending={pending}>
                     {StringsFR.receiveTicket}
+                    <PaperAirplaneIcon />
                   </Button>
-                </Dialog.Panel>
-              </Transition.Child>
+                </form>
+              </DialogPanel>
             </div>
-          </div>
-        </Dialog>
-      </Transition>
+          </Dialog>
+        )}
+      </AnimatePresence>
     </>
   );
 }

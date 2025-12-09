@@ -37,6 +37,8 @@ export const StringsFR = {
   seeCgu: "*Voir les conditions générales d'utilisation ci-contre:",
   copyright: "Copyright © 2024 Nestor App.",
   allRightReserved: "Tous droits réservés",
+  emailLabel: "Email",
+  emailPlaceholder: "nestor@gmail.com",
   enterYourEmail: "Entrez votre email",
   receiveTicket: "Recevoir le ticket",
 };

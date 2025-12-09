@@ -8,8 +8,13 @@ export default async function TicketPage({
   searchParams: Promise<{ ticket: string; c: string }>;
 }) {
   const { ticket, c } = await searchParams;
-  const companyData = await getCompany(c);
-  const ticketData = await getTicket(ticket);
+  const companyData = getCompany(c);
+  const ticketData = getTicket(ticket);
 
-  return Ticket(ticketData, companyData);
+  const [ticketFetched, companyFetched] = await Promise.all([
+    ticketData,
+    companyData,
+  ]);
+
+  return Ticket(ticketFetched, companyFetched);
 }

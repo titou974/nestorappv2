@@ -1,6 +1,6 @@
 import Navbar from "@/components/navbar";
 import { ApiTicket } from "@/types/site";
-import TicketDrawer from "@/components/ticket/ticket";
+import TicketDrawer from "@/components/ticket/TicketDrawer";
 import { StringsFR } from "@/constants/fr_string";
 import ConfettiAnimation from "@/components/animations/Confetti";
 import FooterTicket from "@/components/ticket/FooterTicket";

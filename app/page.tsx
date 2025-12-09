@@ -4,7 +4,6 @@ import styles from "@/components/style";
 import { QrCodeIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Roboto_Mono } from "next/font/google";
 import TypewriterComponent from "typewriter-effect";
-// import useSessionRedirection from '@/app/stores/sessionredirection';
 import { useRouter } from "next/navigation";
 import { Button } from "@heroui/react";
 import { StringsFR } from "@/constants/fr_string";
@@ -13,8 +12,6 @@ const roboto_mono = Roboto_Mono({ subsets: ["latin"] });
 
 const Home = () => {
   const router = useRouter();
-
-  // useSessionRedirection();
 
   return (
     <main

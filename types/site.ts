@@ -202,6 +202,23 @@ export interface EmailTemplateProps {
   userId: string;
 }
 
+export interface EmailTicketActionProps {
+  siteName: string;
+  scannedAt: string;
+  ticketPrice: string;
+  ticketNumber: number;
+  companyCgu?: CguPart[] | null;
+}
+
+export interface EmailTicketProps {
+  email: string;
+  siteName: string;
+  scannedAt: string;
+  ticketPrice: string;
+  ticketNumber: number;
+  companyCgu?: CguPart[] | null;
+}
+
 // Fonctions utilitaires pour convertir les dates
 export function convertPrismaDates<
   T extends { createdAt: Date; updatedAt: Date },
