@@ -20,7 +20,6 @@ export default function CreateTicket({ siteData }: { siteData: Restaurant }) {
       <Navbar
         subtitle={StringsFR.welcomeTo}
         title={siteData.name}
-        isLoading={false}
         transparent
       />
       <LoadingModal isOpen={true} title={StringsFR.creationOfYourTicket} />

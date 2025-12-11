@@ -11,6 +11,7 @@ import {
   TicketCreateNestedManyWithoutUserInput,
   UserCreateNestedOneWithoutTicketsInput,
 } from "@/generated/prisma/models";
+import { LottieRefCurrentProps } from "lottie-react";
 
 export type Json =
   | null
@@ -217,6 +218,24 @@ export interface EmailTicketProps {
   ticketPrice: string;
   ticketNumber: number;
   companyCgu?: CguPart[] | null;
+}
+
+export interface RegisterValet {
+  name?: string;
+  phoneNumber?: string;
+  password?: string;
+}
+
+export interface PlayAnimationInput {
+  name: boolean;
+  phoneNumber: boolean;
+  password: boolean;
+}
+
+export interface LottieRefsRegister {
+  name?: LottieRefCurrentProps | null;
+  phoneNumber?: LottieRefCurrentProps | null;
+  password?: LottieRefCurrentProps | null;
 }
 
 // Fonctions utilitaires pour convertir les dates

@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { useState, useActionState, useEffect } from "react";
+import { useState, useActionState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 import { EmailTemplateProps } from "@/types/site";
@@ -44,16 +44,10 @@ export default function EmailModal({
         ticketNumber,
         companyCgu,
       }),
-      toastCallback(
-        () => setIsOpen(false) // ✅ Pass as a callback function
-      )
+      toastCallback(() => setIsOpen(false))
     ),
     initialState
   );
-
-  useEffect(() => {
-    console.log("message", state?.message, state?.errors);
-  });
 
   return (
     <AnimatePresence>

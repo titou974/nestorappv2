@@ -8,7 +8,6 @@ export default function Register() {
       <Navbar
         subtitle={StringsFR.create}
         title={StringsFR.yourTicket}
-        isLoading={false}
         transparent
       />
       <div className="flex w-full flex-col justify-center gap-8">

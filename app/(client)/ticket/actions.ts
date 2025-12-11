@@ -1,6 +1,7 @@
 "use server";
 
 import EmailTemplate from "@/components/ticket/EmailTemplate";
+import { StringsFR } from "@/constants/fr_string";
 import { emailSchema } from "@/constants/validations";
 import prisma from "@/lib/prisma";
 import { EmailTicketActionProps } from "@/types/site";
@@ -24,10 +25,8 @@ export default async function sendTicketByEmail(
   const validatedFields = emailSchema.safeParse(email);
 
   if (!validatedFields.success) {
-    console.log("email pas bon");
-
     return {
-      message: "Invalid email address", // ✅ Now has message
+      message: StringsFR.emailAdressError,
       errors: z.flattenError(validatedFields.error),
     };
   }
@@ -42,9 +41,9 @@ export default async function sendTicketByEmail(
       },
     });
     await resend.emails.send({
-      from: `Nestor App <${process.env.RESEND_MAIL}>`,
+      from: `${StringsFR.emailAuthor} <${process.env.RESEND_MAIL}>`,
       to: [email as string],
-      subject: "Votre ticket",
+      subject: StringsFR.emailSubject,
       html: await render(
         EmailTemplate({
           siteName,
@@ -60,12 +59,12 @@ export default async function sendTicketByEmail(
       ),
     });
     return {
-      message: "Email sent successfully",
+      message: StringsFR.emailTicketSent,
       status: "SUCCESS" as const,
     };
   } catch (error) {
     return {
-      message: "Something went wrong",
+      message: StringsFR.emailTicketError,
       status: "ERROR" as const,
     };
   }

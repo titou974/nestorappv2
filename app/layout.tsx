@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import { Montserrat } from "next/font/google";
 import { siteConfig } from "@/constants/site";
+import "./globals.css";
 
-// with template %
 export const metadata: Metadata = {
   title: siteConfig.name,
   description: siteConfig.description,

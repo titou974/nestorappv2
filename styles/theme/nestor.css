@@ -43,6 +43,7 @@
 
     /* nestor accent (primary from NextUI light) */
     --accent: #0675c3; /* primary.DEFAULT */
+    --accent-soft-hover: #0674c340;
     --accent-foreground: #ffffff; /* primary.foreground */
 
     /* Form Field Defaults */
@@ -73,13 +74,14 @@
 
     /* Shadows */
     --surface-shadow:
-      0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
-      0 0 1px 0 rgba(0, 0, 0, 0.06);
+      0 2px 4px 0 rgba(6, 117, 195, 0.08), 0 1px 2px 0 rgba(6, 117, 195, 0.12),
+      0 0 1px 0 rgba(6, 117, 195, 0.1);
     --overlay-shadow:
-      0 4px 16px 0 rgba(24, 24, 27, 0.08), 0 8px 24px 0 rgba(24, 24, 27, 0.09);
+      0 4px 16px 0 rgba(6, 117, 195, 0.12),
+      0 8px 24px 0 rgba(6, 117, 195, 0.15), 0 2px 8px 0 rgba(6, 117, 195, 0.08);
     --field-shadow:
-      0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
-      0 0 1px 0 rgba(0, 0, 0, 0.06);
+      0 2px 4px 0 rgba(6, 117, 195, 0.06), 0 1px 2px 0 rgba(6, 117, 195, 0.1),
+      0 0 1px 0 rgba(6, 117, 195, 0.08);
 
     /* Skeleton Default Global Animation */
     --skeleton-animation: shimmer; /* Possible values: shimmer, pulse, none */
@@ -94,21 +96,23 @@
     --foreground: #ffffff; /* global foreground in dark config */
 
     /* Surface: Used for non-overlay components */
-    --surface: #414141; /* neutral in dark config */
+    --surface: #27272a; /* neutral in dark config */
     --surface-foreground: var(--foreground);
 
     /* Overlay: Used for floating/overlay components */
-    --overlay: #414141;
+    --overlay: #27272a;
     --overlay-foreground: var(--foreground);
 
     --muted: #d1d5db; /* neutral_content from dark config */
     --scrollbar: #d1d5db;
 
-    --default: #414141;
+    --default: #27272a;
     --default-foreground: var(--foreground);
 
     /* nestor accent (primary from NextUI dark) */
     --accent: #e7fe55; /* primary.DEFAULT */
+    --accent-soft-hover: #e7fe5550;
+
     --accent-foreground: #000000; /* primary.foreground for dark primary */
 
     /* Form Field Defaults */

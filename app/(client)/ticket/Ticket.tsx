@@ -15,7 +15,6 @@ export default async function Ticket(
         subtitle={StringsFR.welcomeTo}
         title={ticketData?.restaurant.name}
         position="static"
-        isLoading={false}
       />
       <ConfettiAnimation />
       <TicketDrawer ticketData={ticketData} companyData={companyData} />

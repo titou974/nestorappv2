@@ -1,0 +1,8 @@
+@layer components {
+  .button--primary:hover {
+    @apply bg-accent/80;
+  }
+  .button--ghost:hover {
+    @apply bg-accent/30;
+  }
+}

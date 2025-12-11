@@ -46,7 +46,6 @@ const TicketDrawer = ({
                 </p>
               </div>
             </div>
-
             <Accordion.Indicator className="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-surface">
               <ChevronDownIcon className="mx-auto h-6 w-6 transition-all" />
             </Accordion.Indicator>

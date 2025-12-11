@@ -29,7 +29,7 @@ export async function createTicket(siteId: string, companyId: string) {
   if (ticketId && companyId) {
     const url = buildRouteWithParams(ROUTES.TICKET, {
       ticket: ticketId,
-      c: companyId, // sera ignoré si null/undefined
+      c: companyId,
     });
     redirect(url);
   }

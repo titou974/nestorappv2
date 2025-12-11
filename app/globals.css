@@ -3,3 +3,5 @@
 @import "tailwindcss";
 @import "@heroui/styles";
 @import "../styles/theme/nestor.css" layer(theme);
+@import "../styles/ui/buttons.css";
+@import "../styles/ui/form.css";
