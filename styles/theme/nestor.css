@@ -28,7 +28,7 @@
     --foreground: #000000; /* NextUI light foreground */
 
     /* Surface: Used for non-overlay components */
-    --surface: #ffffff; /* secondary / neutral in config */
+    --surface: #f4f4f5; /* secondary / neutral in config */
     --surface-foreground: var(--foreground);
 
     /* Overlay: Used for floating/overlay components */
@@ -46,7 +46,7 @@
     --accent-foreground: #ffffff; /* primary.foreground */
 
     /* Form Field Defaults */
-    --field-background: var(--surface);
+    --field-background: var(--surface) !important;
     --field-foreground: var(--foreground);
     --field-placeholder: var(--muted);
     --field-border: transparent;
@@ -72,12 +72,14 @@
     --link: var(--accent);
 
     /* Shadows */
-    --surface-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04),
-      0 1px 2px 0 rgba(0, 0, 0, 0.06), 0 0 1px 0 rgba(0, 0, 0, 0.06);
-    --overlay-shadow: 0 4px 16px 0 rgba(24, 24, 27, 0.08),
-      0 8px 24px 0 rgba(24, 24, 27, 0.09);
-    --field-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04),
-      0 1px 2px 0 rgba(0, 0, 0, 0.06), 0 0 1px 0 rgba(0, 0, 0, 0.06);
+    --surface-shadow:
+      0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+      0 0 1px 0 rgba(0, 0, 0, 0.06);
+    --overlay-shadow:
+      0 4px 16px 0 rgba(24, 24, 27, 0.08), 0 8px 24px 0 rgba(24, 24, 27, 0.09);
+    --field-shadow:
+      0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+      0 0 1px 0 rgba(0, 0, 0, 0.06);
 
     /* Skeleton Default Global Animation */
     --skeleton-animation: shimmer; /* Possible values: shimmer, pulse, none */

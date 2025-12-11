@@ -1,4 +1,4 @@
-import { APIROUTES } from "@/constants/routes";
+import { APIROUTES } from "@/constants/api_routes";
 import { Restaurant } from "@/types/site";
 
 export default async function getSite(siteId: string) {

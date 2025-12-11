@@ -19,6 +19,13 @@ export default function FooterTicket({
   return (
     <>
       <FooterBarLayout>
+        <Link
+          href="https://tally.so/r/3qKl18"
+          target="_blank"
+          className="text-center text-sm text-accent transition-all hover:font-bold"
+        >
+          {StringsFR.problemContactUs}
+        </Link>
         <Button
           onClick={() => setEmailModal(true)}
           className="fill-primary-foreground w-full"
@@ -27,13 +34,6 @@ export default function FooterTicket({
           {StringsFR.receiveByEmail}
           <EnvelopeIcon width={20} />
         </Button>
-        <Link
-          href="https://tally.so/r/3qKl18"
-          target="_blank"
-          className="text-center text-sm text-accent transition-all hover:font-bold hover:underline"
-        >
-          {StringsFR.problemContactUs}
-        </Link>
       </FooterBarLayout>
       <EmailModal
         companyCgu={cgu}

@@ -99,7 +99,7 @@ export interface Company {
   name: string;
   createdAt: Date;
   updatedAt: Date;
-  cgu: CguPart[] | null;
+  cgu?: CguPart[] | null;
   // Relations
   restaurants?: Restaurant[];
   users?: User[];

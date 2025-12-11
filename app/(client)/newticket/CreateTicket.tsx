@@ -1,5 +1,5 @@
 "use client";
-import LoadingModal from "@/components/home/loadingmodal";
+import LoadingModal from "@/components/home/LoadingModal";
 import Navbar from "@/components/navbar";
 import { StringsFR } from "@/constants/fr_string";
 import { Restaurant } from "@/types/site";

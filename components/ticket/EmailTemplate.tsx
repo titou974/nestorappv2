@@ -60,13 +60,13 @@ const EmailTemplate = ({
                 {StringsFR.thanksForUsingNestor}
               </Text>
             </Section>
-            <Section className="border-collapse border-spacing-0 text-[rgb(51,51,51)] bg-[rgb(250,250,250)] rounded-[3px] text-[12px]">
+            <Section className="border-collapse border-spacing-0 text-[#333333] bg-[#fafafa] rounded-[3px] text-[12px]">
               <Row className="min-h-[46px]">
                 <Column colSpan={2}>
                   <Section>
                     <Row>
-                      <Column className="pl-5 border-solid border-white border-0 border-r border-b min-h-[44px]">
-                        <Text className="m-0 p-0 text-[rgb(102,102,102)] text-[10px] leading-[1.4]">
+                      <Column className="pl-5 border-solid border-white border-0 border-r border-b min-h-[44px] ">
+                        <Text className="m-0 p-0 text-[#666666] text-[10px] leading-[1.4]">
                           {StringsFR.email}
                         </Text>
                         <Link className="m-0 p-0 text-[#15c] underline text-[12px] leading-[1.4]">
@@ -77,7 +77,7 @@ const EmailTemplate = ({
 
                     <Row>
                       <Column className="pl-5 border-solid border-white border-0 border-r border-b min-h-[44px]">
-                        <Text className="m-0 p-0 text-[rgb(102,102,102)] text-[10px] leading-[1.4]">
+                        <Text className="m-0 p-0 text-[#666666] text-[10px] leading-[1.4]">
                           {StringsFR.invoiceDate}
                         </Text>
                         <Text className="m-0 p-0 text-[12px] leading-[1.4]">
@@ -88,7 +88,7 @@ const EmailTemplate = ({
 
                     <Row>
                       <Column className="pl-5 border-solid border-white border-0 border-r border-b min-h-[44px]">
-                        <Text className="m-0 p-0 text-[rgb(102,102,102)] text-[10px] leading-[1.4]">
+                        <Text className="m-0 p-0 text-[#666666] text-[10px] leading-[1.4]">
                           {StringsFR.ticketId}
                         </Text>
                         <Text className="m-0 p-0 text-[#15c] underline text-[12px] leading-[1.4]">
@@ -103,7 +103,7 @@ const EmailTemplate = ({
                   className="pl-5 border-solid border-white border-0 border-r border-b min-h-[44px]"
                   colSpan={2}
                 >
-                  <Text className="m-0 p-0 text-[rgb(102,102,102)] text-[10px] leading-[1.4]">
+                  <Text className="m-0 p-0 text-[#666666] text-[10px] leading-[1.4]">
                     {StringsFR.place}
                   </Text>
                   <Text className="m-0 p-0 text-[12px] leading-[1.4]">
@@ -112,7 +112,7 @@ const EmailTemplate = ({
                 </Column>
               </Row>
             </Section>
-            <Section className="border-collapse border-spacing-0 text-[rgb(51,51,51)] bg-[rgb(250,250,250)] rounded-[3px] text-[12px] mt-[30px] mb-[15px] min-h-[24px]">
+            <Section className="border-collapse border-spacing-0 text-[#333333] bg-[#fafafa] rounded-[3px] text-[12px] mt-[30px] mb-[15px] min-h-[24px]">
               <Text className="bg-[#fafafa] pl-[10px] text-sm leading-[24px] font-medium m-0">
                 {StringsFR.yourReceipt}
               </Text>
@@ -126,12 +126,12 @@ const EmailTemplate = ({
                       {StringsFR.asterisk}
                     </sup>
                   </Text>
-                  <Text className="text-xs text-[rgb(102,102,102)] m-0 p-0 leading-[1.4]">
+                  <Text className="text-xs text-[#666666] m-0 p-0 leading-[1.4]">
                     {siteName}
                   </Text>
                   <Link
                     href="https://tally.so/r/3qKl18"
-                    className="text-[12px] text-[rgb(0,112,201)] no-underline"
+                    className="text-[12px] text-accent no-underline"
                   >
                     {StringsFR.problemClickHere}
                   </Link>
@@ -152,7 +152,7 @@ const EmailTemplate = ({
             <Section align="right">
               <Row>
                 <Column className="table-cell" align="right">
-                  <Text className="m-0 text-[rgb(102,102,102)] text-[10px] font-semibold p-0 pr-[30px] text-right">
+                  <Text className="m-0 text-[#666666] text-[10px] font-semibold p-0 pr-[30px] text-right">
                     {StringsFR.total}
                   </Text>
                 </Column>
@@ -166,26 +166,26 @@ const EmailTemplate = ({
               </Row>
             </Section>
             <Hr className="mb-[75px]" />
-            <Text className="text-[12px] leading-[normal] text-[rgb(102,102,102)] m-0 mb-[4px] mt-[20px]">
+            <Text className="text-[12px] leading-[normal] text-[#666666] m-0 mb-[4px] mt-[20px]">
               {StringsFR.seeCgu}
             </Text>
             {companyCgu
               ? companyCgu.map((part, index) => (
                   <div key={index}>
-                    <Text className="text-[12px] leading-[normal] text-[rgb(102,102,102)] m-0 mb-[4px] mt-[20px]">
+                    <Text className="text-[12px] leading-[normal] text-[#666666] m-0 mb-[4px] mt-[20px]">
                       {part.subtitle}
                     </Text>
-                    <Text className="text-[12px] leading-[normal] text-[rgb(102,102,102)] m-0 mb-[4px]">
+                    <Text className="text-[12px] leading-[normal] text-[#666666] m-0 mb-[4px]">
                       {part.text}
                     </Text>
                   </div>
                 ))
               : cguContent.map((part, index) => (
                   <div key={index}>
-                    <Text className="text-[12px] leading-[normal] text-[rgb(102,102,102)] m-0 mb-[4px] mt-[20px]">
+                    <Text className="text-[12px] leading-[normal] text-[#666666] m-0 mb-[4px] mt-[20px]">
                       {part.subtitle}
                     </Text>
-                    <Text className="text-[12px] leading-[normal] text-[rgb(102,102,102)] m-0 mb-[4px]">
+                    <Text className="text-[12px] leading-[normal] text-[#666666] m-0 mb-[4px]">
                       {part.text}
                     </Text>
                   </div>
@@ -202,7 +202,7 @@ const EmailTemplate = ({
                 </Column>
               </Row>
             </Section>
-            <Text className="m-0 mt-[25px] text-center text-[12px] leading-[24px] text-[rgb(102,102,102)]">
+            <Text className="m-0 mt-[25px] text-center text-[12px] leading-[24px] text-[#666666]">
               {StringsFR.copyright} <br />{" "}
               <Link>{StringsFR.allRightReserved}</Link>
             </Text>

@@ -5,7 +5,7 @@ import { formatDateToFrench } from "@/lib/formatdate";
 import style from "@/styles/ticket.module.css";
 import { cguContent } from "@/constants";
 import { HashtagIcon } from "@heroicons/react/20/solid";
-import { ApiTicket } from "@/types/site";
+import { ApiTicket, Company } from "@/types/site";
 import { StringsFR } from "@/constants/fr_string";
 
 const TicketDrawer = ({
@@ -13,7 +13,7 @@ const TicketDrawer = ({
   companyData,
 }: {
   ticketData: ApiTicket;
-  companyData: unknown;
+  companyData: Company;
 }) => {
   return (
     <Accordion

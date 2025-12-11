@@ -1,4 +1,6 @@
 "use server";
+import { ROUTES } from "@/constants/routes";
+import { buildRouteWithParams } from "@/lib/buildroutewithparams";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
@@ -25,10 +27,17 @@ export async function createTicket(siteId: string, companyId: string) {
   }
 
   if (ticketId && companyId) {
-    redirect(`/ticket?ticket=${ticketId}&c=${companyId}`);
+    const url = buildRouteWithParams(ROUTES.TICKET, {
+      ticket: ticketId,
+      c: companyId, // sera ignoré si null/undefined
+    });
+    redirect(url);
   }
 
   if (ticketId) {
-    redirect(`/ticket?ticket=${ticketId}`);
+    const url = buildRouteWithParams(ROUTES.TICKET, {
+      ticket: ticketId,
+    });
+    redirect(url);
   }
 }

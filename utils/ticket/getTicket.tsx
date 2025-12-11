@@ -1,4 +1,4 @@
-import { APIROUTES } from "@/constants/routes";
+import { APIROUTES } from "@/constants/api_routes";
 import { ApiTicket } from "@/types/site";
 
 export default async function getTicket(id: string) {

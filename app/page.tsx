@@ -7,6 +7,7 @@ import TypewriterComponent from "typewriter-effect";
 import { useRouter } from "next/navigation";
 import { Button } from "@heroui/react";
 import { StringsFR } from "@/constants/fr_string";
+import { ROUTES } from "@/constants/routes";
 
 const roboto_mono = Roboto_Mono({ subsets: ["latin"] });
 
@@ -67,7 +68,7 @@ const Home = () => {
               <p>{StringsFR.or}</p>
             </div>
             <Button
-              onClick={() => router.push("/newticket")}
+              onClick={() => router.push(ROUTES.NEW_TICKET)}
               size="lg"
               className="text-primary w-full"
               variant="secondary"
@@ -76,7 +77,7 @@ const Home = () => {
               <ArrowRightIcon width={20} />
             </Button>
             <Button
-              onClick={() => router.push("/sign-in")}
+              onClick={() => router.push(ROUTES.SIGNIN)}
               className="w-full"
               variant="primary"
             >

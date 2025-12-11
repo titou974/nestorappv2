@@ -14,6 +14,7 @@ export const StringsFR = {
   retry: "Veuillez réessayer.",
   welcomeTo: "Bienvenue au",
   creationOfYourTicket: "Création de votre ticket",
+  waitaFewSeconds: "Patientez quelques secondes...",
   yourTicketWithoutEmoji: "Votre Ticket",
   at: "au",
   cguTitle: "CONDITIONS GÉNÉRALES D’UTILISATION DE NESTOR APP",
@@ -41,4 +42,6 @@ export const StringsFR = {
   emailPlaceholder: "nestor@gmail.com",
   enterYourEmail: "Entrez votre email",
   receiveTicket: "Recevoir le ticket",
+  isSending: "Envoi...",
+  emailAdressError: "Votre adresse mail est invalide",
 };
