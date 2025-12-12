@@ -5,32 +5,37 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider               = "prisma-client"
   generatedFileExtension = "ts"
-  importFileExtension = "ts"
-  moduleFormat = "esm"
-  output   = "../generated/prisma"
+  importFileExtension    = "ts"
+  moduleFormat           = "esm"
+  output                 = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-
 model User {
-  id          String    @id @default(cuid())
-  role        UserRole
-  name        String?
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
-  phoneNumber String?   @unique
-  password    String?
-  email       String?
-  resetToken  String?   @unique
-  companyId   String?
-  sessions    Session[]
-  tickets     Ticket[]
-  company     Company?  @relation(fields: [companyId], references: [id])
+  id            String    @id @default(cuid())
+  role          UserRole
+  name          String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  phoneNumber   String?   @unique
+  password      String?
+  email         String?
+  resetToken    String?   @unique
+  companyId     String?
+  sessions      Session[]
+  workSessions  WorkSession[]
+  tickets       Ticket[]
+  company       Company?  @relation(fields: [companyId], references: [id])
+  emailVerified Boolean   @default(false)
+  image         String?
+  accounts      Account[]
+
+  @@map("user")
 }
 
 model Ticket {
@@ -41,10 +46,10 @@ model Ticket {
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
   ticketNumber    Int        @default(autoincrement())
-  sessionId       String?
+  workSessionId   String?
   immatriculation String?
   restaurant      Restaurant @relation(fields: [restaurantId], references: [id])
-  session         Session?   @relation(fields: [sessionId], references: [id])
+  workSession     WorkSession?   @relation(fields: [workSessionId], references: [id])
   user            User       @relation(fields: [userId], references: [id])
 }
 
@@ -54,23 +59,29 @@ model Restaurant {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   ticketPrice String?
-  companyId   String?
-  company     Company?  @relation(fields: [companyId], references: [id])
-  sessions    Session[]
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id])
+  workSessions WorkSession[]
   tickets     Ticket[]
 }
 
-model Session {
+model WorkSession {
   id           String     @id @default(cuid())
   userId       String
-  endAt        DateTime?
   restaurantId String
+  startedAt    DateTime   @default(now())
+  endAt        DateTime?
   createdAt    DateTime   @default(now())
-  startedAt    DateTime?
+  updatedAt    DateTime   @updatedAt
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   tickets      Ticket[]
+
+  @@index([userId])
+  @@index([restaurantId])
+  @@map("work_session")
 }
+
 
 model Company {
   id          String       @id @default(cuid())
@@ -86,4 +97,52 @@ enum UserRole {
   VALET
   CLIENT
   ADMIN
+}
+
+model Session {
+  id          String     @id @default(cuid())
+  userId      String
+  expiresAt   DateTime
+  token       String     @unique
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  ipAddress   String?
+  userAgent   String?
+
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
 }

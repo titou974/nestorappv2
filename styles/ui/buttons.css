@@ -5,4 +5,8 @@
   .button--ghost:hover {
     @apply bg-accent/30;
   }
+
+  .button--tertiary:hover {
+    @apply bg-foreground/20;
+  }
 }

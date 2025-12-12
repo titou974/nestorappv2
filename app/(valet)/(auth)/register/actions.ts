@@ -14,7 +14,7 @@ const schema = z.object({
 });
 
 export default async function register(
-  siteId: string,
+  companyId: string,
   initialState: any,
   formData: FormData
 ) {

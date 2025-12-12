@@ -1,15 +1,17 @@
 // types/prisma.ts
-// Généré automatiquement à partir de votre schema.prisma
-// Correspond exactement aux modèles Prisma
+// Generated automatically from your schema.prisma
+// Corresponds exactly to Prisma models
 
 import {
   CompanyCreateWithoutUsersInput,
   CompanyWhereUniqueInput,
   RestaurantCreateWithoutTicketsInput,
   SessionCreateNestedManyWithoutUserInput,
-  SessionCreateNestedOneWithoutTicketsInput,
+  WorkSessionCreateNestedManyWithoutUserInput,
+  WorkSessionCreateNestedOneWithoutTicketsInput,
   TicketCreateNestedManyWithoutUserInput,
   UserCreateNestedOneWithoutTicketsInput,
+  AccountCreateNestedManyWithoutUserInput,
 } from "@/generated/prisma/models";
 import { LottieRefCurrentProps } from "lottie-react";
 
@@ -27,7 +29,7 @@ export enum UserRole {
   ADMIN = "ADMIN",
 }
 
-// Modèles principaux
+// Main Models
 export interface User {
   id: string;
   role: UserRole;
@@ -39,15 +41,20 @@ export interface User {
   email: string | null;
   resetToken: string | null;
   companyId: string | null;
+  emailVerified: boolean;
+  image: string | null;
   // Relations
   sessions?: Session[];
+  workSessions?: WorkSession[];
   tickets?: Ticket[];
   company?: Company | null;
+  accounts?: Account[];
 }
 
 export interface TicketCreated {
   ticketId: string;
 }
+
 export interface Ticket {
   id: string;
   userId: string;
@@ -56,11 +63,11 @@ export interface Ticket {
   createdAt: Date;
   updatedAt: Date;
   ticketNumber: number;
-  sessionId: string | null;
+  workSessionId: string | null;
   immatriculation: string | null;
   // Relations
   restaurant: Restaurant;
-  session?: Session | null;
+  workSession?: WorkSession | null;
   user: User;
 }
 
@@ -72,22 +79,65 @@ export interface Restaurant {
   ticketPrice: string;
   companyId: string;
   // Relations
-  sessions?: Session[];
+  workSessions?: WorkSession[];
   tickets?: Ticket[];
-  company?: Company;
+  company?: Company | null;
 }
 
+// Better Auth Session (authentication)
 export interface Session {
   id: string;
   userId: string;
-  endAt: Date | null;
-  restaurantId: string;
+  expiresAt: Date;
+  token: string;
   createdAt: Date;
-  startedAt: Date | null;
+  updatedAt: Date;
+  ipAddress: string | null;
+  userAgent: string | null;
+  // Relations
+  user: User;
+}
+
+// Work Session (restaurant shifts)
+export interface WorkSession {
+  id: string;
+  userId: string;
+  restaurantId: string;
+  startedAt: Date;
+  endAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
   // Relations
   restaurant: Restaurant;
   user: User;
   tickets?: Ticket[];
+}
+
+export interface Account {
+  id: string;
+  accountId: string;
+  providerId: string;
+  userId: string;
+  accessToken: string | null;
+  refreshToken: string | null;
+  idToken: string | null;
+  accessTokenExpiresAt: Date | null;
+  refreshTokenExpiresAt: Date | null;
+  scope: string | null;
+  password: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  // Relations
+  user: User;
+}
+
+export interface Verification {
+  id: string;
+  identifier: string;
+  value: string;
+  expiresAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface CguPart {
@@ -106,7 +156,7 @@ export interface Company {
   users?: User[];
 }
 
-// Types pour les inputs Prisma (création/mise à jour)
+// Types for Prisma inputs (create/update)
 export interface UserCreateInput {
   role: UserRole;
   name?: string | null;
@@ -114,22 +164,33 @@ export interface UserCreateInput {
   password?: string | null;
   email?: string | null;
   resetToken?: string | null;
+  emailVerified?: boolean;
+  image?: string | null;
   company?: CompanyCreateNestedOneWithoutUsersInput;
   sessions?: SessionCreateNestedManyWithoutUserInput;
+  workSessions?: WorkSessionCreateNestedManyWithoutUserInput;
   tickets?: TicketCreateNestedManyWithoutUserInput;
+  accounts?: AccountCreateNestedManyWithoutUserInput;
 }
 
 export interface TicketCreateInput {
   scannedAt: Date;
   ticketNumber?: number;
-  sessionId?: string | null;
+  workSessionId?: string | null;
   immatriculation?: string | null;
   restaurant: RestaurantCreateNestedOneWithoutTicketsInput;
   user: UserCreateNestedOneWithoutTicketsInput;
-  session?: SessionCreateNestedOneWithoutTicketsInput;
+  workSession?: WorkSessionCreateNestedOneWithoutTicketsInput;
 }
 
-// Types pour les relations imbriquées
+export interface WorkSessionCreateInput {
+  userId: string;
+  restaurantId: string;
+  startedAt?: Date;
+  endAt?: Date | null;
+}
+
+// Types for nested relations
 export interface CompanyCreateNestedOneWithoutUsersInput {
   create?: CompanyCreateWithoutUsersInput;
   connect?: CompanyWhereUniqueInput;
@@ -140,36 +201,51 @@ export interface RestaurantCreateNestedOneWithoutTicketsInput {
   connect: RestaurantWhereUniqueInput;
 }
 
-// Types pour les requêtes
+// Types for queries
 export interface UserWhereUniqueInput {
   id?: string;
   phoneNumber?: string;
   resetToken?: string;
+  email?: string;
 }
 
 export interface RestaurantWhereUniqueInput {
   id?: string;
 }
 
-// Types pour les réponses API (version simplifiée)
+export interface WorkSessionWhereInput {
+  userId?: string;
+  restaurantId?: string;
+  endAt?: null | { not: null };
+}
+
+// Types for API responses (simplified version)
 export interface ApiUser {
   id: string;
   role: UserRole;
   name: string | null;
   phoneNumber: string | null;
   email: string | null;
+  emailVerified: boolean;
+  image: string | null;
 }
 
 export interface ApiTicket {
   id: string;
   ticketNumber: number;
   scannedAt: string;
+  immatriculation: string | null;
   restaurant: {
     id: string;
     name: string;
-    ticketPrice: string;
+    ticketPrice: string | null;
   };
   user: ApiUser;
+  workSession?: {
+    id: string;
+    startedAt: string;
+    endAt: string | null;
+  } | null;
 }
 
 export interface ApiRestaurant {
@@ -180,6 +256,16 @@ export interface ApiRestaurant {
     id: string;
     name: string;
   } | null;
+}
+
+export interface ApiWorkSession {
+  id: string;
+  userId: string;
+  restaurantId: string;
+  startedAt: string;
+  endAt: string | null;
+  restaurant: ApiRestaurant;
+  tickets?: ApiTicket[];
 }
 
 export interface EmailProps {
@@ -197,7 +283,6 @@ export interface EmailTemplateProps {
   ticketPrice: string;
   ticketNumber: number;
   companyCgu?: CguPart[] | null;
-
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   userId: string;
@@ -224,6 +309,7 @@ export interface RegisterValet {
   name?: string;
   phoneNumber?: string;
   password?: string;
+  email?: string;
 }
 
 export interface PlayAnimationInput {
@@ -236,9 +322,10 @@ export interface LottieRefsRegister {
   name?: LottieRefCurrentProps | null;
   phoneNumber?: LottieRefCurrentProps | null;
   password?: LottieRefCurrentProps | null;
+  email?: LottieRefCurrentProps | null;
 }
 
-// Fonctions utilitaires pour convertir les dates
+// Utility functions to convert dates
 export function convertPrismaDates<
   T extends { createdAt: Date; updatedAt: Date },
 >(data: T): T {
@@ -256,6 +343,26 @@ export function convertApiDates<
 ): Omit<T, "createdAt" | "updatedAt"> & { createdAt: Date; updatedAt: Date } {
   return {
     ...data,
+    createdAt: new Date(data.createdAt),
+    updatedAt: new Date(data.updatedAt),
+  };
+}
+
+// Utility function to convert work session dates
+export function convertWorkSessionDates(data: {
+  startedAt: string;
+  endAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}): {
+  startedAt: Date;
+  endAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+} {
+  return {
+    startedAt: new Date(data.startedAt),
+    endAt: data.endAt ? new Date(data.endAt) : null,
     createdAt: new Date(data.createdAt),
     updatedAt: new Date(data.updatedAt),
   };

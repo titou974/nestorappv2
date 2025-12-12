@@ -3,7 +3,7 @@
     @apply w-full;
   }
   .input:hover {
-    @apply bg-surface/80;
+    @apply bg-foreground/20;
   }
   .input:focus {
     @apply bg-surface;
@@ -13,7 +13,7 @@
   }
 
   .input[data-invalid]:hover {
-    @apply bg-surface/80;
+    @apply bg-foreground/20;
   }
 
   .input[data-invalid]:focus {
