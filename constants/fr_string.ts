@@ -59,7 +59,10 @@ export const StringsFR = {
   phoneNumber: "Numéro de Téléphone",
   password: "Mot de passe",
   namePlaceholder: "Samuel",
+  phonePlaceholder: "+33 6 01 01 01 01",
+  passwordPlaceholder: "Entrer votre mot de passe",
   nameError: "Votre prénom doit faire au moins 3 caractères",
-  frenchPhoneNumberError:
-    "Vous devez rentrer un numéro de téléphone français valide",
+  frenchPhoneNumberError: "Vous devez rentrer un numéro de téléphone valide",
+  passwordError: "Votre mot de passe doit contenir au moins 6 caractères",
+  isRegistering: "Inscription...",
 };

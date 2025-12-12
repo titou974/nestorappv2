@@ -107,21 +107,19 @@ export default function EmailModal({
                   </TextField>
                 </div>
                 <Button type="submit" isPending={pending}>
-                  {({ isPending }) => (
-                    <>
-                      {isPending ? (
-                        <>
-                          <p>{StringsFR.isSending}</p>
-                          <Spinner color="current" size="sm" />
-                        </>
-                      ) : (
-                        <>
-                          <p>{StringsFR.receiveTicket}</p>
-                          <PaperAirplaneIcon />
-                        </>
-                      )}
-                    </>
-                  )}
+                  {({ isPending }) =>
+                    isPending ? (
+                      <>
+                        <p>{StringsFR.isSending}</p>
+                        <Spinner color="current" size="sm" />
+                      </>
+                    ) : (
+                      <>
+                        <p>{StringsFR.receiveTicket}</p>
+                        <PaperAirplaneIcon />
+                      </>
+                    )
+                  }
                 </Button>
               </form>
             </DialogPanel>

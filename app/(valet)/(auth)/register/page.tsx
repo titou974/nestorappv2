@@ -19,5 +19,5 @@ export default async function RegisterPage({
     return <RegisterWelcome />;
   }
 
-  return <Register />;
+  return <Register siteId={site} />;
 }

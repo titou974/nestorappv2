@@ -9,21 +9,27 @@ import {
   FieldError,
   Input,
   Label,
+  Spinner,
   TextField,
 } from "@heroui/react";
-import { useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { Form } from "@heroui/react";
 import { LottieRefCurrentProps } from "lottie-react";
 import CheckAnimation from "@/components/animations/Check";
-import { nameSchema, frenchPhoneNumberSchema } from "@/constants/validations";
-import { INITIAL_ANIMATION_STATE } from "@/constants/states";
+import {
+  nameSchema,
+  frenchPhoneNumberSchema,
+  passwordSchema,
+} from "@/constants/validations";
+import { INITIAL_ANIMATION_STATE, initialState } from "@/constants/states";
+import register from "./actions";
 
-export default function RegisterForm() {
+export default function RegisterForm({ siteId }: { siteId: string }) {
   const [formData, setFormData] = useState<RegisterValet>({});
-
   const [displayAnimation, setDisplayAnimation] = useState<PlayAnimationInput>(
     INITIAL_ANIMATION_STATE
   );
+
   const lottieRefName = useRef<LottieRefCurrentProps>(null);
   const lottieRefPhone = useRef<LottieRefCurrentProps>(null);
   const lottieRefPassword = useRef<LottieRefCurrentProps>(null);
@@ -33,6 +39,11 @@ export default function RegisterForm() {
     phoneNumber: lottieRefPhone,
     password: lottieRefPassword,
   };
+
+  const [state, formAction, pending] = useActionState(
+    register.bind(null, siteId),
+    initialState
+  );
 
   const handleFieldValidation = (
     field: keyof PlayAnimationInput,
@@ -65,12 +76,18 @@ export default function RegisterForm() {
     }
   };
 
+  useEffect(() => {
+    console.log(state?.errors);
+  });
+
   return (
-    <Form className="space-y-4">
+    <Form className="space-y-4" action={formAction}>
       <TextField
+        name="name"
         isRequired
         isInvalid={
-          !!formData.name && !nameSchema.safeParse(formData.name).success
+          (!!formData.name && !nameSchema.safeParse(formData.name).success) ||
+          !!state?.errors.fieldErrors.name
         }
       >
         <Label className="inline-flex items-center">{StringsFR.name}</Label>
@@ -89,19 +106,20 @@ export default function RegisterForm() {
         </div>
         <FieldError>{StringsFR.nameError}</FieldError>
       </TextField>
-
       <TextField
+        type="tel"
+        name="phone"
         isRequired
         isInvalid={
-          !!formData.phoneNumber &&
-          !frenchPhoneNumberSchema.safeParse(formData.phoneNumber).success
+          (!!formData.phoneNumber &&
+            !frenchPhoneNumberSchema.safeParse(formData.phoneNumber).success) ||
+          !!state?.errors.fieldErrors.phone
         }
       >
         <Label>{StringsFR.phoneNumber}</Label>
         <div className="relative w-full">
           <Input
-            type="tel"
-            placeholder="+33 6 01 01 01 01"
+            placeholder={StringsFR.phonePlaceholder}
             className="w-full"
             value={formData.phoneNumber}
             onChange={(e) =>
@@ -118,28 +136,47 @@ export default function RegisterForm() {
         </div>
         <FieldError>{StringsFR.frenchPhoneNumberError}</FieldError>
       </TextField>
-
-      <TextField isRequired>
+      <TextField
+        isRequired
+        type="password"
+        name="password"
+        isInvalid={
+          (!!formData.password &&
+            !passwordSchema.safeParse(formData.password).success) ||
+          !!state?.errors.fieldErrors.password
+        }
+      >
         <Label>{StringsFR.password}</Label>
-        <Input
-          type="password"
-          value={formData.password}
-          onChange={(e) => {
-            setFormData((prev) => ({
-              ...prev,
-              password: e.target.value,
-            }));
-          }}
-        />
-        <Description>
-          Votre mot de passe doit contenir au moins 6 caractères
-        </Description>
+        <div className="relative w-full">
+          <Input
+            className="w-full"
+            placeholder={StringsFR.passwordPlaceholder}
+            value={formData.password}
+            onChange={(e) => {
+              handleFieldValidation("password", e.target.value, passwordSchema);
+            }}
+          />
+          {displayAnimation.password && (
+            <CheckAnimation lottieRef={lottieRefPhone} />
+          )}
+        </div>
+        <FieldError>{StringsFR.passwordError}</FieldError>
       </TextField>
-
       <FooterBarLayout>
-        <Button type="submit" size="lg" className="w-full">
-          {StringsFR.createYourAccount}
-          <ArrowRightIcon width={20} />
+        <Button type="submit" size="lg" className="w-full" isPending={pending}>
+          {({ isPending }) =>
+            isPending ? (
+              <>
+                <p>{StringsFR.isRegistering}</p>
+                <Spinner color="current" size="sm" />
+              </>
+            ) : (
+              <>
+                <p>{StringsFR.createYourAccount}</p>
+                <ArrowRightIcon width={20} />
+              </>
+            )
+          }
         </Button>
         <Button className="w-full" variant="ghost">
           {StringsFR.login}

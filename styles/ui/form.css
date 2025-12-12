@@ -5,11 +5,18 @@
   .input:hover {
     @apply bg-surface/80;
   }
+  .input:focus {
+    @apply bg-surface;
+  }
   .input[data-invalid] {
     @apply bg-surface;
   }
 
   .input[data-invalid]:hover {
     @apply bg-surface/80;
+  }
+
+  .input[data-invalid]:focus {
+    @apply bg-surface;
   }
 }
