@@ -15,7 +15,7 @@ export async function createTicket(siteId: string, companyId: string) {
     const newTicket = await prisma.ticket.create({
       data: {
         userId: newUser.id,
-        restaurantId: siteId,
+        siteId: siteId,
         scannedAt: new Date(),
       },
     });

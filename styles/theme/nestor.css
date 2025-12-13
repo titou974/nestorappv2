@@ -118,8 +118,7 @@
     /* Form Field Defaults */
     --field-background: var(--default);
     --field-foreground: var(--foreground);
-
-    /* Status */
+    --color-field: #ffffff33; /* Status */
     --success: oklch(0.7329 0.1935 150.81);
     --success-foreground: var(--eclipse);
 

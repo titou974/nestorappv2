@@ -19,4 +19,25 @@
   .input[data-invalid]:focus {
     @apply bg-surface;
   }
+
+  .input-group {
+    @apply w-full;
+  }
+  .input-group:hover {
+    @apply bg-foreground/20;
+  }
+  .input-group:focus {
+    @apply bg-surface;
+  }
+  .input-group[data-invalid] {
+    @apply bg-surface;
+  }
+
+  .input-group[data-invalid]:hover {
+    @apply bg-foreground/20;
+  }
+
+  .input-group[data-invalid]:focus {
+    @apply bg-surface;
+  }
 }

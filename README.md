@@ -23,8 +23,8 @@ I'm recoding the entire first version of Nestor App (built 2 years ago in Next.j
 
 The current version (Next.js 13) has proven the concept:
 
-- 🏢 **15 Parisian restaurants** using Nestor daily
-- 💰 **€300 MRR** 
+- 🏢 **15 Parisian sites** using Nestor daily
+- 💰 **€300 MRR**
 - 🌱 **2 years in production**
 - 🎉 **My first successful app** as a developer
 
@@ -43,17 +43,20 @@ The current version (Next.js 13) has proven the concept:
 ## ✨ Core Features (Improved)
 
 #### Customer Side
+
 - 📱 Scan QR code to create ticket instantly
 - 🎫 Digital ticket accessible anytime
 - 🔔 Real-time notifications
 
 #### Valet Dashboard
+
 - 📊 Receive tickets in real-time
 - 🚙 Add license plate information
 - 📈 Track daily activity
 - 📉 Analytics & insights (new!)
 
-#### Restaurant Admin
+#### Site Admin
+
 - 👥 Manage multiple valets
 - 📊 Business intelligence dashboard (new!)
 - 💳 Subscription management
@@ -68,7 +71,6 @@ Built 2 years ago
 My first dev project
 Proven in production
 
-
 #### v2 (In Development - Next.js 16) 🚧
 
 Modern architecture
@@ -76,7 +78,6 @@ Optimized performance
 Scalable infrastructure
 Latest best practices
 Enhanced security
-
 
 ---
 
@@ -107,9 +108,9 @@ Enhanced security
 
 Follow the rebuild process as I apply 2 years of experience to create a production-ready, enterprise-grade solution.
 
-**From**: First dev project with Next.js 13  
+**From**: First dev project with Next.js 13
 **To**: Scalable SaaS with modern architecture
 
 ---
 
-**Built with ❤️ & 2 years of experience** | Making valet parking paperless, one restaurant at a time.
+**Built with ❤️ & 2 years of experience** | Making valet parking paperless, one site at a time.

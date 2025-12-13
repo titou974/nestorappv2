@@ -41,19 +41,19 @@ model User {
 model Ticket {
   id              String     @id @default(cuid())
   userId          String
-  restaurantId    String
+  siteId    String
   scannedAt       DateTime
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
   ticketNumber    Int        @default(autoincrement())
   workSessionId   String?
   immatriculation String?
-  restaurant      Restaurant @relation(fields: [restaurantId], references: [id])
+  site      Site @relation(fields: [siteId], references: [id])
   workSession     WorkSession?   @relation(fields: [workSessionId], references: [id])
   user            User       @relation(fields: [userId], references: [id])
 }
 
-model Restaurant {
+model Site {
   id          String    @id @default(cuid())
   name        String
   createdAt   DateTime  @default(now())
@@ -68,17 +68,17 @@ model Restaurant {
 model WorkSession {
   id           String     @id @default(cuid())
   userId       String
-  restaurantId String
+  siteId String
   startedAt    DateTime   @default(now())
   endAt        DateTime?
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  site   Site @relation(fields: [siteId], references: [id], onDelete: Cascade)
   user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   tickets      Ticket[]
 
   @@index([userId])
-  @@index([restaurantId])
+  @@index([siteId])
   @@map("work_session")
 }
 
@@ -89,7 +89,7 @@ model Company {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   cgu         Json?
-  restaurants Restaurant[]
+  sites Site[]
   users       User[]
 }
 

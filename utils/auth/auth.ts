@@ -4,6 +4,7 @@ import { createAuthMiddleware, oneTap } from "better-auth/plugins";
 import prisma from "@/lib/prisma";
 import { UserRole } from "@/types/site";
 import { inferAdditionalFields } from "better-auth/client/plugins";
+import { nextCookies } from "better-auth/next-js";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -11,6 +12,7 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    minPasswordLength: 6,
   },
   socialProviders: {
     google: {
@@ -31,6 +33,11 @@ export const auth = betterAuth({
         defaultValue: UserRole.VALET,
         input: false,
       },
+      phone: {
+        type: "string",
+        required: false,
+        input: true,
+      },
     },
   },
   hooks: {
@@ -43,7 +50,7 @@ export const auth = betterAuth({
         if (location && ctx.context.newSession?.user.id) {
           const url = new URL(location, process.env.BASE_URL);
           const companyId = url.searchParams.get("companyId");
-          const restaurantId = url.searchParams.get("restaurantId");
+          const siteId = url.searchParams.get("siteId");
 
           if (companyId) {
             await prisma.user.update({
@@ -54,10 +61,10 @@ export const auth = betterAuth({
             });
           }
 
-          if (restaurantId) {
+          if (siteId) {
             await prisma.workSession.create({
               data: {
-                restaurantId: restaurantId,
+                siteId: siteId,
                 userId: ctx.context.newSession?.user.id,
                 createdAt: new Date(),
               },
@@ -76,7 +83,13 @@ export const auth = betterAuth({
           required: true,
           input: true,
         },
+        phone: {
+          type: "string",
+          required: false,
+          input: true,
+        },
       },
     }),
+    nextCookies(),
   ],
 });

@@ -10,7 +10,7 @@ export async function GET(
 ) {
   const { id } = await params;
   try {
-    const site = await prisma.restaurant.findUnique({
+    const site = await prisma.site.findUnique({
       where: { id },
     });
 

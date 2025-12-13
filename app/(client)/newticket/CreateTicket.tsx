@@ -2,11 +2,11 @@
 import LoadingModal from "@/components/home/LoadingModal";
 import Navbar from "@/components/navbar";
 import { StringsFR } from "@/constants/fr_string";
-import { Restaurant } from "@/types/site";
+import { Site } from "@/types/site";
 import { useEffect, useTransition } from "react";
 import { createTicket } from "./actions";
 
-export default function CreateTicket({ siteData }: { siteData: Restaurant }) {
+export default function CreateTicket({ siteData }: { siteData: Site }) {
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {

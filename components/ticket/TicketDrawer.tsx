@@ -34,7 +34,7 @@ const TicketDrawer = ({
                 </div>
               </div>
               <p className="text-xl font-semibold">
-                {ticketData?.restaurant?.ticketPrice} €
+                {ticketData?.site?.ticketPrice} €
               </p>
               <div className="mb-4 w-full border border-surface"></div>
 
@@ -42,7 +42,7 @@ const TicketDrawer = ({
                 {ticketData?.scannedAt &&
                   formatDateToFrench(ticketData.scannedAt)}
                 <p className="font-semibold italic">
-                  {StringsFR.at} {ticketData?.restaurant.name}
+                  {StringsFR.at} {ticketData?.site.name}
                 </p>
               </div>
             </div>

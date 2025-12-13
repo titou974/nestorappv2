@@ -1,7 +1,7 @@
 "use client";
 import FooterBarLayout from "@/components/layouts/footerbarlayout";
 import { StringsFR } from "@/constants/fr_string";
-import { RegisterValet, PlayAnimationInput } from "@/types/site";
+import { LoginValet, PlayAnimationInput } from "@/types/site";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import {
   Button,
@@ -16,20 +16,17 @@ import { useActionState, useRef, useState } from "react";
 import { Form } from "@heroui/react";
 import { LottieRefCurrentProps } from "lottie-react";
 import CheckAnimation from "@/components/animations/Check";
-import {
-  nameSchema,
-  passwordSchema,
-  emailSchema,
-} from "@/constants/validations";
+import { passwordSchema, emailSchema } from "@/constants/validations";
 import { INITIAL_ANIMATION_STATE, initialState } from "@/constants/states";
-import register from "./actions";
 import { Icon } from "@iconify/react";
 import { handleGoogleSignIn } from "@/utils/auth/authActions";
+import login from "./actions";
 import { useRouter } from "next/navigation";
+
 import { ROUTES } from "@/constants/routes";
 import { buildRouteWithParams } from "@/lib/buildroutewithparams";
 
-export default function RegisterForm({
+export default function LoginForm({
   companyId,
   siteId,
 }: {
@@ -38,7 +35,7 @@ export default function RegisterForm({
 }) {
   const router = useRouter();
 
-  const [formData, setFormData] = useState<RegisterValet>({});
+  const [formData, setFormData] = useState<LoginValet>({});
   const [displayAnimation, setDisplayAnimation] = useState<PlayAnimationInput>(
     INITIAL_ANIMATION_STATE
   );
@@ -54,14 +51,14 @@ export default function RegisterForm({
   };
 
   const [state, formAction, pending] = useActionState(
-    register.bind(null, companyId, siteId),
+    login.bind(null, siteId),
     initialState
   );
 
   const handleFieldValidation = (
     field: keyof PlayAnimationInput,
     value: string,
-    schema: typeof nameSchema | typeof emailSchema | typeof passwordSchema
+    schema: typeof emailSchema | typeof passwordSchema
   ) => {
     const isValid = schema.safeParse(value).success;
 
@@ -92,30 +89,6 @@ export default function RegisterForm({
   return (
     <div className="space-y-6">
       <Form className="space-y-4" action={formAction}>
-        <TextField
-          name="name"
-          isRequired
-          isInvalid={
-            (!!formData.name && !nameSchema.safeParse(formData.name).success) ||
-            !!state?.errors?.fieldErrors.name
-          }
-        >
-          <Label className="inline-flex items-center">{StringsFR.name}</Label>
-          <div className="relative w-full">
-            <Input
-              className="w-full"
-              placeholder={StringsFR.namePlaceholder}
-              value={formData.name}
-              onChange={(e) =>
-                handleFieldValidation("name", e.target.value, nameSchema)
-              }
-            />
-            {displayAnimation.name && (
-              <CheckAnimation lottieRef={lottieRefName} />
-            )}
-          </div>
-          <FieldError>{StringsFR.nameError}</FieldError>
-        </TextField>
         <TextField
           type="email"
           name="email"
@@ -177,12 +150,12 @@ export default function RegisterForm({
             {({ isPending }) =>
               isPending ? (
                 <>
-                  <p>{StringsFR.isRegistering}</p>
+                  <p>{StringsFR.isLoggedIn}</p>
                   <Spinner color="current" size="sm" />
                 </>
               ) : (
                 <>
-                  <p>{StringsFR.createYourAccount}</p>
+                  <p>{StringsFR.login}</p>
                   <ArrowRightIcon width={20} />
                 </>
               )
@@ -193,13 +166,13 @@ export default function RegisterForm({
             variant="ghost"
             onClick={() =>
               router.push(
-                buildRouteWithParams(ROUTES.SIGNIN, {
+                buildRouteWithParams(ROUTES.REGISTER, {
                   site: siteId,
                 })
               )
             }
           >
-            {StringsFR.login}
+            {StringsFR.createYourAccount}
             <ArrowRightIcon width={20} />
           </Button>
         </FooterBarLayout>

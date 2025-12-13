@@ -5,7 +5,7 @@ export const dynamic = "force-static";
 
 export async function GET(req: NextRequest) {
   try {
-    const site = await prisma.restaurant.findMany();
+    const site = await prisma.site.findMany();
     return NextResponse.json(site);
   } catch (error) {
     return NextResponse.json({ error: "Error fetching site..." });

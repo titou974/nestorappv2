@@ -9,7 +9,7 @@ export async function GET(
   try {
     const ticket = await prisma.ticket.findUnique({
       where: { id: id },
-      include: { restaurant: true, user: true },
+      include: { site: true, user: true },
     });
     return NextResponse.json(ticket);
   } catch (error) {

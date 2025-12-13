@@ -13,7 +13,7 @@ export default async function Ticket(
     <>
       <Navbar
         subtitle={StringsFR.welcomeTo}
-        title={ticketData?.restaurant.name}
+        title={ticketData?.site.name}
         position="static"
       />
       <ConfettiAnimation />

@@ -1,4 +1,7 @@
 import getSite from "@/utils/site/getSite";
+import LoginError from "./LoginError";
+import LoginWelcome from "./LoginWelcome";
+import Login from "./Login";
 
 export default async function LoginPage({
   searchParams,
@@ -16,5 +19,11 @@ export default async function LoginPage({
     return <LoginWelcome />;
   }
 
-  return <Login />;
+  return (
+    <Login
+      siteId={siteData.id}
+      siteName={siteData.name}
+      companyId={siteData.companyId}
+    />
+  );
 }

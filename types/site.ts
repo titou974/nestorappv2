@@ -5,7 +5,7 @@
 import {
   CompanyCreateWithoutUsersInput,
   CompanyWhereUniqueInput,
-  RestaurantCreateWithoutTicketsInput,
+  SiteCreateWithoutTicketsInput,
   SessionCreateNestedManyWithoutUserInput,
   WorkSessionCreateNestedManyWithoutUserInput,
   WorkSessionCreateNestedOneWithoutTicketsInput,
@@ -58,7 +58,7 @@ export interface TicketCreated {
 export interface Ticket {
   id: string;
   userId: string;
-  restaurantId: string;
+  siteId: string;
   scannedAt: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -66,12 +66,12 @@ export interface Ticket {
   workSessionId: string | null;
   immatriculation: string | null;
   // Relations
-  restaurant: Restaurant;
+  site: Site;
   workSession?: WorkSession | null;
   user: User;
 }
 
-export interface Restaurant {
+export interface Site {
   id: string;
   name: string;
   createdAt: Date;
@@ -98,17 +98,17 @@ export interface Session {
   user: User;
 }
 
-// Work Session (restaurant shifts)
+// Work Session (site shifts)
 export interface WorkSession {
   id: string;
   userId: string;
-  restaurantId: string;
+  siteId: string;
   startedAt: Date;
   endAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
   // Relations
-  restaurant: Restaurant;
+  site: Site;
   user: User;
   tickets?: Ticket[];
 }
@@ -152,7 +152,7 @@ export interface Company {
   updatedAt: Date;
   cgu?: CguPart[] | null;
   // Relations
-  restaurants?: Restaurant[];
+  sites?: Site[];
   users?: User[];
 }
 
@@ -178,14 +178,14 @@ export interface TicketCreateInput {
   ticketNumber?: number;
   workSessionId?: string | null;
   immatriculation?: string | null;
-  restaurant: RestaurantCreateNestedOneWithoutTicketsInput;
+  site: SiteCreateNestedOneWithoutTicketsInput;
   user: UserCreateNestedOneWithoutTicketsInput;
   workSession?: WorkSessionCreateNestedOneWithoutTicketsInput;
 }
 
 export interface WorkSessionCreateInput {
   userId: string;
-  restaurantId: string;
+  siteId: string;
   startedAt?: Date;
   endAt?: Date | null;
 }
@@ -196,9 +196,9 @@ export interface CompanyCreateNestedOneWithoutUsersInput {
   connect?: CompanyWhereUniqueInput;
 }
 
-export interface RestaurantCreateNestedOneWithoutTicketsInput {
-  create?: RestaurantCreateWithoutTicketsInput;
-  connect: RestaurantWhereUniqueInput;
+export interface SiteCreateNestedOneWithoutTicketsInput {
+  create?: SiteCreateWithoutTicketsInput;
+  connect: SiteWhereUniqueInput;
 }
 
 // Types for queries
@@ -209,13 +209,13 @@ export interface UserWhereUniqueInput {
   email?: string;
 }
 
-export interface RestaurantWhereUniqueInput {
+export interface SiteWhereUniqueInput {
   id?: string;
 }
 
 export interface WorkSessionWhereInput {
   userId?: string;
-  restaurantId?: string;
+  siteId?: string;
   endAt?: null | { not: null };
 }
 
@@ -235,7 +235,7 @@ export interface ApiTicket {
   ticketNumber: number;
   scannedAt: string;
   immatriculation: string | null;
-  restaurant: {
+  site: {
     id: string;
     name: string;
     ticketPrice: string | null;
@@ -248,7 +248,7 @@ export interface ApiTicket {
   } | null;
 }
 
-export interface ApiRestaurant {
+export interface ApiSite {
   id: string;
   name: string;
   ticketPrice: string | null;
@@ -261,10 +261,10 @@ export interface ApiRestaurant {
 export interface ApiWorkSession {
   id: string;
   userId: string;
-  restaurantId: string;
+  siteId: string;
   startedAt: string;
   endAt: string | null;
-  restaurant: ApiRestaurant;
+  site: ApiSite;
   tickets?: ApiTicket[];
 }
 
@@ -307,22 +307,40 @@ export interface EmailTicketProps {
 
 export interface RegisterValet {
   name?: string;
-  phoneNumber?: string;
-  password?: string;
   email?: string;
+  password?: string;
+}
+
+export interface RegisterValetData {
+  name: string;
+  email: string;
+  password: string;
+  companyId: string;
+  siteId: string;
+}
+
+export interface LoginValet {
+  email?: string;
+  password?: string;
+}
+
+export interface LoginValetData {
+  email: string;
+  password: string;
+  companyId: string;
+  siteId: string;
 }
 
 export interface PlayAnimationInput {
   name: boolean;
-  phoneNumber: boolean;
+  email: boolean;
   password: boolean;
 }
 
 export interface LottieRefsRegister {
   name?: LottieRefCurrentProps | null;
-  phoneNumber?: LottieRefCurrentProps | null;
-  password?: LottieRefCurrentProps | null;
   email?: LottieRefCurrentProps | null;
+  password?: LottieRefCurrentProps | null;
 }
 
 // Utility functions to convert dates

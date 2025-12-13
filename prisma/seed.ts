@@ -17,7 +17,7 @@ const users = [
   { role: UserRole.CLIENT, name: "Linda Wilson", phoneNumber: "111-111-1120" },
 ];
 
-const restaurants = [
+const sites = [
   { name: "The Tasty Spoon", ticketPrice: "16" },
   { name: "Spicy Dreams", ticketPrice: "10" },
   { name: "Ocean Bites", ticketPrice: "17" },
@@ -31,16 +31,16 @@ const restaurants = [
 ];
 
 const tickets = [
-  { userId: 1, restaurantId: 1, scannedAt: "2023-01-01T12:00:00Z" },
-  { userId: 2, restaurantId: 2, scannedAt: "2023-01-02T12:30:00Z" },
-  { userId: 3, restaurantId: 3, scannedAt: "2023-01-03T13:00:00Z" },
-  { userId: 4, restaurantId: 4, scannedAt: "2023-01-04T13:30:00Z" },
-  { userId: 5, restaurantId: 5, scannedAt: "2023-01-05T14:00:00Z" },
-  { userId: 6, restaurantId: 6, scannedAt: "2023-01-06T14:30:00Z" },
-  { userId: 7, restaurantId: 7, scannedAt: "2023-01-07T15:00:00Z" },
-  { userId: 8, restaurantId: 8, scannedAt: "2023-01-08T15:30:00Z" },
-  { userId: 9, restaurantId: 9, scannedAt: "2023-01-09T16:00:00Z" },
-  { userId: 10, restaurantId: 10, scannedAt: "2023-01-10T16:30:00Z" },
+  { userId: 1, siteId: 1, scannedAt: "2023-01-01T12:00:00Z" },
+  { userId: 2, siteId: 2, scannedAt: "2023-01-02T12:30:00Z" },
+  { userId: 3, siteId: 3, scannedAt: "2023-01-03T13:00:00Z" },
+  { userId: 4, siteId: 4, scannedAt: "2023-01-04T13:30:00Z" },
+  { userId: 5, siteId: 5, scannedAt: "2023-01-05T14:00:00Z" },
+  { userId: 6, siteId: 6, scannedAt: "2023-01-06T14:30:00Z" },
+  { userId: 7, siteId: 7, scannedAt: "2023-01-07T15:00:00Z" },
+  { userId: 8, siteId: 8, scannedAt: "2023-01-08T15:30:00Z" },
+  { userId: 9, siteId: 9, scannedAt: "2023-01-09T16:00:00Z" },
+  { userId: 10, siteId: 10, scannedAt: "2023-01-10T16:30:00Z" },
 ];
 
 const cguCompanyOne = [
@@ -89,7 +89,7 @@ const cguCompanyOne = [
 async function main() {
   await prisma.ticket.deleteMany();
   await prisma.user.deleteMany();
-  await prisma.restaurant.deleteMany();
+  await prisma.site.deleteMany();
   await prisma.session.deleteMany();
   await prisma.company.deleteMany();
 
@@ -118,16 +118,16 @@ async function main() {
     usersCreate.push(newUser);
   }
 
-  // Create restaurants and associate them with companies
-  const restaurantsCreate = [];
-  for (const [index, restaurant] of restaurants.entries()) {
-    const newRestaurant = await prisma.restaurant.create({
+  // Create sites and associate them with companies
+  const sitesCreate = [];
+  for (const [index, site] of sites.entries()) {
+    const newSite = await prisma.site.create({
       data: {
-        ...restaurant,
+        ...site,
         companyId: index % 2 === 0 ? companyA.id : companyB.id,
       },
     });
-    restaurantsCreate.push(newRestaurant);
+    sitesCreate.push(newSite);
   }
 }
 
