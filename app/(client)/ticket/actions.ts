@@ -1,6 +1,6 @@
 "use server";
 
-import EmailTemplate from "@/components/ticket/EmailTemplate";
+import EmailTemplate from "@/emails/EmailTemplate";
 import { StringsFR } from "@/constants/fr_string";
 import { emailSchema } from "@/constants/validations";
 import prisma from "@/lib/prisma";

@@ -13,7 +13,7 @@ export default function Login({
 }) {
   return (
     <>
-      <Navbar subtitle={StringsFR.complete} title={siteName} />
+      <Navbar subtitle={StringsFR.youAreIn} title={siteName} />
       <LoginForm companyId={companyId} siteId={siteId} />
     </>
   );

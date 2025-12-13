@@ -1,5 +1,4 @@
 import styles from "@/components/style";
-import Footer from "@/components/valet/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,7 +13,6 @@ export default function ValetLayout({
       className="min-h-screen bg-background text-foreground dark"
     >
       <meta name="theme-color" content="#000000" />
-
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -25,7 +23,7 @@ export default function ValetLayout({
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
+        theme="dark"
       />
       <div
         className={`${styles.padding} flex flex-col justify-start relative mx-auto min-h-screen max-w-screen-sm`}

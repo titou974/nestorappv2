@@ -1,4 +1,4 @@
-import EmailTemplate from "@/components/ticket/EmailTemplate";
+import EmailTemplate from "@/emails/EmailTemplate";
 
 export default function EmailPage() {
   return (

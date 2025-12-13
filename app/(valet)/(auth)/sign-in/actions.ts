@@ -5,6 +5,7 @@ import { ROUTES } from "@/constants/routes";
 import { emailSchema, passwordSchema } from "@/constants/validations";
 import prisma from "@/lib/prisma";
 import { auth } from "@/utils/auth/auth";
+import { APIError } from "better-auth/api";
 import { redirect } from "next/navigation";
 import z from "zod";
 
@@ -24,12 +25,13 @@ export default async function login(
 
   if (!validatedFields.success) {
     return {
+      message: "Field Errors",
       errors: z.flattenError(validatedFields.error),
     };
   }
 
   try {
-    const { headers, response: responseRegister } = await auth.api.signInEmail({
+    const { headers, response: responseLogin } = await auth.api.signInEmail({
       returnHeaders: true,
       body: {
         email: data.email as string,
@@ -37,8 +39,8 @@ export default async function login(
       },
     });
 
-    if (responseRegister.user) {
-      const userId = responseRegister.user.id;
+    if (responseLogin.user) {
+      const userId = responseLogin.user.id;
       await prisma.workSession.create({
         data: {
           siteId: siteId,
@@ -48,8 +50,17 @@ export default async function login(
       });
     }
   } catch (error) {
+    console.log("error", error);
+    if (error instanceof APIError) {
+      if (error.statusCode === 401) {
+        return {
+          message: StringsFR.wrongMailorPassword,
+          status: "ERROR" as const,
+        };
+      }
+    }
     return {
-      message: StringsFR.registerError,
+      message: StringsFR.loginError,
       status: "ERROR" as const,
     };
   }

@@ -67,4 +67,8 @@ export const StringsFR = {
   registerError: "Erreur lors de l'inscription",
   isLoggedIn: "Connexion...",
   yourAreIn: "Vous êtes au",
+  userAlreadyExist: "Un compte voiturier existe déjà avec cette adresse mail",
+  youAreIn: "Vous êtes au",
+  loginError: "Erreur lors de la connexion",
+  wrongMailorPassword: "Mauvaise adresse mail ou mot de passe",
 };

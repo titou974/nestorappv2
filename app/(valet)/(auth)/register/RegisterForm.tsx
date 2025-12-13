@@ -28,6 +28,7 @@ import { handleGoogleSignIn } from "@/utils/auth/authActions";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/constants/routes";
 import { buildRouteWithParams } from "@/lib/buildroutewithparams";
+import { withCallbacks, toastCallback } from "@/lib/toastCallback";
 
 export default function RegisterForm({
   companyId,
@@ -54,7 +55,10 @@ export default function RegisterForm({
   };
 
   const [state, formAction, pending] = useActionState(
-    register.bind(null, companyId, siteId),
+    withCallbacks(
+      register.bind(null, companyId, siteId),
+      toastCallback(() => {})
+    ),
     initialState
   );
 

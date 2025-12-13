@@ -25,6 +25,7 @@ import { useRouter } from "next/navigation";
 
 import { ROUTES } from "@/constants/routes";
 import { buildRouteWithParams } from "@/lib/buildroutewithparams";
+import { withCallbacks, toastCallback } from "@/lib/toastCallback";
 
 export default function LoginForm({
   companyId,
@@ -51,7 +52,10 @@ export default function LoginForm({
   };
 
   const [state, formAction, pending] = useActionState(
-    login.bind(null, siteId),
+    withCallbacks(
+      login.bind(null, siteId),
+      toastCallback(() => {})
+    ),
     initialState
   );
 

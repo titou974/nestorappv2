@@ -9,6 +9,7 @@ import {
 } from "@/constants/validations";
 import prisma from "@/lib/prisma";
 import { auth } from "@/utils/auth/auth";
+import { APIError } from "better-auth/api";
 import { redirect } from "next/navigation";
 import z from "zod";
 
@@ -30,9 +31,12 @@ export default async function register(
 
   if (!validatedFields.success) {
     return {
+      message: "Fields error",
       errors: z.flattenError(validatedFields.error),
     };
   }
+
+  await checkIfUserExist(data.email as string, data.password as string, siteId);
 
   try {
     const { headers, response: responseRegister } = await auth.api.signUpEmail({
@@ -45,6 +49,8 @@ export default async function register(
       },
     });
 
+    console.log("Reponse", responseRegister);
+
     if (responseRegister.user) {
       const userId = responseRegister.user.id;
       await prisma.workSession.create({
@@ -56,10 +62,63 @@ export default async function register(
       });
     }
   } catch (error) {
+    if (error instanceof APIError) {
+      if (error.statusCode === 422) {
+        return {
+          message: StringsFR.userAlreadyExist,
+          status: "ERROR" as const,
+        };
+      }
+    }
     return {
       message: StringsFR.registerError,
       status: "ERROR" as const,
     };
   }
   redirect(ROUTES.DASHBOARD);
+}
+
+async function checkIfUserExist(
+  email: string,
+  password: string,
+  siteId: string
+) {
+  let workSession;
+  try {
+    const existingAccount = await prisma.user.findFirst({
+      where: {
+        email: email as string,
+      },
+    });
+    if (existingAccount?.id) {
+      const responseLogin = await auth.api.signInEmail({
+        body: {
+          email: email as string,
+          password: password as string,
+        },
+      });
+      if (responseLogin.user) {
+        workSession = await prisma.workSession.create({
+          data: {
+            siteId: siteId,
+            userId: responseLogin.user.id,
+            createdAt: new Date(),
+          },
+        });
+      } else {
+        return {
+          message: StringsFR.userAlreadyExist,
+          status: "ERROR" as const,
+        };
+      }
+    }
+  } catch {
+    return {
+      message: StringsFR.userAlreadyExist,
+      status: "ERROR" as const,
+    };
+  }
+  if (workSession) {
+    redirect(ROUTES.DASHBOARD);
+  }
 }

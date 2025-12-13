@@ -5,4 +5,5 @@ export const APIROUTES = {
   COMPANY: "/api/company/[id]",
   USER: "/api/user/[id]",
   SEND_TICKET: "/api/sendticket",
+  WORK_SESSION: "/api/worksession/[userId]",
 };
