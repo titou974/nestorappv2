@@ -2,6 +2,7 @@ import getSite from "@/utils/site/getSite";
 import Register from "./Register";
 import RegisterError from "./RegisterError";
 import CreateTicket from "./CreateTicket";
+import { createTicket } from "./actions";
 
 export default async function RegisterPage({
   searchParams,
@@ -19,6 +20,8 @@ export default async function RegisterPage({
   if (!siteData.name) {
     return <Register />;
   }
+
+  await createTicket(siteData.id, siteData.companyId);
 
   return <CreateTicket siteData={siteData} />;
 }

@@ -1,6 +1,6 @@
 import { ROUTES } from "@/constants/routes";
 import { auth } from "@/utils/auth/auth";
-import getWorkSession from "@/utils/worksession/getWorkSession";
+import getWorkSession from "@/utils/dashboard/getWorkSession";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Dashboard from "./Dashboard";
