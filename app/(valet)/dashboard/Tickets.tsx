@@ -4,6 +4,8 @@ import { useTicketsOfSession } from "@/utils/dashboard/useTicketsofSession";
 import { motion } from "framer-motion";
 import TicketCard from "./TicketCard";
 import { slideIn } from "@/lib/motion";
+import patchTicket from "@/utils/ticket/patchTicket";
+import useSWRMutation from "swr/mutation";
 
 export default function Tickets({
   siteId,
@@ -12,8 +14,14 @@ export default function Tickets({
   siteId: string;
   startedAt: Date;
 }) {
-  const { tickets, isTicketsLoading, numberOfTicketsToCompleteImmat } =
-    useTicketsOfSession(siteId, startedAt);
+  const { tickets, isTicketsLoading, swrKey } = useTicketsOfSession(
+    siteId,
+    startedAt
+  );
+
+  const { trigger } = useSWRMutation(swrKey, patchTicket, {
+    revalidate: false,
+  });
 
   if (isTicketsLoading) {
     return <p>Loading...</p>;
@@ -33,7 +41,7 @@ export default function Tickets({
                 whileInView="show"
                 viewport={{ once: true }}
               >
-                <TicketCard ticket={ticket} index={index} />
+                <TicketCard ticket={ticket} trigger={trigger} />
               </motion.div>
             );
           })}

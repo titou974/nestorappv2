@@ -1,7 +1,6 @@
 "use client";
-import { useTicketsOfSession } from "@/utils/dashboard/useTicketsofSession";
-import { ArrowPathIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
-import { Alert, Button, CloseButton, Spinner } from "@heroui/react";
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
+import { Button, Spinner } from "@heroui/react";
 import TicketAlert from "./TicketAlert";
 import Tickets from "./Tickets";
 import FooterBarLayout from "@/components/layouts/footerbarlayout";

@@ -4,17 +4,11 @@ import { fetcher } from "@/lib/fetcher";
 import { Ticket } from "@/generated/prisma/client";
 
 export function useTicketsOfSession(siteId: string, startedAt: Date) {
-  const { data, error, isLoading, isValidating } = useSWR(
-    {
-      url: APIROUTES.TICKETS_OF_WORK_SESSION,
-      args: {
-        siteId: siteId,
-        startedAt: startedAt.toString(),
-      },
-    },
-    fetcher,
-    { refreshInterval: 5000 }
-  );
+  const swrKey = `${APIROUTES.TICKETS_OF_WORK_SESSION}?siteId=${siteId}&startedAt=${startedAt.toString()}`;
+
+  const { data, error, isLoading, isValidating } = useSWR(swrKey, fetcher, {
+    refreshInterval: 5000,
+  });
 
   const numberOfTicketsToCompleteImmat = data?.tickets?.filter(
     (ticket: Ticket) => !ticket.immatriculation
@@ -26,5 +20,6 @@ export function useTicketsOfSession(siteId: string, startedAt: Date) {
     isTicketsError: error,
     isValidating,
     numberOfTicketsToCompleteImmat: numberOfTicketsToCompleteImmat,
+    swrKey,
   };
 }

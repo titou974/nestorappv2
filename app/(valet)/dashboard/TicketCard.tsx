@@ -1,33 +1,71 @@
 "use client";
+import CheckAnimation from "@/components/animations/Check";
+import { APIROUTES } from "@/constants/api_routes";
 import { StringsFR } from "@/constants/fr_string";
+import { licensePlateSchema } from "@/constants/validations";
 import { Ticket } from "@/generated/prisma/client";
 import formatHour from "@/lib/formatHour";
+import patchTicket from "@/utils/ticket/patchTicket";
 import { ClockIcon } from "@heroicons/react/20/solid";
-import {
-  Card,
-  Description,
-  FieldError,
-  Input,
-  Label,
-  Link,
-  TextField,
-} from "@heroui/react";
+import { Card, Description, Input, Label, TextField } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { LottieRefCurrentProps } from "lottie-react";
+import { useState, useRef } from "react";
+import useSWRMutation from "swr/mutation";
 
 export default function TicketCard({
   ticket,
-  index,
+  trigger,
 }: {
   ticket: Ticket;
-  index: number;
+  trigger: (arg: any) => Promise<any>;
 }) {
-  const [immatriculation, setImmatriculation] = useState<string>();
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
+
+  const [immatriculation, setImmatriculation] = useState<string>(
+    ticket.immatriculation || ""
+  );
+  const [displayAnimation, setDisplayAnimation] = useState<boolean>();
+
+  const handleImmatriculationBlur = async () => {
+    if (immatriculation && immatriculation !== ticket.immatriculation) {
+      try {
+        await trigger({ id: ticket.id, immatriculation });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  const handleFieldValidation = (value: string) => {
+    const isValid = licensePlateSchema.safeParse(value).success;
+
+    setImmatriculation(value);
+
+    if (!displayAnimation && isValid) {
+      setDisplayAnimation(true);
+      queueMicrotask(() => {
+        lottieRef.current?.play();
+      });
+    } else if (!isValid && displayAnimation) {
+      setDisplayAnimation(false);
+      queueMicrotask(() => {
+        lottieRef.current?.stop();
+      });
+    }
+  };
+
   return (
     <Card className="col-span-12 w-full">
       <Card.Header className="gap-3">
         <div className="w-full flex justify-between">
-          <TextField name="name">
+          <TextField
+            name="name"
+            isInvalid={
+              !!immatriculation &&
+              !licensePlateSchema.safeParse(immatriculation)
+            }
+          >
             <Label className="inline-flex items-center">
               {StringsFR.immatriculation}
             </Label>
@@ -36,8 +74,10 @@ export default function TicketCard({
                 className="w-full uppercase"
                 placeholder={StringsFR.immatriculationPlaceholder}
                 value={immatriculation}
-                onChange={(e) => setImmatriculation(e.target.value)}
+                onBlur={handleImmatriculationBlur}
+                onChange={(e) => handleFieldValidation(e.target.value)}
               />
+              {displayAnimation && <CheckAnimation lottieRef={lottieRef} />}
             </div>
             {!immatriculation && (
               <Description className="flex items-center gap-1 text-accent">
