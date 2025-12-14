@@ -11,6 +11,7 @@ import { Card, Description, Input, Label, TextField } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { LottieRefCurrentProps } from "lottie-react";
 import { useState, useRef } from "react";
+import { toast } from "react-toastify";
 import useSWRMutation from "swr/mutation";
 
 export default function TicketCard({
@@ -25,12 +26,19 @@ export default function TicketCard({
   const [immatriculation, setImmatriculation] = useState<string>(
     ticket.immatriculation || ""
   );
-  const [displayAnimation, setDisplayAnimation] = useState<boolean>();
+  const [displayAnimation, setDisplayAnimation] = useState<boolean>(false);
 
   const handleImmatriculationBlur = async () => {
     if (immatriculation && immatriculation !== ticket.immatriculation) {
       try {
         await trigger({ id: ticket.id, immatriculation });
+        if (!displayAnimation) {
+          setDisplayAnimation(true);
+          queueMicrotask(() => {
+            lottieRef.current?.play();
+          });
+          toast.success("Plaque d'immatriculation enregistrée");
+        }
       } catch (error) {
         console.error(error);
       }
@@ -38,16 +46,9 @@ export default function TicketCard({
   };
 
   const handleFieldValidation = (value: string) => {
-    const isValid = licensePlateSchema.safeParse(value).success;
-
     setImmatriculation(value);
 
-    if (!displayAnimation && isValid) {
-      setDisplayAnimation(true);
-      queueMicrotask(() => {
-        lottieRef.current?.play();
-      });
-    } else if (!isValid && displayAnimation) {
+    if (displayAnimation) {
       setDisplayAnimation(false);
       queueMicrotask(() => {
         lottieRef.current?.stop();

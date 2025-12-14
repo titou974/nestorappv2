@@ -35,7 +35,7 @@ export default function Tickets({
           .map((ticket: Ticket, index: number) => {
             return (
               <motion.div
-                key={index}
+                key={ticket.id}
                 initial="hidden"
                 variants={slideIn("left", "tween", index * 0.25, 0.5)}
                 whileInView="show"

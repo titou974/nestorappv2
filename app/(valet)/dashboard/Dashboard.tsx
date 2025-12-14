@@ -1,9 +1,5 @@
-import { StringsFR } from "@/constants/fr_string";
 import FeedTickets from "./FeedTickets";
 import NavbarDashboard from "./NavbarDashboard";
-import { ArrowRightIcon } from "@heroicons/react/20/solid";
-import FooterBarLayout from "@/components/layouts/footerbarlayout";
-import { Button, Spinner } from "@heroui/react";
 
 export default function Dashboard({
   startedAt,

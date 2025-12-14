@@ -20,7 +20,7 @@ export default function FeedTickets({
         <Tickets siteId={siteId} startedAt={startedAt} />
       </div>
       <FooterBarLayout>
-        <Button type="submit" className="w-full">
+        <Button className="w-full">
           {({ isPending }) =>
             isPending ? (
               <>
