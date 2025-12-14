@@ -6,6 +6,7 @@ import TicketCard from "./TicketCard";
 import { slideIn } from "@/lib/motion";
 import patchTicket from "@/utils/ticket/patchTicket";
 import useSWRMutation from "swr/mutation";
+import TicketsLoading from "@/components/valet/TicketsLoading";
 
 export default function Tickets({
   siteId,
@@ -24,7 +25,7 @@ export default function Tickets({
   });
 
   if (isTicketsLoading) {
-    return <p>Loading...</p>;
+    return <TicketsLoading />;
   }
   return (
     <div className="grid min-h-fit grid-cols-1 gap-4 text-white">

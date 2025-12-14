@@ -1,19 +1,15 @@
 "use client";
 import CheckAnimation from "@/components/animations/Check";
-import TemplateToast from "@/components/Toast";
-import { APIROUTES } from "@/constants/api_routes";
 import { StringsFR } from "@/constants/fr_string";
 import { licensePlateSchema } from "@/constants/validations";
 import { Ticket } from "@/generated/prisma/client";
+import createToast from "@/lib/createToast";
 import formatHour from "@/lib/formatHour";
-import patchTicket from "@/utils/ticket/patchTicket";
 import { ClockIcon } from "@heroicons/react/20/solid";
 import { Card, Description, Input, Label, TextField } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { LottieRefCurrentProps } from "lottie-react";
 import { useState, useRef } from "react";
-import { toast } from "react-toastify";
-import useSWRMutation from "swr/mutation";
 
 export default function TicketCard({
   ticket,
@@ -33,22 +29,20 @@ export default function TicketCard({
     if (immatriculation && immatriculation !== ticket.immatriculation) {
       try {
         await trigger({ id: ticket.id, immatriculation });
+        const modalContent = `${StringsFR.theImmat} ${immatriculation.toUpperCase()} ${StringsFR.savedForTheTicket} ${ticket.ticketNumber}`;
+        createToast(StringsFR.immatriculationSaved, modalContent, true);
         if (!displayAnimation) {
           setDisplayAnimation(true);
           queueMicrotask(() => {
             lottieRef.current?.play();
           });
-          toast(TemplateToast, {
-            className:
-              "max-w-[90%] sm:w-full !rounded-xl !bg-surface backdrop-blur-lg shadow-inner shadow-zinc-600 border !border-foreground/30 !text-foreground overflow-visible group !py-4",
-            data: {
-              title: "Plaque enregistrée",
-              content: `La plaque ${immatriculation.toUpperCase()} pour le ticket ${ticket.ticketNumber}`,
-            },
-            closeButton: true,
-          });
         }
       } catch (error) {
+        createToast(
+          StringsFR.aErrorOccured,
+          StringsFR.ourServerHasProblems,
+          false
+        );
         console.error(error);
       }
     }

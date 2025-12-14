@@ -15,10 +15,7 @@ export default function FeedTickets({
 }) {
   return (
     <>
-      <div className="flex h-full flex-col gap-8">
-        <TicketAlert siteId={siteId} startedAt={startedAt} />
-        <Tickets siteId={siteId} startedAt={startedAt} />
-      </div>
+      <Tickets siteId={siteId} startedAt={startedAt} />
       <FooterBarLayout>
         <Button className="w-full">
           {({ isPending }) =>

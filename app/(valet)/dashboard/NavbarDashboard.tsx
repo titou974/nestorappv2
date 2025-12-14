@@ -4,6 +4,7 @@ import NavbarLoading from "@/components/NavbarLoading";
 import { StringsFR } from "@/constants/fr_string";
 import { useTicketsOfSession } from "@/utils/dashboard/useTicketsofSession";
 import { BuildingStorefrontIcon } from "@heroicons/react/20/solid";
+import TicketAlert from "./TicketAlert";
 
 export default function NavbarDashboard({
   siteId,
@@ -14,15 +15,10 @@ export default function NavbarDashboard({
   startedAt: Date;
   siteName: string;
 }) {
-  const { tickets, isTicketsLoading, numberOfTicketsToCompleteImmat } =
-    useTicketsOfSession(siteId, startedAt);
+  const { tickets, isTicketsLoading } = useTicketsOfSession(siteId, startedAt);
 
-  if (isTicketsLoading) {
-    return <NavbarLoading />;
-  }
-
-  if (numberOfTicketsToCompleteImmat === 0) {
-    return <Navbar subtitle={StringsFR.youAreIn} title={siteName} />;
+  if (isTicketsLoading || !tickets?.tickets) {
+    return <NavbarLoading withBottomContent={true} />;
   }
 
   return (
@@ -35,6 +31,7 @@ export default function NavbarDashboard({
           {siteName}
         </div>
       }
+      bottomContent={<TicketAlert siteId={siteId} startedAt={startedAt} />}
     />
   );
 }

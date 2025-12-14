@@ -84,4 +84,9 @@ export const StringsFR = {
   numero: "n°",
   finished: "J'ai terminé",
   deconnection: "Déconnexion...",
+  immatriculationSaved: "Plaque enregistrée",
+  theImmat: "La plaque",
+  savedForTheTicket: "est enregistrée pour le ticket",
+  aErrorOccured: "Une erreur est survenue",
+  ourServerHasProblems: "Notre serveur reçoit des problèmes",
 };
