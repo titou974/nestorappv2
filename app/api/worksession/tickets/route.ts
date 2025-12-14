@@ -1,12 +1,10 @@
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, { params }) {
+export async function GET(req: NextRequest) {
   const siteId = req.nextUrl.searchParams.get("siteId") as string;
-  const startDateString = req.nextUrl.searchParams.get("startDate") as string;
-  console.log("coucou");
+  const startDateString = req.nextUrl.searchParams.get("startedAt") as string;
   const startDate = new Date(startDateString);
-
   try {
     const tickets = await prisma.site.findUnique({
       where: { id: siteId },
@@ -18,7 +16,6 @@ export async function GET(req: NextRequest, { params }) {
         },
       },
     });
-    console.log("tickets", tickets);
     return NextResponse.json(tickets);
   } catch (error) {
     return NextResponse.json({ error: error }, { status: 500 });

@@ -15,6 +15,13 @@ export async function GET(
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        site: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
     return NextResponse.json(workSession);
   } catch (error) {

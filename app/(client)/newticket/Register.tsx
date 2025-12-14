@@ -1,4 +1,4 @@
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/Navbar";
 import { QrCodeIcon } from "@heroicons/react/20/solid";
 import { StringsFR } from "@/constants/fr_string";
 

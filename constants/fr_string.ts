@@ -71,4 +71,17 @@ export const StringsFR = {
   youAreIn: "Vous êtes au",
   loginError: "Erreur lors de la connexion",
   wrongMailorPassword: "Mauvaise adresse mail ou mot de passe",
+  addTheImmatMissingOnTicket:
+    "Vous pouvez ajouter les plaques d'immatriculations sur les tickets",
+  allTicketsCompleted: "Tout vos tickets sont complétés",
+  youHave: "Vous avez",
+  ticket: "ticket",
+  tickets: "tickets",
+  toComplete: "à compléter",
+  immatriculation: "Immatriculation",
+  immatriculationPlaceholder: "AA-001-AA",
+  createdAt: "Crée à",
+  numero: "n°",
+  finished: "J'ai terminé",
+  deconnection: "Déconnexion...",
 };

@@ -1,4 +1,4 @@
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/Navbar";
 import RegisterForm from "./RegisterForm";
 import { StringsFR } from "@/constants/fr_string";
 

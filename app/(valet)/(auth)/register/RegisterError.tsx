@@ -1,5 +1,5 @@
 import FooterBarLayout from "@/components/layouts/footerbarlayout";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/Navbar";
 import { StringsFR } from "@/constants/fr_string";
 import { ArrowRightIcon, QrCodeIcon } from "@heroicons/react/20/solid";
 import { Button } from "@heroui/react";

@@ -1,0 +1,65 @@
+"use client";
+import { StringsFR } from "@/constants/fr_string";
+import { Ticket } from "@/generated/prisma/client";
+import formatHour from "@/lib/formatHour";
+import { ClockIcon } from "@heroicons/react/20/solid";
+import {
+  Card,
+  Description,
+  FieldError,
+  Input,
+  Label,
+  Link,
+  TextField,
+} from "@heroui/react";
+import { Icon } from "@iconify/react";
+import { useState } from "react";
+
+export default function TicketCard({
+  ticket,
+  index,
+}: {
+  ticket: Ticket;
+  index: number;
+}) {
+  const [immatriculation, setImmatriculation] = useState<string>();
+  return (
+    <Card className="col-span-12 w-full">
+      <Card.Header className="gap-3">
+        <div className="w-full flex justify-between">
+          <TextField name="name">
+            <Label className="inline-flex items-center">
+              {StringsFR.immatriculation}
+            </Label>
+            <div className="relative w-full">
+              <Input
+                className="w-full uppercase"
+                placeholder={StringsFR.immatriculationPlaceholder}
+                value={immatriculation}
+                onChange={(e) => setImmatriculation(e.target.value)}
+              />
+            </div>
+            {!immatriculation && (
+              <Description className="flex items-center gap-1 text-accent">
+                <Icon icon="jam:alert" />
+                <p>{StringsFR.toComplete}</p>
+              </Description>
+            )}
+          </TextField>
+          <div className="h-fit rounded-md border-2 border-solid border-foreground bg-surface/80 px-2 py-1 shadow-xl text-sm">
+            {StringsFR.numero}
+            {ticket.ticketNumber}
+          </div>
+        </div>
+      </Card.Header>
+      <Card.Footer className="mt-6">
+        <div className="flex items-center justify-start gap-2 text-foreground/80 text-sm">
+          <ClockIcon className="h-4 w-4 text-foreground/80" />
+          <p>
+            {StringsFR.createdAt} {formatHour(ticket.createdAt)}
+          </p>
+        </div>
+      </Card.Footer>
+    </Card>
+  );
+}

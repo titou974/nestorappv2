@@ -40,4 +40,26 @@
   .input-group[data-invalid]:focus {
     @apply bg-surface;
   }
+
+  .input--on-surface {
+    @apply bg-foreground/10;
+  }
+
+  .input--on-surface:hover {
+    @apply bg-foreground/20;
+  }
+  .input--on-surface:focus {
+    @apply bg-foreground/10;
+  }
+  .input--on-surface[data-invalid] {
+    @apply bg-foreground/10;
+  }
+
+  .input--on-surface[data-invalid]:hover {
+    @apply bg-foreground/20;
+  }
+
+  .input--on-surface[data-invalid]:focus {
+    @apply bg-foreground/10;
+  }
 }

@@ -1,4 +1,4 @@
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/Navbar";
 import { ApiTicket, Company } from "@/types/site";
 import TicketDrawer from "@/components/ticket/TicketDrawer";
 import { StringsFR } from "@/constants/fr_string";

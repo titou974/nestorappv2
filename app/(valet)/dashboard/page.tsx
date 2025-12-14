@@ -16,9 +16,11 @@ export default async function DashboardPage() {
 
   const workSession = await getWorkSession(session.session.userId);
 
-  console.log("work", workSession);
-
   return (
-    <Dashboard startedAt={workSession.startedAt} siteId={workSession.siteId} />
+    <Dashboard
+      startedAt={workSession.startedAt}
+      siteId={workSession.siteId}
+      siteName={workSession.site.name}
+    />
   );
 }
