@@ -1,3 +1,4 @@
+import Toast from "@/components/Toast";
 import FeedTickets from "./FeedTickets";
 import NavbarDashboard from "./NavbarDashboard";
 

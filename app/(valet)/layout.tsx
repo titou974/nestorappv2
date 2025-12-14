@@ -13,18 +13,7 @@ export default function ValetLayout({
       className="min-h-screen bg-background text-foreground dark"
     >
       <meta name="theme-color" content="#000000" />
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
+      <ToastContainer position="top-center" autoClose={4000} hideProgressBar />
       <div
         className={`${styles.padding} flex flex-col justify-start relative mx-auto min-h-screen max-w-screen-sm`}
       >

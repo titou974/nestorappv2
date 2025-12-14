@@ -1,5 +1,6 @@
 "use client";
 import CheckAnimation from "@/components/animations/Check";
+import TemplateToast from "@/components/Toast";
 import { APIROUTES } from "@/constants/api_routes";
 import { StringsFR } from "@/constants/fr_string";
 import { licensePlateSchema } from "@/constants/validations";
@@ -37,7 +38,15 @@ export default function TicketCard({
           queueMicrotask(() => {
             lottieRef.current?.play();
           });
-          toast.success("Plaque d'immatriculation enregistrée");
+          toast(TemplateToast, {
+            className:
+              "max-w-[90%] sm:w-full !rounded-xl !bg-surface backdrop-blur-lg shadow-inner shadow-zinc-600 border !border-foreground/30 !text-foreground overflow-visible group !py-4",
+            data: {
+              title: "Plaque enregistrée",
+              content: `La plaque ${immatriculation.toUpperCase()} pour le ticket ${ticket.ticketNumber}`,
+            },
+            closeButton: true,
+          });
         }
       } catch (error) {
         console.error(error);
