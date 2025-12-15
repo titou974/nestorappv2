@@ -1,10 +1,12 @@
 import { toast } from "react-toastify";
+import createToast from "./createToast";
 
 type CreateToastCallbacksOptions = { loadingMessage?: string };
 
 type ActionState =
   | {
-      message: string;
+      title: string;
+      content: string;
       errors?: any;
       status?: "SUCCESS" | "ERROR";
     }
@@ -20,14 +22,14 @@ type Callbacks<T, R = unknown> = {
 export function toastCallback(onClose: () => void) {
   return {
     onSuccess: (result: ActionState) => {
-      if (result?.message) {
-        toast.success(result.message);
+      if (result?.title && result?.content) {
+        createToast(result.title, result.content, true);
       }
       onClose();
     },
     onError: (result: ActionState) => {
-      if (result?.message) {
-        toast.error(result.message);
+      if (result?.title && result?.content) {
+        createToast(result.title, result.content, false);
       }
     },
   };

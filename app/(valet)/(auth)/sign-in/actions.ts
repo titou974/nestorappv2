@@ -25,7 +25,8 @@ export default async function login(
 
   if (!validatedFields.success) {
     return {
-      message: "Field Errors",
+      title: StringsFR.fieldError,
+      content: StringsFR.fieldErrorDescription,
       errors: z.flattenError(validatedFields.error),
     };
   }
@@ -54,13 +55,15 @@ export default async function login(
     if (error instanceof APIError) {
       if (error.statusCode === 401) {
         return {
-          message: StringsFR.wrongMailorPassword,
+          title: StringsFR.wrongMailorPassword,
+          content: StringsFR.wrongMailOrPasswordDescription,
           status: "ERROR" as const,
         };
       }
     }
     return {
-      message: StringsFR.loginError,
+      title: StringsFR.oupsError,
+      content: StringsFR.loginErrorDescription,
       status: "ERROR" as const,
     };
   }

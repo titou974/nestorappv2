@@ -14,6 +14,6 @@ export default function createToast(
       content: content,
       success: success,
     },
-    closeButton: true,
+    closeButton: false,
   });
 }

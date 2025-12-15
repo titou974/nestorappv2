@@ -13,7 +13,7 @@ export default function ValetLayout({
       className="min-h-screen bg-background text-foreground dark"
     >
       <meta name="theme-color" content="#000000" />
-      <ToastContainer position="top-center" hideProgressBar />
+      <ToastContainer position="top-center" hideProgressBar autoClose={4000} />
       <div
         className={`${styles.padding} flex flex-col justify-start relative mx-auto min-h-screen max-w-screen-sm`}
       >

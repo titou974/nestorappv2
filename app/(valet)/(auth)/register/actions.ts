@@ -31,7 +31,8 @@ export default async function register(
 
   if (!validatedFields.success) {
     return {
-      message: "Fields error",
+      title: StringsFR.fieldError,
+      content: StringsFR.fieldErrorDescription,
       errors: z.flattenError(validatedFields.error),
     };
   }
@@ -49,8 +50,6 @@ export default async function register(
       },
     });
 
-    console.log("Reponse", responseRegister);
-
     if (responseRegister.user) {
       const userId = responseRegister.user.id;
       await prisma.workSession.create({
@@ -65,13 +64,15 @@ export default async function register(
     if (error instanceof APIError) {
       if (error.statusCode === 422) {
         return {
-          message: StringsFR.userAlreadyExist,
+          title: StringsFR.userAlreadyExist,
+          content: StringsFR.userAlreadyExistDescription,
           status: "ERROR" as const,
         };
       }
     }
     return {
-      message: StringsFR.registerError,
+      title: StringsFR.oupsError,
+      content: StringsFR.registerErrorDescription,
       status: "ERROR" as const,
     };
   }
@@ -107,14 +108,16 @@ async function checkIfUserExist(
         });
       } else {
         return {
-          message: StringsFR.userAlreadyExist,
+          title: StringsFR.userAlreadyExist,
+          content: StringsFR.userAlreadyExistDescription,
           status: "ERROR" as const,
         };
       }
     }
   } catch {
     return {
-      message: StringsFR.userAlreadyExist,
+      title: StringsFR.userAlreadyExist,
+      content: StringsFR.userAlreadyExistDescription,
       status: "ERROR" as const,
     };
   }

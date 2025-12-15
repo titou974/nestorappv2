@@ -26,7 +26,8 @@ export default async function sendTicketByEmail(
 
   if (!validatedFields.success) {
     return {
-      message: StringsFR.emailAdressError,
+      title: StringsFR.emailAdressError,
+      content: StringsFR.emailAdressErrorDescription,
       errors: z.flattenError(validatedFields.error),
     };
   }
@@ -59,12 +60,14 @@ export default async function sendTicketByEmail(
       ),
     });
     return {
-      message: StringsFR.emailTicketSent,
+      title: StringsFR.emailTicketSent,
+      content: StringsFR.emailTicketSentDescription,
       status: "SUCCESS" as const,
     };
   } catch (error) {
     return {
-      message: StringsFR.emailTicketError,
+      title: StringsFR.oupsError,
+      content: StringsFR.emailTicketError,
       status: "ERROR" as const,
     };
   }

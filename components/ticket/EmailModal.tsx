@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { useState, useActionState } from "react";
+import { useState, useActionState, useRef } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 import { EmailTemplateProps } from "@/types/site";
@@ -20,6 +20,8 @@ import sendTicketByEmail from "@/app/(client)/ticket/actions";
 import { resetFieldError } from "@/lib/resetFieldError";
 import { emailSchema } from "@/constants/validations";
 import { withCallbacks, toastCallback } from "@/lib/toastCallback";
+import CheckAnimationBlue from "../animations/CheckBlue";
+import { LottieRefCurrentProps } from "lottie-react";
 
 const initialState = null;
 
@@ -33,6 +35,8 @@ export default function EmailModal({
   userId,
   companyCgu,
 }: EmailTemplateProps) {
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
+  const [displayAnimation, setDisplayAnimation] = useState<boolean>(false);
   const [email, setEmail] = useState("");
 
   const [state, formAction, pending] = useActionState(
@@ -48,6 +52,24 @@ export default function EmailModal({
     ),
     initialState
   );
+
+  const handleFieldValidation = (value: string) => {
+    setEmail(value);
+    resetFieldError(state, "0");
+    const isValid = emailSchema.safeParse(value).success;
+
+    if (!displayAnimation && isValid) {
+      setDisplayAnimation(true);
+      queueMicrotask(() => {
+        lottieRef.current?.play();
+      });
+    } else if (!isValid && displayAnimation) {
+      setDisplayAnimation(false);
+      queueMicrotask(() => {
+        lottieRef.current?.stop();
+      });
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -91,18 +113,22 @@ export default function EmailModal({
                       !!state?.errors.formErrors["0"]
                     }
                   >
-                    <Input
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                        resetFieldError(state, "0");
-                      }}
-                      type="email"
-                      name="email"
-                      required
-                      placeholder={StringsFR.emailPlaceholder}
-                      className="w-full hover:bg-neutral-200"
-                    />
+                    <div className="relative w-full">
+                      <Input
+                        value={email}
+                        onChange={(e) => {
+                          handleFieldValidation(e.target.value);
+                        }}
+                        type="email"
+                        name="email"
+                        required
+                        placeholder={StringsFR.emailPlaceholder}
+                        className="w-full hover:bg-neutral-200"
+                      />
+                      {displayAnimation && (
+                        <CheckAnimationBlue lottieRef={lottieRef} />
+                      )}
+                    </div>
                     <FieldError>{StringsFR.emailAdressError}</FieldError>
                   </TextField>
                 </div>

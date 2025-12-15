@@ -27,7 +27,7 @@ export default function TemplateToast({
         <Icon
           icon="material-symbols:error"
           fontSize={36}
-          className="text-accent"
+          className="text-danger"
         />
       )}
       <div>

@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import FooterBar from "./FooterBar";
 import { Alert } from "@heroui/react";
 import { StringsFR } from "@/constants/fr_string";
+import { capitalize } from "@/lib/capitalize";
 
 export default function SessionDone({
   siteName,
@@ -16,7 +17,7 @@ export default function SessionDone({
   return (
     <>
       <Navbar
-        subtitle={`Bravo${sessionName && ` ${sessionName}`}`}
+        subtitle={`Bravo${sessionName && ` ${capitalize(sessionName)}`}`}
         title={"À bientôt."}
       />
       <ParkAnimation>

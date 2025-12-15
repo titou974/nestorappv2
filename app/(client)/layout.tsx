@@ -13,18 +13,7 @@ export default function ClientLayout({
       className="min-h-screen w-full bg-background text-foreground"
     >
       <meta name="theme-color" content="#e7e7e7" />
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <ToastContainer position="top-center" hideProgressBar autoClose={4000} />
       <div
         className={`${styles.padding} relative mx-auto flex min-h-screen max-w-screen-sm flex-col justify-start gap-10`}
       >
