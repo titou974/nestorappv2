@@ -1,7 +1,7 @@
 import { APIROUTES } from "@/constants/api_routes";
 
 export default async function patchTicket(
-  url,
+  url: string,
   { arg }: { arg: { id: string; immatriculation: string } }
 ) {
   return fetch(APIROUTES.TICKET.replace("[id]", arg.id), {

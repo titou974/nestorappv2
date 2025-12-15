@@ -40,7 +40,7 @@ export default async function register(
   await checkIfUserExist(data.email as string, data.password as string, siteId);
 
   try {
-    const { headers, response: responseRegister } = await auth.api.signUpEmail({
+    const { response: responseRegister } = await auth.api.signUpEmail({
       returnHeaders: true,
       body: {
         email: data.email as string,

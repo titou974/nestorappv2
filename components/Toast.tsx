@@ -1,8 +1,6 @@
 import { ToastContentProps } from "react-toastify";
-import cx from "clsx";
 import { Montserrat } from "next/font/google";
 import { Icon } from "@iconify/react";
-import { success } from "zod";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -11,10 +9,7 @@ type CustomNotificationProps = ToastContentProps<{
   content: string;
   success: boolean;
 }>;
-export default function TemplateToast({
-  closeToast,
-  data,
-}: CustomNotificationProps) {
+export default function TemplateToast({ data }: CustomNotificationProps) {
   return (
     <div className={`text-sm ${montserrat.className} flex items-center gap-4`}>
       {data.success ? (

@@ -1,5 +1,5 @@
 import { APIROUTES } from "@/constants/api_routes";
-import { ApiTicket, WorkSession } from "@/types/site";
+import { WorkSession } from "@/types/site";
 
 export default async function getLastWorkSession(userId: string) {
   const baseUrl = process.env.BASE_URL || "";

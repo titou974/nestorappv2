@@ -1,13 +1,14 @@
 "use client";
 import { motion } from "framer-motion";
 import styles from "@/components/style";
+import { ReactNode } from "react";
 
 export default function FooterBarLayout({
   children,
   isVisible = true,
   fixed = true,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   isVisible?: boolean;
   fixed?: boolean;
 }) {

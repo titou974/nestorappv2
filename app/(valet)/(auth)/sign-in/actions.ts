@@ -32,7 +32,7 @@ export default async function login(
   }
 
   try {
-    const { headers, response: responseLogin } = await auth.api.signInEmail({
+    const { response: responseLogin } = await auth.api.signInEmail({
       returnHeaders: true,
       body: {
         email: data.email as string,
@@ -51,7 +51,6 @@ export default async function login(
       });
     }
   } catch (error) {
-    console.log("error", error);
     if (error instanceof APIError) {
       if (error.statusCode === 401) {
         return {

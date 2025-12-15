@@ -1,11 +1,12 @@
 import { Skeleton } from "@heroui/react";
+import { ReactNode } from "react";
 
 export default function NavbarLoading({
   withBottomContent,
   endContent,
 }: {
   withBottomContent?: boolean;
-  endContent?: React.ReactNode;
+  endContent?: ReactNode;
 }) {
   if (withBottomContent && endContent) {
     return (

@@ -1,13 +1,9 @@
 "use client";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
-import { useRef } from "react";
+import { ReactNode, useRef } from "react";
 import parkAnimation from "@/assets/park.json";
 
-export default function ParkAnimation({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ParkAnimation({ children }: { children: ReactNode }) {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
   return (

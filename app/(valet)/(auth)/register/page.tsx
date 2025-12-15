@@ -4,6 +4,8 @@ import getSite from "@/utils/site/getSite";
 import Register from "./Register";
 import { auth } from "@/utils/auth/auth";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { ROUTES } from "@/constants/routes";
 
 export default async function RegisterPage({
   searchParams,
@@ -14,13 +16,10 @@ export default async function RegisterPage({
     headers: await headers(),
   });
 
-  console.log("voilou session", session);
-
-  if (!session) {
-    console.log("pas de session");
-  } else {
-    console.log("session");
+  if (session) {
+    redirect(ROUTES.DASHBOARD);
   }
+
   const { site } = await searchParams;
   const siteData = await getSite(site);
 

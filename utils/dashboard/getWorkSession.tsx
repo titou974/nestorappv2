@@ -1,5 +1,5 @@
 import { APIROUTES } from "@/constants/api_routes";
-import { ApiTicket, WorkSession } from "@/types/site";
+import { WorkSession } from "@/types/site";
 
 export default async function getWorkSession(id: string) {
   const baseUrl = process.env.BASE_URL || "";
@@ -7,7 +7,6 @@ export default async function getWorkSession(id: string) {
     `${baseUrl}${APIROUTES.WORK_SESSION.replace("[id]", id)}`
   );
   const res = await fetch(url);
-  console.log("res", res);
   const data = (await res.json()) as WorkSession;
   return data;
 }

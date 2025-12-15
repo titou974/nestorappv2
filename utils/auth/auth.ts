@@ -43,8 +43,6 @@ export const auth = betterAuth({
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
       if (ctx.path.includes("/callback/:id")) {
-        console.log("🔍 Callback detected", ctx.context.newSession?.user);
-
         const location = ctx?.context?.responseHeaders?.get("location");
 
         if (location && ctx.context.newSession?.user.id) {

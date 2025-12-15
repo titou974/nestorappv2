@@ -20,7 +20,6 @@ export async function GET(
 
     return NextResponse.json(site);
   } catch (error) {
-    console.error("Error fetching site:", error);
     return NextResponse.json(
       { error: "Error fetching site..." },
       { status: 500 }

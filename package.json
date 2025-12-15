@@ -43,6 +43,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.0.7",
+    "eslint-config-prettier": "^10.1.8",
     "prisma": "^7.1.0",
     "react-email": "5.0.8",
     "tailwindcss": "^4",

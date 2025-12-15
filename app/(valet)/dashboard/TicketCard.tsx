@@ -10,13 +10,22 @@ import { Card, Description, Input, Label, TextField } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { LottieRefCurrentProps } from "lottie-react";
 import { useState, useRef } from "react";
+import { TriggerWithArgs } from "swr/dist/mutation";
 
 export default function TicketCard({
   ticket,
   trigger,
 }: {
   ticket: Ticket;
-  trigger: (arg: any) => Promise<any>;
+  trigger: TriggerWithArgs<
+    Response,
+    unknown,
+    string,
+    {
+      id: string;
+      immatriculation: string;
+    }
+  >;
 }) {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
@@ -37,13 +46,13 @@ export default function TicketCard({
             lottieRef.current?.play();
           });
         }
-      } catch (error) {
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+      } catch (error: unknown) {
         createToast(
           StringsFR.aErrorOccured,
           StringsFR.ourServerHasProblems,
           false
         );
-        console.error(error);
       }
     }
   };

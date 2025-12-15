@@ -30,19 +30,6 @@ const sites = [
   { name: "Epicurean Echoes", ticketPrice: "17.4" },
 ];
 
-const tickets = [
-  { userId: 1, siteId: 1, scannedAt: "2023-01-01T12:00:00Z" },
-  { userId: 2, siteId: 2, scannedAt: "2023-01-02T12:30:00Z" },
-  { userId: 3, siteId: 3, scannedAt: "2023-01-03T13:00:00Z" },
-  { userId: 4, siteId: 4, scannedAt: "2023-01-04T13:30:00Z" },
-  { userId: 5, siteId: 5, scannedAt: "2023-01-05T14:00:00Z" },
-  { userId: 6, siteId: 6, scannedAt: "2023-01-06T14:30:00Z" },
-  { userId: 7, siteId: 7, scannedAt: "2023-01-07T15:00:00Z" },
-  { userId: 8, siteId: 8, scannedAt: "2023-01-08T15:30:00Z" },
-  { userId: 9, siteId: 9, scannedAt: "2023-01-09T16:00:00Z" },
-  { userId: 10, siteId: 10, scannedAt: "2023-01-10T16:30:00Z" },
-];
-
 const cguCompanyOne = [
   {
     text: "Ces conditions générales d utilisation ci après CGU régissent l utilisation de l application de voiturier Nestor App, on est sur des CGU test :)",
@@ -133,7 +120,6 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error("Error seeding:", e);
     process.exit(1);
   })
   .finally(async () => {

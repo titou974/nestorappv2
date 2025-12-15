@@ -32,7 +32,10 @@ export default function Tickets({
       {tickets.tickets &&
         tickets.tickets
           .slice()
-          .sort((a, b) => new Date(b.scannedAt) - new Date(a.scannedAt))
+          .sort(
+            (a: Ticket, b: Ticket) =>
+              new Date(b.scannedAt).getTime() - new Date(a.scannedAt).getTime()
+          )
           .map((ticket: Ticket, index: number) => {
             return (
               <motion.div

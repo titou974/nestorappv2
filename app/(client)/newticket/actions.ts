@@ -22,7 +22,6 @@ export async function createTicket(siteId: string, companyId: string) {
 
     ticketId = newTicket.id;
   } catch (error) {
-    console.error("Error in createTicketAction:", error);
     throw error;
   }
 

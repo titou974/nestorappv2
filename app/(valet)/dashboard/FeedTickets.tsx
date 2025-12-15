@@ -1,7 +1,6 @@
 "use client";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Button, Spinner } from "@heroui/react";
-import TicketAlert from "./TicketAlert";
 import Tickets from "./Tickets";
 import FooterBarLayout from "@/components/layouts/footerbarlayout";
 import { StringsFR } from "@/constants/fr_string";
@@ -17,6 +16,7 @@ export default function FeedTickets({
   startedAt: Date;
   workSessionId: string;
 }) {
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
   const [state, action, pending] = useActionState(
     signout.bind(null, {
       siteId: siteId,

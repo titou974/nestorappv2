@@ -1,4 +1,3 @@
-import { toast } from "react-toastify";
 import createToast from "./createToast";
 
 type CreateToastCallbacksOptions = { loadingMessage?: string };

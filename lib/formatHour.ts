@@ -2,7 +2,7 @@
 import { DateTime } from "luxon";
 
 export default function formatHour(startingHour: Date) {
-  const startingHourUTC = DateTime.fromISO(startingHour);
+  const startingHourUTC = DateTime.fromJSDate(startingHour);
   const startingHourFrance = startingHourUTC.setZone("Europe/Paris");
   const startingHourFormat = startingHourFrance
     .toFormat("HH:mm")

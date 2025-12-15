@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import styles from "./style";
 
 const Navbar = ({
@@ -12,8 +13,8 @@ const Navbar = ({
   title: string;
   transparent?: boolean;
   position?: string;
-  endContent?: React.ReactNode;
-  bottomContent?: React.ReactNode;
+  endContent?: ReactNode;
+  bottomContent?: ReactNode;
 }) => {
   if (endContent && bottomContent) {
     return (

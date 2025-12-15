@@ -41,7 +41,7 @@ export default function FooterTicket({
         setIsOpen={(e) => setEmailModal(e)}
         siteName={ticketData?.site.name}
         scannedAt={ticketData?.scannedAt}
-        ticketPrice={ticketData?.site.ticketPrice}
+        ticketPrice={ticketData?.site.ticketPrice || "0"}
         ticketNumber={ticketData?.ticketNumber}
         userId={ticketData?.user.id}
       />

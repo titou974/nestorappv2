@@ -1,6 +1,4 @@
-import { UserRole } from "@/generated/prisma/enums";
 import { authClient } from "./auth-client";
-import { RegisterValetData } from "@/types/site";
 
 export const handleGoogleSignIn = async (companyId: string, siteId: string) => {
   try {
@@ -9,10 +7,9 @@ export const handleGoogleSignIn = async (companyId: string, siteId: string) => {
       callbackURL: `/dashboard?companyId=${companyId}&siteId=${siteId}`,
       additionalData: {
         companyId: companyId,
-        role: UserRole.VALET,
       },
     });
   } catch (error) {
-    console.error("Google sign in error:", error);
+    throw new Error("Failed to log with Google");
   }
 };

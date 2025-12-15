@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { siteConfig } from "@/constants/site";
 import "./globals.css";
+import { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -20,7 +21,7 @@ const montserrat = Montserrat({ subsets: ["latin"] });
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="fr">

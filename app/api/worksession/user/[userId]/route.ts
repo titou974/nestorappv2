@@ -6,7 +6,6 @@ export async function GET(
   { params }: { params: Promise<{ userId: string }> }
 ) {
   const { userId } = await params;
-  console.log("userId", userId);
   try {
     const workSession = await prisma.workSession.findFirst({
       where: {

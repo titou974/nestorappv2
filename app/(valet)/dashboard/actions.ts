@@ -1,6 +1,5 @@
 "use server";
 import { ROUTES } from "@/constants/routes";
-import { buildRouteWithParams } from "@/lib/buildroutewithparams";
 import prisma from "@/lib/prisma";
 import { auth } from "@/utils/auth/auth";
 import { redirect } from "next/navigation";
@@ -47,7 +46,6 @@ export default async function signout({
       )
     );
   } catch (error) {
-    console.log("error", error);
     throw error;
   }
 
