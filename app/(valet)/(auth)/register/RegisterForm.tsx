@@ -209,19 +209,14 @@ export default function RegisterForm({
         </FooterBarLayout>
       </Form>
       <Separator />
-      <div className="flex justify-center items-center gap-4">
-        <Button
-          variant="tertiary"
-          onClick={() => handleGoogleSignIn(companyId, siteId)}
-        >
-          <Icon icon="devicon:google" />
-          Avec Google
-        </Button>
-        <Button variant="tertiary">
-          <Icon icon="ion:logo-apple" />
-          Avec Apple
-        </Button>
-      </div>
+      <Button
+        className="w-full"
+        variant="tertiary"
+        onClick={() => handleGoogleSignIn(companyId, siteId)}
+      >
+        <Icon icon="devicon:google" />
+        Continuer avec Google
+      </Button>
     </div>
   );
 }
