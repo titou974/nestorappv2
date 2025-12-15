@@ -17,7 +17,7 @@ export default function SessionDone({
   return (
     <>
       <Navbar
-        subtitle={`Bravo${sessionName && ` ${capitalize(sessionName)}`}`}
+        subtitle={`${sessionName && ` ${capitalize(sessionName)}`}`}
         title={"À bientôt."}
       />
       <ParkAnimation>
