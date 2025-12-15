@@ -20,8 +20,8 @@ const schema = z.object({
 });
 
 export default async function register(
-  companyId: string,
   siteId: string,
+  companyId: string | null,
   initialState: any,
   formData: FormData
 ) {
@@ -46,7 +46,7 @@ export default async function register(
         email: data.email as string,
         name: data.name as string,
         password: data.password as string,
-        companyId: companyId,
+        companyId,
       },
     });
 

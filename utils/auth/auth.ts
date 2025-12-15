@@ -24,7 +24,7 @@ export const auth = betterAuth({
     additionalFields: {
       companyId: {
         type: "string",
-        required: true,
+        required: false,
         input: true,
       },
       role: {
@@ -77,7 +77,7 @@ export const auth = betterAuth({
       user: {
         companyId: {
           type: "string",
-          required: true,
+          required: false,
           input: true,
         },
         phone: {

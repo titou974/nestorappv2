@@ -77,7 +77,7 @@ export interface Site {
   createdAt: Date;
   updatedAt: Date;
   ticketPrice: string;
-  companyId: string;
+  companyId: string | null;
   // Relations
   workSessions?: WorkSession[];
   tickets?: Ticket[];
@@ -314,7 +314,7 @@ export interface RegisterValetData {
   name: string;
   email: string;
   password: string;
-  companyId: string;
+  companyId: string | null;
   siteId: string;
 }
 
@@ -326,7 +326,7 @@ export interface LoginValet {
 export interface LoginValetData {
   email: string;
   password: string;
-  companyId: string;
+  companyId: string | null;
   siteId: string;
 }
 

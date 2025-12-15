@@ -7,7 +7,7 @@ export default function Login({
   siteId,
   siteName,
 }: {
-  companyId: string;
+  companyId: string | null;
   siteId: string;
   siteName: string;
 }) {

@@ -4,7 +4,7 @@ import { buildRouteWithParams } from "@/lib/buildroutewithparams";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
-export async function createTicket(siteId: string, companyId: string) {
+export async function createTicket(siteId: string, companyId: string | null) {
   let ticketId: string | null = null;
   try {
     const newUser = await prisma.user.create({

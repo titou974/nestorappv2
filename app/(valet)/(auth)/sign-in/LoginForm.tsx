@@ -31,7 +31,7 @@ export default function LoginForm({
   companyId,
   siteId,
 }: {
-  companyId: string;
+  companyId: string | null;
   siteId: string;
 }) {
   const router = useRouter();

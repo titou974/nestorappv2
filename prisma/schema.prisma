@@ -59,8 +59,8 @@ model Site {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   ticketPrice String?
-  companyId   String
-  company     Company  @relation(fields: [companyId], references: [id])
+  companyId   String?
+  company     Company?  @relation(fields: [companyId], references: [id])
   workSessions WorkSession[]
   tickets     Ticket[]
 }

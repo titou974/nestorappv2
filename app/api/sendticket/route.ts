@@ -1,6 +1,6 @@
 import EmailTemplate from "@/emails/EmailTemplate";
 import { EmailTicketProps } from "@/types/site";
-import { render } from "@react-email/render";
+import { render } from "@react-email/components";
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 

@@ -1,10 +1,18 @@
+import { buildRouteWithParams } from "@/lib/buildroutewithparams";
 import { authClient } from "./auth-client";
+import { ROUTES } from "@/constants/routes";
 
-export const handleGoogleSignIn = async (companyId: string, siteId: string) => {
+export const handleGoogleSignIn = async (
+  companyId: string | null,
+  siteId: string
+) => {
   try {
     await authClient.signIn.social({
       provider: "google",
-      callbackURL: `/dashboard?companyId=${companyId}&siteId=${siteId}`,
+      callbackURL: buildRouteWithParams(ROUTES.DASHBOARD, {
+        siteId: siteId,
+        companyId: companyId,
+      }),
       additionalData: {
         companyId: companyId,
       },

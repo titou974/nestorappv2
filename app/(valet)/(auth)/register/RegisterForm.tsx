@@ -34,7 +34,7 @@ export default function RegisterForm({
   companyId,
   siteId,
 }: {
-  companyId: string;
+  companyId: string | null;
   siteId: string;
 }) {
   const router = useRouter();
@@ -56,7 +56,7 @@ export default function RegisterForm({
 
   const [state, formAction, pending] = useActionState(
     withCallbacks(
-      register.bind(null, companyId, siteId),
+      register.bind(null, siteId, companyId),
       toastCallback(() => {})
     ),
     initialState

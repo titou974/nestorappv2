@@ -6,7 +6,7 @@ export default function Register({
   companyId,
   siteId,
 }: {
-  companyId: string;
+  companyId: string | null;
   siteId: string;
 }) {
   return (
