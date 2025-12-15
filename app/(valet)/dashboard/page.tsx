@@ -1,6 +1,6 @@
 import { ROUTES } from "@/constants/routes";
 import { auth } from "@/utils/auth/auth";
-import getWorkSession from "@/utils/dashboard/getWorkSession";
+import getLastWorkSession from "@/utils/dashboard/getLastWorkSession";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Dashboard from "./Dashboard";
@@ -14,13 +14,14 @@ export default async function DashboardPage() {
     redirect(ROUTES.SIGNIN);
   }
 
-  const workSession = await getWorkSession(session.session.userId);
+  const workSession = await getLastWorkSession(session.session.userId);
 
   return (
     <Dashboard
       startedAt={workSession.startedAt}
       siteId={workSession.siteId}
       siteName={workSession.site.name}
+      workSessionId={workSession.id}
     />
   );
 }

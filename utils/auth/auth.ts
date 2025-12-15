@@ -66,7 +66,6 @@ export const auth = betterAuth({
               data: {
                 siteId: siteId,
                 userId: ctx.context.newSession?.user.id,
-                createdAt: new Date(),
               },
             });
           }

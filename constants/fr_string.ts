@@ -89,4 +89,7 @@ export const StringsFR = {
   savedForTheTicket: "est enregistrée pour le ticket",
   aErrorOccured: "Une erreur est survenue",
   ourServerHasProblems: "Notre serveur reçoit des problèmes",
+  sessionDone: "Session terminée",
+  yourServiceAt: "Votre service au ",
+  isFinished: " est terminé",
 };

@@ -5,5 +5,5 @@ export const ROUTES = {
   SIGNIN: "/sign-in",
   REGISTER: "/register",
   DASHBOARD: "/dashboard",
-  DONE: "/done",
+  DONE: "/done/[id]",
 };

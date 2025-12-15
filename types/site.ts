@@ -107,7 +107,6 @@ export interface WorkSession {
   endAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
-  // Relations
   site: Site;
   user: User;
   tickets?: Ticket[];

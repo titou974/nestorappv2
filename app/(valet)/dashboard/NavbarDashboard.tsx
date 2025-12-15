@@ -18,7 +18,17 @@ export default function NavbarDashboard({
   const { tickets, isTicketsLoading } = useTicketsOfSession(siteId, startedAt);
 
   if (isTicketsLoading || !tickets?.tickets) {
-    return <NavbarLoading withBottomContent={true} />;
+    return (
+      <NavbarLoading
+        withBottomContent={true}
+        endContent={
+          <div className="bg-surface rounded-xl p-2 self-start text-sm mt-4 flex items-center gap-2">
+            <BuildingStorefrontIcon width={16} />
+            {siteName}
+          </div>
+        }
+      />
+    );
   }
 
   return (
