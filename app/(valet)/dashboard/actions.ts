@@ -29,22 +29,6 @@ export default async function signout({
         endAt: endSessionTime,
       },
     });
-
-    const ticketsToUpdate = await prisma.ticket.findMany({
-      where: {
-        siteId: siteId,
-        createdAt: { gte: startedAt },
-      },
-    });
-
-    await Promise.all(
-      ticketsToUpdate.map((ticket) =>
-        prisma.ticket.update({
-          where: { id: ticket.id },
-          data: { workSessionId: workSessionId },
-        })
-      )
-    );
   } catch (error) {
     throw error;
   }

@@ -8,12 +8,14 @@ import { AnimatePresence, motion } from "framer-motion";
 export default function TicketAlert({
   siteId,
   startedAt,
+  workSessionId,
 }: {
   siteId: string;
   startedAt: Date;
+  workSessionId: string;
 }) {
   const { isTicketsLoading, numberOfTicketsToCompleteImmat, isValidating } =
-    useTicketsOfSession(siteId, startedAt);
+    useTicketsOfSession(siteId, startedAt, workSessionId);
 
   if (isTicketsLoading) {
     return <Skeleton className="w-full rounded-3xl min-h-[76px]" />;

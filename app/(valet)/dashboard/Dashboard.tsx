@@ -18,6 +18,7 @@ export default function Dashboard({
         siteId={siteId}
         startedAt={startedAt}
         siteName={siteName}
+        workSessionId={workSessionId}
       />
       <FeedTickets
         siteId={siteId}

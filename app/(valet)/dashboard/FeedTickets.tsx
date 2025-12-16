@@ -28,7 +28,11 @@ export default function FeedTickets({
 
   return (
     <>
-      <Tickets siteId={siteId} startedAt={startedAt} />
+      <Tickets
+        siteId={siteId}
+        startedAt={startedAt}
+        workSessionId={workSessionId}
+      />
       <FooterBarLayout>
         <Button
           className="w-full"

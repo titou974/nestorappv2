@@ -10,6 +10,7 @@ export async function GET(
     const workSession = await prisma.workSession.findFirst({
       where: {
         userId,
+        endAt: null,
       },
       orderBy: {
         createdAt: "desc",

@@ -10,12 +10,18 @@ export default function NavbarDashboard({
   siteId,
   startedAt,
   siteName,
+  workSessionId,
 }: {
   siteId: string;
   startedAt: Date;
   siteName: string;
+  workSessionId: string;
 }) {
-  const { tickets, isTicketsLoading } = useTicketsOfSession(siteId, startedAt);
+  const { tickets, isTicketsLoading } = useTicketsOfSession(
+    siteId,
+    startedAt,
+    workSessionId
+  );
 
   if (isTicketsLoading || !tickets?.tickets) {
     return (
@@ -41,7 +47,13 @@ export default function NavbarDashboard({
           {siteName}
         </div>
       }
-      bottomContent={<TicketAlert siteId={siteId} startedAt={startedAt} />}
+      bottomContent={
+        <TicketAlert
+          siteId={siteId}
+          startedAt={startedAt}
+          workSessionId={workSessionId}
+        />
+      }
     />
   );
 }
