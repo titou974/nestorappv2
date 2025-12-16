@@ -45,9 +45,8 @@ export const StringsFR = {
   isSending: "Envoi...",
   emailAdressError: "Adresse mail invalide",
   emailAdressErrorDescription: "Veuillez rentrer un bon format d'adresse mail",
-  emailTicketSent: "Paiement réussi!",
-  emailTicketSentDescription:
-    "Merci d'avoir utilisé Nestor, l'application des voituriers",
+  emailTicketSent: "Ticket envoyé !",
+  emailTicketSentDescription: "Pensez à vérifier vos spams",
   oupsError: "Oups... Un bug a eu lieu",
   fieldError: "Erreur sur les champs",
   fieldErrorDescription: "Veuillez rentrer les bons formats de données",

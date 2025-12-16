@@ -6,7 +6,6 @@ import { EnvelopeIcon } from "@heroicons/react/20/solid";
 import EmailModal from "./EmailModal";
 import { ApiTicket, CguPart } from "@/types/site";
 import { useState } from "react";
-import { Icon } from "@iconify/react";
 
 export default function FooterTicket({
   ticketData,
@@ -27,10 +26,6 @@ export default function FooterTicket({
         >
           {StringsFR.problemContactUs}
         </Link>
-        <Button className="w-full" variant="secondary" onClick={() => {}}>
-          <Icon icon="devicon:google" />
-          Google Pay
-        </Button>
         <Button
           onClick={() => setEmailModal(true)}
           className="fill-primary-foreground w-full"
