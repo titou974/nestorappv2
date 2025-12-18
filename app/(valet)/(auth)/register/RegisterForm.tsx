@@ -215,7 +215,7 @@ export default function RegisterForm({
         onClick={() => handleGoogleSignIn(companyId, siteId)}
       >
         <Icon icon="devicon:google" />
-        Continuer avec Google
+        {StringsFR.continueWithGoogle}
       </Button>
     </div>
   );

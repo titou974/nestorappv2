@@ -24,6 +24,7 @@ export default function Dashboard({
         siteId={siteId}
         startedAt={startedAt}
         workSessionId={workSessionId}
+        siteName={siteName}
       />
     </>
   );

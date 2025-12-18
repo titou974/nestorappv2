@@ -188,7 +188,7 @@ export default function LoginForm({
         onClick={() => handleGoogleSignIn(companyId, siteId)}
       >
         <Icon icon="devicon:google" />
-        Continuer avec Google
+        {StringsFR.continueWithGoogle}
       </Button>
     </div>
   );
