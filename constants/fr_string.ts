@@ -103,4 +103,5 @@ export const StringsFR = {
   isFinished: " est terminé",
   continueWithGoogle: "Continuer avec Google",
   showQrCode: "Montrer le QR Code",
+  mayScanQrCode: "Veuillez scanner le QR Code ci-dessous:",
 };

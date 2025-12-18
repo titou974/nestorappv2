@@ -35,18 +35,12 @@ export default function ModalQrCode({
             <>
               <Modal.CloseTrigger />
               <Modal.Header>
-                {/* <Modal.Icon className="bg-default text-foreground">
-                  <Icon
-                    className="size-5"
-                    icon="material-symbols:parking-valet"
-                  />
-                </Modal.Icon> */}
                 <Modal.Heading className="text-center space-y-2">
                   <p>
                     {StringsFR.welcomeTo} {siteName}
                   </p>
                   <p className="text-foreground/80 text-sm">
-                    Veuillez scanner le QR Code ci-dessous:
+                    {StringsFR.mayScanQrCode}
                   </p>
                 </Modal.Heading>
               </Modal.Header>
