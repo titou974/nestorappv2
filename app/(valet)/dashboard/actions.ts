@@ -6,12 +6,8 @@ import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 
 export default async function signout({
-  startedAt,
-  siteId,
   workSessionId,
 }: {
-  startedAt: Date;
-  siteId: string;
   workSessionId: string;
 }) {
   const endSessionTime = new Date();

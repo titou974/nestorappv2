@@ -101,4 +101,6 @@ export const StringsFR = {
   sessionDone: "Session terminée",
   yourServiceAt: "Votre service au ",
   isFinished: " est terminé",
+  continueWithGoogle: "Continuer avec Google",
+  showQrCode: "Montrer le QR Code",
 };
