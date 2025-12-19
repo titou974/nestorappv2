@@ -6,10 +6,24 @@ import { redirect } from "next/navigation";
 
 export async function createTicket(siteId: string, companyId: string | null) {
   let ticketId: string | null = null;
+  const twentyFourHoursAgo = new Date();
+  twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
   try {
     const newUser = await prisma.user.create({
       data: {
         role: "CLIENT",
+      },
+    });
+    const workSession = await prisma.workSession.findFirst({
+      where: {
+        createdAt: {
+          gte: twentyFourHoursAgo,
+        },
+        siteId: siteId,
+        endAt: null,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
     const newTicket = await prisma.ticket.create({
@@ -17,6 +31,7 @@ export async function createTicket(siteId: string, companyId: string | null) {
         userId: newUser.id,
         siteId: siteId,
         scannedAt: new Date(),
+        workSessionId: workSession?.id,
       },
     });
 

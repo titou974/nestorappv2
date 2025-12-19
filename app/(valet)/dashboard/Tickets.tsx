@@ -11,13 +11,16 @@ import TicketsLoading from "@/components/valet/TicketsLoading";
 export default function Tickets({
   siteId,
   startedAt,
+  workSessionId,
 }: {
   siteId: string;
   startedAt: Date;
+  workSessionId: string;
 }) {
   const { tickets, isTicketsLoading, swrKey } = useTicketsOfSession(
     siteId,
-    startedAt
+    startedAt,
+    workSessionId
   );
 
   const { trigger } = useSWRMutation(swrKey, patchTicket, {
