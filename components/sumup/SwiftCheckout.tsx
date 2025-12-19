@@ -92,8 +92,6 @@ function SwiftCheckout({
         }
       });
 
-    console.log("elements", paymentElement);
-
     paymentRequest.onShippingOptionsChange((shippingOption: any) => {
       const value =
         parseFloat(shippingOption.amount.value) + parseFloat(paymentAmount);
@@ -130,7 +128,7 @@ function SwiftCheckout({
   return (
     <>
       {issuePaymentRequest && <p>Problème</p>}
-      <div ref={paymentContainerRef} />
+      <div ref={paymentContainerRef} className="w-full" />
     </>
   );
 }

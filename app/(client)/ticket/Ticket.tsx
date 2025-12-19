@@ -19,12 +19,6 @@ export default async function Ticket(
       />
       <ConfettiAnimation />
       <TicketDrawer ticketData={ticketData} companyData={companyData} />
-      <SwiftCheckout
-        merchantPublicKey={
-          process.env.NEXT_PUBLIC_SUMUP_PUBLIC_MERCHANT_KEY as string
-        }
-        paymentAmount={"10"}
-      />
       <FooterTicket ticketData={ticketData} cgu={companyData?.cgu} />
     </>
   );

@@ -6,9 +6,8 @@ import { EnvelopeIcon } from "@heroicons/react/20/solid";
 import EmailModal from "./EmailModal";
 import { ApiTicket, CguPart } from "@/types/site";
 import { useState } from "react";
-import SwiftCheckout from "../sumup/SwiftCheckout";
 
-export default function FooterTicket({
+export default function FooterTicketWithPayment({
   ticketData,
   cgu,
 }: {
@@ -27,22 +26,14 @@ export default function FooterTicket({
         >
           {StringsFR.problemContactUs}
         </Link>
-        <div className="w-full space-y-2">
-          <SwiftCheckout
-            merchantPublicKey={
-              process.env.NEXT_PUBLIC_SUMUP_PUBLIC_MERCHANT_KEY as string
-            }
-            paymentAmount={ticketData.site.ticketPrice as string}
-          />
-          <Button
-            onClick={() => setEmailModal(true)}
-            className="fill-primary-foreground w-full"
-            size="lg"
-          >
-            {StringsFR.receiveByEmail}
-            <EnvelopeIcon width={20} />
-          </Button>
-        </div>
+        <Button
+          onClick={() => setEmailModal(true)}
+          className="fill-primary-foreground w-full"
+          size="lg"
+        >
+          {StringsFR.receiveByEmail}
+          <EnvelopeIcon width={20} />
+        </Button>
       </FooterBarLayout>
       <EmailModal
         companyCgu={cgu}

@@ -5,3 +5,8 @@
 @import "../styles/theme/nestor.css" layer(theme);
 @import "../styles/ui/buttons.css";
 @import "../styles/ui/form.css";
+
+.gpay-button {
+  border-radius: 40px !important;
+  height: calc(var(--spacing) * 11) !important;
+}
