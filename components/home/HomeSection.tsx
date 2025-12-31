@@ -17,7 +17,7 @@ export default function HomeSection() {
       data-theme="nestor"
       className="relative h-screen w-full bg-accent text-accent-foreground"
     >
-      <div
+      <section
         className={`${styles.padding} mx-auto flex h-full max-w-screen-sm flex-col justify-center gap-8`}
       >
         <div className={`relative mx-auto ${roboto_mono.className}`}>
@@ -84,7 +84,7 @@ export default function HomeSection() {
             </Button>
           </div>
         </div>
-      </div>
+      </section>
     </main>
   );
 }
