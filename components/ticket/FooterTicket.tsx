@@ -22,7 +22,7 @@ export default function FooterTicket({
         <Link
           href="https://tally.so/r/3qKl18"
           target="_blank"
-          className="text-center text-sm text-accent transition-all hover:font-bold"
+          className="text-center text-sm text-success transition-all hover:font-bold"
         >
           {StringsFR.problemContactUs}
         </Link>

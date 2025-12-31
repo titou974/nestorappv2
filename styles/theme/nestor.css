@@ -53,7 +53,7 @@
     --field-border: transparent;
 
     /* Status (kept compatible) */
-    --success: oklch(0.7329 0.1935 150.81);
+    --success: #0e69aa;
     --success-foreground: var(--eclipse);
 
     --warning: oklch(0.7819 0.1585 72.33);

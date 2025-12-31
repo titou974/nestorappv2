@@ -5,9 +5,20 @@ import "./globals.css";
 import { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: siteConfig.name,
+  metadataBase: siteConfig.metadataBase,
+  title: {
+    ...siteConfig.title,
+  },
   description: siteConfig.description,
+  openGraph: {
+    ...siteConfig.openGraph,
+  },
+  twitter: {
+    ...siteConfig.twitter,
+  },
 };
+
+console.log("metadata", metadata);
 
 export const viewport = {
   width: "device-width",
