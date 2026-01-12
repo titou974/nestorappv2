@@ -287,6 +287,11 @@ export interface EmailTemplateProps {
   userId: string;
 }
 
+export interface ModalProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
 export interface EmailTicketActionProps {
   siteName: string;
   scannedAt: string;

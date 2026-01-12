@@ -104,4 +104,8 @@ export const StringsFR = {
   continueWithGoogle: "Continuer avec Google",
   showQrCode: "Montrer le QR Code",
   mayScanQrCode: "Veuillez scanner le QR Code ci-dessous:",
+  areYouSureToValidateCarRetrieveTitle:
+    "Etes-vous sur que le client a bien récupérer sa voiture ",
+  areYouSureToValidateCarRetrieveDescription:
+    "Le ticket sera supprimé de votre Dashboard",
 };

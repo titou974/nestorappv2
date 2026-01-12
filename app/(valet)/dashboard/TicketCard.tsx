@@ -5,8 +5,15 @@ import { licensePlateSchema } from "@/constants/validations";
 import { Ticket } from "@/generated/prisma/client";
 import createToast from "@/lib/createToast";
 import formatHour from "@/lib/formatHour";
-import { ClockIcon } from "@heroicons/react/20/solid";
-import { Card, Description, Input, Label, TextField } from "@heroui/react";
+import { ClockIcon, ArrowRightCircleIcon } from "@heroicons/react/20/solid";
+import {
+  Button,
+  Card,
+  Description,
+  Input,
+  Label,
+  TextField,
+} from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { LottieRefCurrentProps } from "lottie-react";
 import { useState, useRef } from "react";
@@ -105,7 +112,10 @@ export default function TicketCard({
           </div>
         </div>
       </Card.Header>
-      <Card.Footer className="mt-6">
+      <Card.Footer className="mt-6 w-full flex justify-between">
+        <Button variant="primary" size="sm">
+          Véhicule récupéré ? <ArrowRightCircleIcon />
+        </Button>
         <div className="flex items-center justify-start gap-2 text-foreground/80 text-sm">
           <ClockIcon className="h-4 w-4 text-foreground/80" />
           <p>
