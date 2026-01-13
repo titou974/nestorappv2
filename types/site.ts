@@ -14,6 +14,7 @@ import {
   AccountCreateNestedManyWithoutUserInput,
 } from "@/generated/prisma/models";
 import { LottieRefCurrentProps } from "lottie-react";
+import { TriggerWithArgs } from "swr/dist/mutation";
 
 export type Json =
   | null
@@ -65,6 +66,8 @@ export interface Ticket {
   ticketNumber: number;
   workSessionId: string | null;
   immatriculation: string | null;
+  retrievedAt: string | null;
+  requestedPickupTime: string | null;
   // Relations
   site: Site;
   workSession?: WorkSession | null;
@@ -77,6 +80,8 @@ export interface Site {
   createdAt: Date;
   updatedAt: Date;
   ticketPrice: string;
+  enableValetResponsibilityModal: Boolean;
+  enableClientReviewModal: Boolean;
   companyId: string | null;
   // Relations
   workSessions?: WorkSession[];
@@ -103,6 +108,7 @@ export interface WorkSession {
   id: string;
   userId: string;
   siteId: string;
+  acceptedWorkConditions: boolean;
   startedAt: Date;
   endAt: Date | null;
   createdAt: Date;
@@ -287,6 +293,24 @@ export interface EmailTemplateProps {
   userId: string;
 }
 
+export interface ModalProps {
+  isOpen: boolean;
+  ticketId: string;
+  setIsOpen: React.Dispatch<
+    React.SetStateAction<{
+      isOpen: boolean;
+      id: string | null;
+    }>
+  >;
+  triggerCarRetrieved: TriggerWithArgs<
+    Response,
+    unknown,
+    string,
+    { id: string } & TicketPatchData
+  >;
+  isLoading: boolean;
+}
+
 export interface EmailTicketActionProps {
   siteName: string;
   scannedAt: string;
@@ -341,6 +365,11 @@ export interface LottieRefsRegister {
   email?: LottieRefCurrentProps | null;
   password?: LottieRefCurrentProps | null;
 }
+
+export type TicketPatchData = {
+  immatriculation?: string;
+  retrievedAt?: Date;
+};
 
 // Utility functions to convert dates
 export function convertPrismaDates<

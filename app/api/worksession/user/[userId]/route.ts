@@ -19,6 +19,7 @@ export async function GET(
         site: {
           select: {
             name: true,
+            enableValetResponsibilityModal: true,
           },
         },
       },

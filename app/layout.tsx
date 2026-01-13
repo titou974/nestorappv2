@@ -18,8 +18,6 @@ export const metadata: Metadata = {
   },
 };
 
-console.log("metadata", metadata);
-
 export const viewport = {
   width: "device-width",
   initialScale: 1,

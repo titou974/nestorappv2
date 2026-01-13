@@ -17,7 +17,7 @@ const TicketDrawer = ({
 }) => {
   return (
     <Accordion
-      className={`${style.digitalTicket} data-[hover=true]:bg-default-100`}
+      className={`${style.digitalTicket} data-[hover=true]:bg-default-100 pb-10`}
     >
       <Accordion.Item>
         <Accordion.Heading>
@@ -46,9 +46,12 @@ const TicketDrawer = ({
                 </p>
               </div>
             </div>
-            <Accordion.Indicator className="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-surface">
-              <ChevronDownIcon className="mx-auto h-6 w-6 transition-all" />
-            </Accordion.Indicator>
+            <div className="absolute bottom-[-30px] left-1/2 transform -translate-x-1/2 text-surface flex flex-col items-center justify-center">
+              <p className="text-xs">{StringsFR.cguCta}</p>
+              <Accordion.Indicator className="text-surface mx-0">
+                <ChevronDownIcon className="mx-auto h-6 w-6 transition-all" />
+              </Accordion.Indicator>
+            </div>
           </Accordion.Trigger>
         </Accordion.Heading>
         <Accordion.Panel>
