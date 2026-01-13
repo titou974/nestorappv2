@@ -16,7 +16,9 @@ export default function FooterBarLayout({
     isVisible && (
       <motion.section
         className={`mx-auto max-w-screen-sm ${
-          fixed ? `${styles.padding} fixed bottom-4 left-1 right-1 z-50` : ""
+          fixed
+            ? `${styles.padding} fixed bottom-4 left-0 right-0 px-4 z-50` // ✅ Padding horizontal égal
+            : ""
         } flex min-h-fit w-full flex-col items-center justify-center gap-5`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

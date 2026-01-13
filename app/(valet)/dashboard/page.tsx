@@ -34,7 +34,6 @@ export default async function DashboardPage() {
         siteName={workSession.site.name}
         workSessionId={workSession.id}
       />
-
       {workSession.site.enableValetResponsibilityModal &&
         !workSession.acceptedWorkConditions && (
           <ResponsabilityModal

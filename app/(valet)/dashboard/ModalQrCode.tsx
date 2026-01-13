@@ -21,7 +21,7 @@ export default function ModalQrCode({
   });
   return (
     <Modal>
-      <Button className="w-full" variant="tertiary">
+      <Button className="w-full border border-foreground/40" variant="tertiary">
         {StringsFR.showQrCode}
         <Icon icon="tabler:qrcode" className="size-6" />
       </Button>
