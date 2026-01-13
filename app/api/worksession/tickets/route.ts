@@ -14,6 +14,7 @@ export async function GET(req: NextRequest) {
           where: {
             createdAt: { gte: startDate },
             workSessionId: workSessionId,
+            retrievedAt: null,
           },
         },
       },

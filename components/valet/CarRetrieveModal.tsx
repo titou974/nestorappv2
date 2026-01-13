@@ -6,20 +6,26 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import { Button } from "@heroui/react";
+import { Button, Spinner } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRightCircleIcon } from "@heroicons/react/20/solid";
 
-export default function CarRetrieveModal({ isOpen, setIsOpen }: ModalProps) {
+export default function CarRetrieveModal({
+  isOpen,
+  setIsOpen,
+  triggerCarRetrieved,
+  ticketId,
+  isLoading,
+}: ModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
         <Dialog
           static
           open={isOpen}
-          onClose={() => setIsOpen(false)}
+          onClose={() => setIsOpen({ isOpen: false, id: null })}
           className="relative z-50"
-          data-theme="nestor"
+          data-theme="nestor-dark"
         >
           <motion.div
             initial={{ opacity: 0 }}
@@ -33,17 +39,47 @@ export default function CarRetrieveModal({ isOpen, setIsOpen }: ModalProps) {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="max-w-md w-full space-y-8 bg-white p-6 shadow-xl rounded-2xl flex flex-col items-center justify-center"
+              className="max-w-md w-full bg-surface p-6 shadow-xl rounded-2xl flex flex-col items-center justify-center text-center"
             >
               <DialogTitle className="text-lg font-semibold text-foreground">
                 {StringsFR.areYouSureToValidateCarRetrieveTitle}
               </DialogTitle>
-              <Description>
+              <Description className="text-foreground/80 mt-2">
                 {StringsFR.areYouSureToValidateCarRetrieveDescription}
               </Description>
-              <div className="flex gap-4 items-center">
-                <Button variant="secondary" />
-                <Button variant="primary" />
+              <div className="flex gap-4 items-center mt-6">
+                <Button
+                  onClick={() => setIsOpen({ isOpen: false, id: null })}
+                  variant="secondary"
+                  className="hover:bg-background/80"
+                >
+                  {StringsFR.cancel}
+                </Button>
+                <Button
+                  onClick={async () => {
+                    await triggerCarRetrieved({
+                      id: ticketId,
+                      retrievedAt: new Date(),
+                    });
+                    setIsOpen({
+                      isOpen: false,
+                      id: null,
+                    });
+                  }}
+                  isPending={isLoading}
+                  variant="primary"
+                >
+                  {({ isPending }) =>
+                    isPending ? (
+                      <>
+                        {StringsFR.yesGiveBackTheKey}
+                        <Spinner color="current" size="sm" />
+                      </>
+                    ) : (
+                      StringsFR.yesGiveBackTheKey
+                    )
+                  }
+                </Button>
               </div>
             </DialogPanel>
           </div>

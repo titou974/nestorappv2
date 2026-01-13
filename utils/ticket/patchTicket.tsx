@@ -1,11 +1,17 @@
 import { APIROUTES } from "@/constants/api_routes";
+import { TicketPatchData } from "@/types/site";
 
 export default async function patchTicket(
   url: string,
-  { arg }: { arg: { id: string; immatriculation: string } }
+  { arg }: { arg: { id: string } & TicketPatchData }
 ) {
-  return fetch(APIROUTES.TICKET.replace("[id]", arg.id), {
+  const { id, ...dataToUpdate } = arg;
+
+  return fetch(APIROUTES.TICKET.replace("[id]", id), {
     method: "PATCH",
-    body: JSON.stringify({ immatriculation: arg.immatriculation }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dataToUpdate),
   });
 }

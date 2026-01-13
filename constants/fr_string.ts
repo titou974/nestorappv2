@@ -17,6 +17,7 @@ export const StringsFR = {
   waitaFewSeconds: "Patientez quelques secondes...",
   yourTicketWithoutEmoji: "Votre Ticket",
   at: "au",
+  cguCta: "Voir les cgu",
   cguTitle: "CONDITIONS GÉNÉRALES D’UTILISATION DE NESTOR APP",
   receiveByEmail: "Recevoir par email",
   problemContactUs: "Un problème ? Contactez-nous ici",
@@ -104,8 +105,10 @@ export const StringsFR = {
   continueWithGoogle: "Continuer avec Google",
   showQrCode: "Montrer le QR Code",
   mayScanQrCode: "Veuillez scanner le QR Code ci-dessous:",
-  areYouSureToValidateCarRetrieveTitle:
-    "Etes-vous sur que le client a bien récupérer sa voiture ",
+  areYouSureToValidateCarRetrieveTitle: "Vous avez bien rendu les clefs ?",
   areYouSureToValidateCarRetrieveDescription:
     "Le ticket sera supprimé de votre Dashboard",
+  retrievedCar: "Véhicule récupéré ?",
+  cancel: "Annuler",
+  yesGiveBackTheKey: "Oui, j'ai bien rendu les clefs",
 };

@@ -40,8 +40,8 @@ model Ticket {
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
   ticketNumber    Int          @default(autoincrement())
-  retrievedAt          DateTime?  // NULL tant que non récupérée
-  requestedPickupTime  DateTime?  // Choix du client (mieux en DateTime que String)
+  retrievedAt          DateTime?
+  requestedPickupTime  DateTime?
   workSessionId   String?
   immatriculation String?
   site            Site         @relation(fields: [siteId], references: [id])

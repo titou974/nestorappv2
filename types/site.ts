@@ -14,6 +14,7 @@ import {
   AccountCreateNestedManyWithoutUserInput,
 } from "@/generated/prisma/models";
 import { LottieRefCurrentProps } from "lottie-react";
+import { TriggerWithArgs } from "swr/dist/mutation";
 
 export type Json =
   | null
@@ -289,7 +290,20 @@ export interface EmailTemplateProps {
 
 export interface ModalProps {
   isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  ticketId: string;
+  setIsOpen: React.Dispatch<
+    React.SetStateAction<{
+      isOpen: boolean;
+      id: string | null;
+    }>
+  >;
+  triggerCarRetrieved: TriggerWithArgs<
+    Response,
+    unknown,
+    string,
+    { id: string } & TicketPatchData
+  >;
+  isLoading: boolean;
 }
 
 export interface EmailTicketActionProps {
@@ -346,6 +360,11 @@ export interface LottieRefsRegister {
   email?: LottieRefCurrentProps | null;
   password?: LottieRefCurrentProps | null;
 }
+
+export type TicketPatchData = {
+  immatriculation?: string;
+  retrievedAt?: Date;
+};
 
 // Utility functions to convert dates
 export function convertPrismaDates<

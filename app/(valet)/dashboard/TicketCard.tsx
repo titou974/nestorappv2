@@ -1,10 +1,10 @@
-"use client";
 import CheckAnimation from "@/components/animations/Check";
 import { StringsFR } from "@/constants/fr_string";
 import { licensePlateSchema } from "@/constants/validations";
 import { Ticket } from "@/generated/prisma/client";
 import createToast from "@/lib/createToast";
 import formatHour from "@/lib/formatHour";
+import { TicketPatchData } from "@/types/site";
 import { ClockIcon, ArrowRightCircleIcon } from "@heroicons/react/20/solid";
 import {
   Button,
@@ -17,21 +17,26 @@ import {
 import { Icon } from "@iconify/react";
 import { LottieRefCurrentProps } from "lottie-react";
 import { useState, useRef } from "react";
+import React from "react";
 import { TriggerWithArgs } from "swr/dist/mutation";
 
 export default function TicketCard({
   ticket,
-  trigger,
+  triggerImmatriculation,
+  setIsOpenModalCarRetrieve,
 }: {
   ticket: Ticket;
-  trigger: TriggerWithArgs<
+  triggerImmatriculation: TriggerWithArgs<
     Response,
     unknown,
     string,
-    {
-      id: string;
-      immatriculation: string;
-    }
+    { id: string } & TicketPatchData
+  >;
+  setIsOpenModalCarRetrieve: React.Dispatch<
+    React.SetStateAction<{
+      isOpen: boolean;
+      id: string | null;
+    }>
   >;
 }) {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
@@ -39,12 +44,13 @@ export default function TicketCard({
   const [immatriculation, setImmatriculation] = useState<string>(
     ticket.immatriculation || ""
   );
+
   const [displayAnimation, setDisplayAnimation] = useState<boolean>(false);
 
   const handleImmatriculationBlur = async () => {
     if (immatriculation && immatriculation !== ticket.immatriculation) {
       try {
-        await trigger({ id: ticket.id, immatriculation });
+        await triggerImmatriculation({ id: ticket.id, immatriculation });
         const modalContent = `${StringsFR.theImmat} ${immatriculation.toUpperCase()} ${StringsFR.savedForTheTicket} ${ticket.ticketNumber}`;
         createToast(StringsFR.immatriculationSaved, modalContent, true);
         if (!displayAnimation) {
@@ -113,8 +119,14 @@ export default function TicketCard({
         </div>
       </Card.Header>
       <Card.Footer className="mt-6 w-full flex justify-between">
-        <Button variant="primary" size="sm">
-          Véhicule récupéré ? <ArrowRightCircleIcon />
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={() =>
+            setIsOpenModalCarRetrieve({ id: ticket.id, isOpen: true })
+          }
+        >
+          {StringsFR.retrievedCar} <ArrowRightCircleIcon />
         </Button>
         <div className="flex items-center justify-start gap-2 text-foreground/80 text-sm">
           <ClockIcon className="h-4 w-4 text-foreground/80" />
