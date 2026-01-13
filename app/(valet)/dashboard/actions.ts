@@ -43,6 +43,6 @@ export async function acceptWorkConditions({
       },
     });
   } catch (error) {
-    console.log("error", error);
+    throw error;
   }
 }

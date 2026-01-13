@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import {
   Description,
   Dialog,
@@ -20,10 +20,11 @@ export default function ResponsabilityModal({
   workSessionId: string;
   acceptedWorkConditions: boolean;
 }) {
-  const [isOpen, setIsOpen] = useState(!acceptedWorkConditions);
+  const [isPending, startTransition] = useTransition();
   const [acceptValetConditions, setAcceptValetConditions] = useState(false);
+  const [isOpen, setIsOpen] = useState(!acceptedWorkConditions);
 
-  const handleAcceptOfValetConditions = async () => {
+  const handleAcceptOfValetConditions = () => {
     if (!acceptValetConditions) {
       createToast(
         StringsFR.haveToAcceptValetRules,
@@ -32,10 +33,14 @@ export default function ResponsabilityModal({
       );
       return;
     }
-    await acceptWorkConditions({
-      workSessionId: workSessionId,
-    });
+
     setIsOpen(false);
+
+    startTransition(async () => {
+      await acceptWorkConditions({
+        workSessionId: workSessionId,
+      });
+    });
   };
 
   return (
@@ -44,7 +49,7 @@ export default function ResponsabilityModal({
         <Dialog
           static
           open={isOpen}
-          onClose={() => setIsOpen(true)}
+          onClose={() => {}}
           className="relative z-50"
           data-theme="nestor-dark"
         >
