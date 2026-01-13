@@ -109,5 +109,12 @@ export const StringsFR = {
   areYouSureToValidateCarRetrieveDescription: "Le ticket ne sera plus affiché",
   retrievedCar: "Véhicule rendu ?",
   cancel: "Annuler",
+  ok: "Ok",
   yesGiveBackTheKey: "Oui, j’ai bien rendu le véhicule",
+  titleResponsabilityModal: "Engagement voiturier",
+  descriptionResponsabilityModal:
+    "Je m'engage à saisir les plaques d'immatriculation et à signaler chaque départ de véhicule.",
+  haveToAcceptValetRules: "Conditions requises",
+  haveToAcceptValetRulesDescription: "Acceptez les conditions pour continuer.",
+  acceptValetConditions: "J'ai compris et j'accepte",
 };

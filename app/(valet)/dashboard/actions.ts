@@ -5,11 +5,7 @@ import { auth } from "@/utils/auth/auth";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 
-export default async function signout({
-  workSessionId,
-}: {
-  workSessionId: string;
-}) {
+export async function signout({ workSessionId }: { workSessionId: string }) {
   const endSessionTime = new Date();
 
   try {
@@ -30,4 +26,23 @@ export default async function signout({
   }
 
   redirect(ROUTES.DONE.replace("[id]", workSessionId));
+}
+
+export async function acceptWorkConditions({
+  workSessionId,
+}: {
+  workSessionId: string;
+}) {
+  try {
+    await prisma.workSession.update({
+      where: {
+        id: workSessionId,
+      },
+      data: {
+        acceptedWorkConditions: true,
+      },
+    });
+  } catch (error) {
+    console.log("error", error);
+  }
 }

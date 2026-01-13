@@ -31,7 +31,7 @@ export default function CarRetrieveModal({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/30"
+            className="fixed inset-0 bg-black/30 backdrop-blur-2xl"
           />
           <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
             <DialogPanel

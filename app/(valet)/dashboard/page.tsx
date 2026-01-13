@@ -4,6 +4,7 @@ import getLastWorkSession from "@/utils/dashboard/getLastWorkSession";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Dashboard from "./Dashboard";
+import ResponsabilityModal from "@/components/valet/ResponsabilityModal";
 
 export default async function DashboardPage() {
   const session = await auth.api.getSession({
@@ -17,11 +18,21 @@ export default async function DashboardPage() {
   const workSession = await getLastWorkSession(session.session.userId);
 
   return (
-    <Dashboard
-      startedAt={workSession.startedAt}
-      siteId={workSession.siteId}
-      siteName={workSession.site.name}
-      workSessionId={workSession.id}
-    />
+    <>
+      <Dashboard
+        startedAt={workSession.startedAt}
+        siteId={workSession.siteId}
+        siteName={workSession.site.name}
+        workSessionId={workSession.id}
+      />
+
+      {workSession.site.enableValetResponsibilityModal &&
+        !workSession.acceptedWorkConditions && (
+          <ResponsabilityModal
+            workSessionId={workSession.id}
+            acceptedWorkConditions={workSession.acceptedWorkConditions}
+          />
+        )}
+    </>
   );
 }

@@ -1,0 +1,26 @@
+@layer components {
+  [data-theme="nestor-dark"] {
+    .checkbox__control {
+      @apply bg-[#e7fe55] border-[#e7fe55];
+
+      &::before {
+        background-color: #e7fe55 !important;
+      }
+    }
+
+    .checkbox__control[data-hovered] {
+      @apply bg-[#e7fe55] border-[#e7fe55];
+
+      &::before {
+        background-color: #e7fe55 !important;
+      }
+    }
+
+    :is(
+      .checkbox:hover .checkbox__control,
+      .checkbox[data-hovered] .checkbox__control
+    )::before {
+      background-color: #e7fe55 !important;
+    }
+  }
+}

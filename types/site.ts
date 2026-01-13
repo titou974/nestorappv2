@@ -66,6 +66,8 @@ export interface Ticket {
   ticketNumber: number;
   workSessionId: string | null;
   immatriculation: string | null;
+  retrievedAt: string | null;
+  requestedPickupTime: string | null;
   // Relations
   site: Site;
   workSession?: WorkSession | null;
@@ -78,6 +80,8 @@ export interface Site {
   createdAt: Date;
   updatedAt: Date;
   ticketPrice: string;
+  enableValetResponsibilityModal: Boolean;
+  enableClientReviewModal: Boolean;
   companyId: string | null;
   // Relations
   workSessions?: WorkSession[];
@@ -104,6 +108,7 @@ export interface WorkSession {
   id: string;
   userId: string;
   siteId: string;
+  acceptedWorkConditions: boolean;
   startedAt: Date;
   endAt: Date | null;
   createdAt: Date;

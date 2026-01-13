@@ -67,6 +67,7 @@ model WorkSession {
   id        String    @id @default(cuid())
   userId    String
   siteId    String
+  acceptedWorkConditions Boolean @default(false)
   startedAt DateTime  @default(now())
   endAt     DateTime?
   createdAt DateTime  @default(now())

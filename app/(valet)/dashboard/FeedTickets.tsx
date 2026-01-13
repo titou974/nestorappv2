@@ -4,9 +4,8 @@ import { Button, Spinner } from "@heroui/react";
 import Tickets from "./Tickets";
 import FooterBarLayout from "@/components/layouts/footerbarlayout";
 import { StringsFR } from "@/constants/fr_string";
-import signout from "./actions";
+import { signout } from "./actions";
 import { startTransition, useActionState } from "react";
-import { Icon } from "@iconify/react";
 import ModalQrCode from "./ModalQrCode";
 
 export default function FeedTickets({
