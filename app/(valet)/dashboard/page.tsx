@@ -17,6 +17,15 @@ export default async function DashboardPage() {
 
   const workSession = await getLastWorkSession(session.session.userId);
 
+  console.log("🔍 Server - workSession:", {
+    id: workSession.id,
+    acceptedWorkConditions: workSession.acceptedWorkConditions,
+    enableModal: workSession.site.enableValetResponsibilityModal,
+    shouldShow:
+      workSession.site.enableValetResponsibilityModal &&
+      !workSession.acceptedWorkConditions,
+  });
+
   return (
     <>
       <Dashboard
