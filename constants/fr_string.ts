@@ -105,10 +105,9 @@ export const StringsFR = {
   continueWithGoogle: "Continuer avec Google",
   showQrCode: "Montrer le QR Code",
   mayScanQrCode: "Veuillez scanner le QR Code ci-dessous:",
-  areYouSureToValidateCarRetrieveTitle: "Vous avez bien rendu les clefs ?",
-  areYouSureToValidateCarRetrieveDescription:
-    "Le ticket sera supprimé de votre Dashboard",
-  retrievedCar: "Véhicule récupéré ?",
+  areYouSureToValidateCarRetrieveTitle: "Vous avez bien rendu le véhicule ?",
+  areYouSureToValidateCarRetrieveDescription: "Le ticket ne sera plus affiché",
+  retrievedCar: "Véhicule rendu ?",
   cancel: "Annuler",
-  yesGiveBackTheKey: "Oui, j'ai bien rendu les clefs",
+  yesGiveBackTheKey: "Oui, j’ai bien rendu le véhicule",
 };

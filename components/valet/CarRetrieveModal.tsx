@@ -8,7 +8,7 @@ import {
 } from "@headlessui/react";
 import { Button, Spinner } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRightCircleIcon } from "@heroicons/react/20/solid";
+import { KeyIcon } from "@heroicons/react/20/solid";
 
 export default function CarRetrieveModal({
   isOpen,
@@ -41,10 +41,10 @@ export default function CarRetrieveModal({
               exit={{ opacity: 0, scale: 0.95 }}
               className="max-w-md w-full bg-surface p-6 shadow-xl rounded-2xl flex flex-col items-center justify-center text-center"
             >
-              <DialogTitle className="text-lg font-semibold text-foreground">
+              <DialogTitle className="text-base font-semibold text-foreground">
                 {StringsFR.areYouSureToValidateCarRetrieveTitle}
               </DialogTitle>
-              <Description className="text-foreground/80 mt-2">
+              <Description className="text-foreground/80 mt-2 text-sm">
                 {StringsFR.areYouSureToValidateCarRetrieveDescription}
               </Description>
               <div className="flex gap-4 items-center mt-6">
@@ -76,7 +76,10 @@ export default function CarRetrieveModal({
                         <Spinner color="current" size="sm" />
                       </>
                     ) : (
-                      StringsFR.yesGiveBackTheKey
+                      <>
+                        {StringsFR.yesGiveBackTheKey}
+                        <KeyIcon />
+                      </>
                     )
                   }
                 </Button>

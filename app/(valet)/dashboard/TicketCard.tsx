@@ -119,6 +119,12 @@ export default function TicketCard({
         </div>
       </Card.Header>
       <Card.Footer className="mt-6 w-full flex justify-between">
+        <div className="flex items-center justify-start gap-1 text-foreground/80 text-sm">
+          <ClockIcon className="h-4 w-4 text-foreground/80" />
+          <p>
+            {StringsFR.createdAt} {formatHour(ticket.createdAt)}
+          </p>
+        </div>
         <Button
           variant="primary"
           size="sm"
@@ -128,12 +134,6 @@ export default function TicketCard({
         >
           {StringsFR.retrievedCar} <ArrowRightCircleIcon />
         </Button>
-        <div className="flex items-center justify-start gap-2 text-foreground/80 text-sm">
-          <ClockIcon className="h-4 w-4 text-foreground/80" />
-          <p>
-            {StringsFR.createdAt} {formatHour(ticket.createdAt)}
-          </p>
-        </div>
       </Card.Footer>
     </Card>
   );
