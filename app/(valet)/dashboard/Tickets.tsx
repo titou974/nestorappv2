@@ -54,7 +54,7 @@ export default function Tickets({
   }
   return (
     <div
-      className="grid min-h-fit grid-cols-1 gap-4 text-white"
+      className="grid min-h-fit grid-cols-1 gap-4 text-white pb-40"
       data-theme="nestor-dark"
     >
       <AnimatePresence>

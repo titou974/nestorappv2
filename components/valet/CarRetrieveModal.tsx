@@ -47,7 +47,7 @@ export default function CarRetrieveModal({
               <Description className="text-foreground/80 mt-2 text-sm">
                 {StringsFR.areYouSureToValidateCarRetrieveDescription}
               </Description>
-              <div className="flex gap-4 items-center mt-6">
+              <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-center mt-6">
                 <Button
                   onClick={() => setIsOpen({ isOpen: false, id: null })}
                   variant="secondary"
