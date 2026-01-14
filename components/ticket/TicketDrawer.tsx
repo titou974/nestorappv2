@@ -33,11 +33,14 @@ const TicketDrawer = ({
                   {ticketData?.ticketNumber}
                 </div>
               </div>
-              <p className="text-xl font-semibold">
-                {ticketData?.site?.ticketPrice} €
-              </p>
-              <div className="mb-4 w-full border border-surface"></div>
-
+              {!!ticketData?.site?.ticketPrice && (
+                <p className="text-xl font-semibold">
+                  {ticketData.site.ticketPrice} €
+                </p>
+              )}
+              <div
+                className={`${!ticketData?.site?.ticketPrice && "mt-2"} mb-4 w-full border border-surface`}
+              ></div>
               <div className="space-y-2 text-base text-primary-foreground">
                 {ticketData?.scannedAt &&
                   formatDateToFrench(ticketData.scannedAt)}
