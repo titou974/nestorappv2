@@ -19,8 +19,7 @@ import CheckAnimation from "@/components/animations/Check";
 import { passwordSchema, emailSchema } from "@/constants/validations";
 import { INITIAL_ANIMATION_STATE, initialState } from "@/constants/states";
 import { Icon } from "@iconify/react";
-import { handleGoogleSignIn } from "@/utils/auth/authActions";
-import login from "./actions";
+import { login, loginWithGoogle } from "./actions";
 import { useRouter } from "next/navigation";
 
 import { ROUTES } from "@/constants/routes";
@@ -38,7 +37,7 @@ export default function LoginForm({
 
   const [formData, setFormData] = useState<LoginValet>({});
   const [displayAnimation, setDisplayAnimation] = useState<PlayAnimationInput>(
-    INITIAL_ANIMATION_STATE
+    INITIAL_ANIMATION_STATE,
   );
 
   const lottieRefName = useRef<LottieRefCurrentProps>(null);
@@ -54,15 +53,23 @@ export default function LoginForm({
   const [state, formAction, pending] = useActionState(
     withCallbacks(
       login.bind(null, siteId),
-      toastCallback(() => {})
+      toastCallback(() => {}),
     ),
-    initialState
+    initialState,
+  );
+
+  const [stateGoogle, connectWithGoogle, pendingGoogle] = useActionState(
+    withCallbacks(
+      loginWithGoogle.bind(null, siteId, companyId),
+      toastCallback(() => {}),
+    ),
+    initialState,
   );
 
   const handleFieldValidation = (
     field: keyof PlayAnimationInput,
     value: string,
-    schema: typeof emailSchema | typeof passwordSchema
+    schema: typeof emailSchema | typeof passwordSchema,
   ) => {
     const isValid = schema.safeParse(value).success;
 
@@ -139,7 +146,7 @@ export default function LoginForm({
                 handleFieldValidation(
                   "password",
                   e.target.value,
-                  passwordSchema
+                  passwordSchema,
                 );
               }}
             />
@@ -172,7 +179,7 @@ export default function LoginForm({
               router.push(
                 buildRouteWithParams(ROUTES.REGISTER, {
                   site: siteId,
-                })
+                }),
               )
             }
           >
@@ -185,7 +192,7 @@ export default function LoginForm({
       <Button
         className="w-full"
         variant="tertiary"
-        onClick={() => handleGoogleSignIn(companyId, siteId)}
+        onClick={() => connectWithGoogle()}
       >
         <Icon icon="devicon:google" />
         {StringsFR.continueWithGoogle}

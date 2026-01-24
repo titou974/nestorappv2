@@ -3,6 +3,7 @@
 import { StringsFR } from "@/constants/fr_string";
 import { ROUTES } from "@/constants/routes";
 import { emailSchema, passwordSchema } from "@/constants/validations";
+import { buildRouteWithParams } from "@/lib/buildroutewithparams";
 import prisma from "@/lib/prisma";
 import { auth } from "@/utils/auth/auth";
 import { APIError } from "better-auth/api";
@@ -14,10 +15,10 @@ const schema = z.object({
   password: passwordSchema,
 });
 
-export default async function login(
+export async function login(
   siteId: string,
   initialState: any,
-  formData: FormData
+  formData: FormData,
 ) {
   const data = Object.fromEntries(formData.entries());
 
@@ -67,4 +68,48 @@ export default async function login(
     };
   }
   redirect(ROUTES.DASHBOARD);
+}
+
+export async function loginWithGoogle(
+  siteId: string,
+  companyId: string | null,
+) {
+  let redirectGoogleUrl: string;
+  try {
+    const data = await auth.api.signInSocial({
+      body: {
+        provider: "google",
+        callbackURL: buildRouteWithParams(ROUTES.DASHBOARD, {
+          siteId: siteId,
+          companyId: companyId,
+        }),
+      },
+      returnHeaders: true,
+    });
+
+    if (!data.response.url) {
+      return {
+        title: StringsFR.oupsError,
+        content: StringsFR.registerErrorDescription,
+        status: "ERROR" as const,
+      };
+    }
+
+    redirectGoogleUrl = data.response.url;
+  } catch (error) {
+    if (error instanceof APIError) {
+      console.log("errorApiSignUp", error.body);
+      return {
+        title: StringsFR.oupsError,
+        content: StringsFR.registerErrorDescription,
+        status: "ERROR" as const,
+      };
+    }
+    return {
+      title: StringsFR.oupsError,
+      content: StringsFR.registerErrorDescription,
+      status: "ERROR" as const,
+    };
+  }
+  redirect(redirectGoogleUrl);
 }
