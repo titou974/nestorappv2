@@ -7,6 +7,7 @@ import {
   nameSchema,
   passwordSchema,
 } from "@/constants/validations";
+import { buildRouteWithParams } from "@/lib/buildroutewithparams";
 import prisma from "@/lib/prisma";
 import { auth } from "@/utils/auth/auth";
 import { APIError } from "better-auth/api";
@@ -23,7 +24,7 @@ export default async function register(
   siteId: string,
   companyId: string | null,
   initialState: any,
-  formData: FormData
+  formData: FormData,
 ) {
   const data = Object.fromEntries(formData.entries());
 
@@ -82,7 +83,7 @@ export default async function register(
 async function checkIfUserExist(
   email: string,
   password: string,
-  siteId: string
+  siteId: string,
 ) {
   let workSession;
   try {

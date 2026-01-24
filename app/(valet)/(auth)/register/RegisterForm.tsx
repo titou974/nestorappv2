@@ -23,8 +23,8 @@ import {
 } from "@/constants/validations";
 import { INITIAL_ANIMATION_STATE, initialState } from "@/constants/states";
 import register from "./actions";
+import { loginWithGoogle } from "../sign-in/actions";
 import { Icon } from "@iconify/react";
-import { handleGoogleSignIn } from "@/utils/auth/authActions";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/constants/routes";
 import { buildRouteWithParams } from "@/lib/buildroutewithparams";
@@ -41,7 +41,7 @@ export default function RegisterForm({
 
   const [formData, setFormData] = useState<RegisterValet>({});
   const [displayAnimation, setDisplayAnimation] = useState<PlayAnimationInput>(
-    INITIAL_ANIMATION_STATE
+    INITIAL_ANIMATION_STATE,
   );
 
   const lottieRefName = useRef<LottieRefCurrentProps>(null);
@@ -57,15 +57,23 @@ export default function RegisterForm({
   const [state, formAction, pending] = useActionState(
     withCallbacks(
       register.bind(null, siteId, companyId),
-      toastCallback(() => {})
+      toastCallback(() => {}),
     ),
-    initialState
+    initialState,
+  );
+
+  const [stateGoogle, signupWithGoogle, pendingGoogle] = useActionState(
+    withCallbacks(
+      loginWithGoogle.bind(null, siteId, companyId),
+      toastCallback(() => {}),
+    ),
+    initialState,
   );
 
   const handleFieldValidation = (
     field: keyof PlayAnimationInput,
     value: string,
-    schema: typeof nameSchema | typeof emailSchema | typeof passwordSchema
+    schema: typeof nameSchema | typeof emailSchema | typeof passwordSchema,
   ) => {
     const isValid = schema.safeParse(value).success;
 
@@ -166,7 +174,7 @@ export default function RegisterForm({
                 handleFieldValidation(
                   "password",
                   e.target.value,
-                  passwordSchema
+                  passwordSchema,
                 );
               }}
             />
@@ -199,7 +207,7 @@ export default function RegisterForm({
               router.push(
                 buildRouteWithParams(ROUTES.SIGNIN, {
                   site: siteId,
-                })
+                }),
               )
             }
           >
@@ -212,10 +220,22 @@ export default function RegisterForm({
       <Button
         className="w-full"
         variant="tertiary"
-        onClick={() => handleGoogleSignIn(companyId, siteId)}
+        onClick={() => signupWithGoogle()}
+        isPending={pendingGoogle}
       >
-        <Icon icon="devicon:google" />
-        {StringsFR.continueWithGoogle}
+        {({ isPending }) =>
+          isPending ? (
+            <>
+              <p>{StringsFR.isRegistering}</p>
+              <Spinner color="current" size="sm" />
+            </>
+          ) : (
+            <>
+              <Icon icon="devicon:google" />
+              {StringsFR.continueWithGoogle}
+            </>
+          )
+        }
       </Button>
     </div>
   );
