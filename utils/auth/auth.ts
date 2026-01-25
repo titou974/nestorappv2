@@ -3,8 +3,10 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { createAuthMiddleware, oneTap } from "better-auth/plugins";
 import prisma from "@/lib/prisma";
 import { UserRole } from "@/types/site";
-import { inferAdditionalFields } from "better-auth/client/plugins";
 import { nextCookies } from "better-auth/next-js";
+import { phoneNumber } from "better-auth/plugins";
+import twilio from "twilio";
+import { StringsFR } from "@/constants/fr_string";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -28,7 +30,7 @@ export const auth = betterAuth({
         input: true,
       },
       role: {
-        type: "string", // Better Auth uses string type
+        type: "string",
         required: true,
         defaultValue: UserRole.VALET,
         input: false,
@@ -73,20 +75,33 @@ export const auth = betterAuth({
   },
   plugins: [
     oneTap(),
-    inferAdditionalFields({
-      user: {
-        companyId: {
-          type: "string",
-          required: false,
-          input: true,
-        },
-        phone: {
-          type: "string",
-          required: false,
-          input: true,
+    nextCookies(),
+    phoneNumber({
+      sendOTP: async ({ phoneNumber, code }, ctx) => {
+        const accountSid = process.env.TWILIO_ACCOUNT_SID;
+        const authToken = process.env.TWILIO_AUTH_TOKEN;
+        const twilioNumber = process.env.TWILIO_PHONE_NUMBER;
+
+        const client = twilio(accountSid, authToken);
+
+        try {
+          await client.messages.create({
+            body: StringsFR.smsVerification + code,
+            from: twilioNumber,
+            to: phoneNumber,
+          });
+        } catch (error) {
+          throw new Error(
+            "Erreur lors de la validation du numéro",
+            error as ErrorOptions,
+          );
+        }
+      },
+      signUpOnVerification: {
+        getTempEmail: (phoneNumber) => {
+          return `${phoneNumber}@nestorappvalet.com`;
         },
       },
     }),
-    nextCookies(),
   ],
 });

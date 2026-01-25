@@ -68,7 +68,7 @@ export interface Ticket {
   immatriculation: string | null;
   retrievedAt: string | null;
   requestedPickupTime: string | null;
-  // Relations
+  pickupReady: boolean;
   site: Site;
   workSession?: WorkSession | null;
   user: User;
@@ -82,6 +82,7 @@ export interface Site {
   ticketPrice: string;
   enableValetResponsibilityModal: Boolean;
   enableClientReviewModal: Boolean;
+  enableSmsRetrieval: Boolean;
   companyId: string | null;
   // Relations
   workSessions?: WorkSession[];
@@ -385,7 +386,7 @@ export function convertPrismaDates<
 export function convertApiDates<
   T extends { createdAt: string; updatedAt: string },
 >(
-  data: T
+  data: T,
 ): Omit<T, "createdAt" | "updatedAt"> & { createdAt: Date; updatedAt: Date } {
   return {
     ...data,

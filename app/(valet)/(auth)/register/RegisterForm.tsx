@@ -22,7 +22,7 @@ import {
   emailSchema,
 } from "@/constants/validations";
 import { INITIAL_ANIMATION_STATE, initialState } from "@/constants/states";
-import register from "./actions";
+import { register } from "./actions";
 import { loginWithGoogle } from "../sign-in/actions";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";

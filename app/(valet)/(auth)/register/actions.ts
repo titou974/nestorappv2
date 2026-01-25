@@ -4,6 +4,7 @@ import { StringsFR } from "@/constants/fr_string";
 import { ROUTES } from "@/constants/routes";
 import {
   emailSchema,
+  frenchPhoneNumberSchema,
   nameSchema,
   passwordSchema,
 } from "@/constants/validations";
@@ -20,7 +21,7 @@ const schema = z.object({
   password: passwordSchema,
 });
 
-export default async function register(
+export async function register(
   siteId: string,
   companyId: string | null,
   initialState: any,
@@ -78,6 +79,45 @@ export default async function register(
     };
   }
   redirect(ROUTES.DASHBOARD);
+}
+
+export async function registerWithPhone(
+  siteId: string,
+  companyId: string | null,
+  initialState: any,
+  formData: FormData,
+) {
+  const phoneNumber = formData.get("phonenumber");
+  console.log("phonenumber", phoneNumber);
+  // const validatedFields = frenchPhoneNumberSchema.safeParse(phoneNumber);
+  // if (!validatedFields.success) {
+  //   return {
+  //     title: StringsFR.phoneNumberError,
+  //     content: StringsFR.phoneNumberErrorDescription,
+  //     errors: z.flattenError(validatedFields.error),
+  //   };
+  // }
+
+  try {
+    const data = await auth.api.sendPhoneNumberOTP({
+      body: {
+        phoneNumber: phoneNumber as string, // required
+      },
+    });
+    console.log("data", data);
+  } catch (error) {
+    console.log("error", error);
+    throw new Error(
+      "erreur sur l'inscription avec le numéro",
+      error as ErrorOptions,
+    );
+  }
+  redirect(
+    buildRouteWithParams(ROUTES.VERIFY_PHONE, {
+      site: siteId,
+      phone: phoneNumber,
+    }),
+  );
 }
 
 async function checkIfUserExist(

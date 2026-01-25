@@ -15,7 +15,7 @@ export default async function sendTicketByEmail(
   userId: string,
   emailContent: EmailTicketActionProps,
   initialState: any,
-  formData: FormData
+  formData: FormData,
 ) {
   const email = formData.get("email");
 
@@ -56,7 +56,7 @@ export default async function sendTicketByEmail(
         }),
         {
           pretty: true,
-        }
+        },
       ),
     });
     return {

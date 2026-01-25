@@ -117,4 +117,15 @@ export const StringsFR = {
   haveToAcceptValetRules: "Conditions requises",
   haveToAcceptValetRulesDescription: "Acceptez les conditions pour continuer.",
   acceptValetConditions: "J'ai compris et j'accepte",
+  smsVerification: "Nestor : Votre code de vérification est ",
+  enter: "Rentrer votre",
+  yourPhoneNumber: "Téléphone",
+  phoneNumber: "Numéro de téléphone",
+  phoneNumberError: "Numéro invalide",
+  phoneNumberErrorDescription:
+    "Le format de votre numéro de téléphone est invalide",
+  enterCode: "Entrer le code",
+  receivedBySms: "Reçu par Sms",
+  verifyYourNumber: "Vérifier votre numéro",
+  verifying: "Vérification...",
 };
