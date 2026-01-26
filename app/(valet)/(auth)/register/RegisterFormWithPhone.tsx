@@ -2,7 +2,11 @@
 import { useState, useRef, useActionState } from "react";
 import { resetFieldError } from "@/lib/resetFieldError";
 import { LottieRefCurrentProps } from "lottie-react";
-import { frenchPhoneNumberSchema } from "@/constants/validations";
+import {
+  frenchPhoneNumberSchema,
+  nameSchema,
+  passwordSchema,
+} from "@/constants/validations";
 import {
   Form,
   Button,
@@ -10,6 +14,7 @@ import {
   Label,
   TextField,
   Spinner,
+  Input,
 } from "@heroui/react";
 import { ArrowRightIcon, PhoneIcon } from "@heroicons/react/20/solid";
 import { StringsFR } from "@/constants/fr_string";
@@ -19,7 +24,9 @@ import { useRouter } from "next/navigation";
 import { ROUTES } from "@/constants/routes";
 import { withCallbacks, toastCallback } from "@/lib/toastCallback";
 import { registerWithPhone } from "./actions";
-import { initialState } from "@/constants/states";
+import { INITIAL_ANIMATION_STATE, initialState } from "@/constants/states";
+import { PlayAnimationInput, RegisterValetWithPhoneNumber } from "@/types/site";
+import CheckAnimation from "@/components/animations/Check";
 
 export default function RegisterFormWithPhone({
   companyId,
@@ -29,9 +36,21 @@ export default function RegisterFormWithPhone({
   siteId: string;
 }) {
   const router = useRouter();
-  const lottieRef = useRef<LottieRefCurrentProps>(null);
-  const [displayAnimation, setDisplayAnimation] = useState<boolean>();
-  const [phoneNumber, setPhoneNumber] = useState<string>();
+  const [formData, setFormData] = useState<RegisterValetWithPhoneNumber>({});
+
+  const [displayAnimation, setDisplayAnimation] = useState<PlayAnimationInput>(
+    INITIAL_ANIMATION_STATE,
+  );
+
+  const lottieRefName = useRef<LottieRefCurrentProps>(null);
+  const lottieRefPhone = useRef<LottieRefCurrentProps>(null);
+  const lottieRefPassword = useRef<LottieRefCurrentProps>(null);
+
+  const lottieRefs = {
+    name: lottieRefName,
+    email: lottieRefPhone,
+    password: lottieRefPassword,
+  };
 
   const [state, formAction, pending] = useActionState(
     withCallbacks(
@@ -41,29 +60,45 @@ export default function RegisterFormWithPhone({
     initialState,
   );
 
-  const handleFieldValidation = (value: string) => {
-    setPhoneNumber(value);
-    // resetFieldError(state, "0");
-    const isValid = frenchPhoneNumberSchema.safeParse(value).success;
+  const handleFieldValidation = (
+    field: keyof PlayAnimationInput,
+    value: string,
+    schema:
+      | typeof nameSchema
+      | typeof frenchPhoneNumberSchema
+      | typeof passwordSchema,
+  ) => {
+    const isValid = schema.safeParse(value).success;
 
-    if (!displayAnimation && isValid) {
-      setDisplayAnimation(true);
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+
+    if (!displayAnimation[field] && isValid) {
+      setDisplayAnimation((prev) => ({
+        ...prev,
+        [field]: true,
+      }));
       queueMicrotask(() => {
-        lottieRef.current?.play();
+        lottieRefs[field].current?.play();
       });
-    } else if (!isValid && displayAnimation) {
-      setDisplayAnimation(false);
+    } else if (!isValid && displayAnimation[field]) {
+      setDisplayAnimation((prev) => ({
+        ...prev,
+        [field]: false,
+      }));
       queueMicrotask(() => {
-        lottieRef.current?.stop();
+        lottieRefs[field].current?.stop();
       });
     }
   };
   return (
     <Form action={formAction}>
       <TextField
-        name="phonenumber"
         isRequired
-        className="max-w-sm"
+        name="phonenumber"
+        className="w-full"
         onChange={(e) => handleFieldValidation(e)}
       >
         <Label>{StringsFR.phoneNumber}</Label>
@@ -81,6 +116,56 @@ export default function RegisterFormWithPhone({
             <PhoneIcon className="text-foreground/60 w-4 h-4" />
           </InputGroup.Suffix>
         </InputGroup>
+      </TextField>
+      <TextField
+        name="name"
+        isRequired
+        isInvalid={
+          (!!formData.name && !nameSchema.safeParse(formData.name).success) ||
+          !!state?.errors?.fieldErrors.name
+        }
+      >
+        <Label className="inline-flex items-center">{StringsFR.name}</Label>
+        <div className="relative w-full">
+          <Input
+            className="w-full"
+            placeholder={StringsFR.namePlaceholder}
+            value={formData.name}
+            onChange={(e) =>
+              handleFieldValidation("name", e.target.value, nameSchema)
+            }
+          />
+          {displayAnimation.name && (
+            <CheckAnimation lottieRef={lottieRefName} />
+          )}
+        </div>
+        <FieldError>{StringsFR.nameError}</FieldError>
+      </TextField>
+      <TextField
+        isRequired
+        type="password"
+        name="password"
+        isInvalid={
+          (!!formData.password &&
+            !passwordSchema.safeParse(formData.password).success) ||
+          !!state?.errors?.fieldErrors.password
+        }
+      >
+        <Label>{StringsFR.password}</Label>
+        <div className="relative w-full">
+          <Input
+            className="w-full"
+            placeholder={StringsFR.passwordPlaceholder}
+            value={formData.password}
+            onChange={(e) => {
+              handleFieldValidation("password", e.target.value, passwordSchema);
+            }}
+          />
+          {displayAnimation.password && (
+            <CheckAnimation lottieRef={lottieRefPhone} />
+          )}
+        </div>
+        <FieldError>{StringsFR.passwordError}</FieldError>
       </TextField>
       <FooterBarLayout>
         <Button type="submit" className="w-full" isPending={pending}>

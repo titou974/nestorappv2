@@ -128,4 +128,14 @@ export const StringsFR = {
   receivedBySms: "Reçu par Sms",
   verifyYourNumber: "Vérifier votre numéro",
   verifying: "Vérification...",
+  codeIsLessThan6Characters: "Le code fait moins de 6 caractères",
+  codeIsLessThan6CharactersDescription:
+    "Le code fourni ne respecte pas le bon format",
+  phoneNumberVerificationBugError:
+    "Une erreur est survenue lors de la vérification de votre numéro",
+  phoneNumberVerificationError: "Mauvais code",
+  phoneNumberVerificationErrorDescription:
+    "Le code rentré ne correspond pas à celui envoyé par sms",
+  codeExpiratedError: "Le code est expiré",
+  codeExpiratedErrorDescription: "Veuillez renvoyer un nouveau code",
 };

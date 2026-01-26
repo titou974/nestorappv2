@@ -329,6 +329,12 @@ export interface EmailTicketProps {
   companyCgu?: CguPart[] | null;
 }
 
+export interface RegisterValetWithPhoneNumber {
+  name?: string;
+  phoneNumber?: string;
+  password?: string;
+}
+
 export interface RegisterValet {
   name?: string;
   email?: string;

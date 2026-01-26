@@ -18,6 +18,11 @@ export const licensePlateSchema = z
   .max(10, "La plaque ne peut pas dépasser 10 caractères")
   .regex(
     /^[A-Z0-9\s\-]+$/i,
-    "La plaque ne peut contenir que des lettres, chiffres, espaces et tirets"
+    "La plaque ne peut contenir que des lettres, chiffres, espaces et tirets",
   )
   .transform((val) => val.toUpperCase().replace(/\s+/g, " ").trim());
+
+export const verificationCodeSchema = z
+  .string()
+  .length(6, "Le code doit contenir exactement 6 chiffres")
+  .regex(/^\d{6}$/, "Le code doit contenir uniquement des chiffres");

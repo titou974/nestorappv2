@@ -1,6 +1,7 @@
 "use client";
 import FooterBarLayout from "@/components/layouts/footerbarlayout";
 import { StringsFR } from "@/constants/fr_string";
+import { withCallbacks, toastCallback } from "@/lib/toastCallback";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import {
   Button,
@@ -11,7 +12,9 @@ import {
   Link,
   Spinner,
 } from "@heroui/react";
-import { FormEvent, useState } from "react";
+import { useActionState, useState } from "react";
+import verifyPhoneNumber from "./actions";
+import { initialState } from "@/constants/states";
 
 export default function VerifyPhoneForm({
   companyId,
@@ -22,43 +25,27 @@ export default function VerifyPhoneForm({
   siteId: string;
   phone: string;
 }) {
-  const [value, setValue] = useState("");
-  const [error, setError] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    setError("");
-    if (value.length !== 6) {
-      setError("Please enter all 6 digits");
-      return;
-    }
-    setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      if (value === "123456") {
-        console.log("Code verified successfully!");
-        setValue("");
-      } else {
-        setError("Invalid code. Please try again.");
-      }
-      setIsSubmitting(false);
-    }, 1500);
-  };
+  const [code, setCode] = useState("");
+  const [state, formAction, pending] = useActionState(
+    withCallbacks(
+      verifyPhoneNumber.bind(null, siteId, companyId, phone),
+      toastCallback(() => {}),
+    ),
+    initialState,
+  );
+
   return (
-    <Form className="flex w-full flex-col gap-4" onSubmit={handleSubmit}>
+    <Form className="flex w-full flex-col gap-4" action={formAction}>
       <div className="flex flex-col gap-2">
         <Label>Vérifier votre compte</Label>
         <Description>
           Nous avons envoyé un code à votre numéro: {phone}
         </Description>
         <InputOTP
-          isInvalid={!!error}
           maxLength={6}
-          value={value}
-          onChange={(val) => {
-            setValue(val);
-            setError("");
-          }}
+          value={code}
+          onChange={(val) => setCode(val)}
+          name="code"
         >
           <InputOTP.Group>
             <InputOTP.Slot index={0} />
@@ -72,9 +59,6 @@ export default function VerifyPhoneForm({
             <InputOTP.Slot index={5} />
           </InputOTP.Group>
         </InputOTP>
-        <span className="field-error" data-visible={!!error} id="code-error">
-          {error}
-        </span>
       </div>
       <div className="flex items-center gap-[5px] px-1 pt-1">
         <p className="text-sm text-muted">Vous n&apos;avez pas reçu le code?</p>
@@ -86,7 +70,8 @@ export default function VerifyPhoneForm({
         <Button
           type="submit"
           className="w-full"
-          isDisabled={value.length !== 6}
+          isDisabled={code.length !== 6}
+          isPending={pending}
         >
           {({ isPending }) =>
             isPending ? (
