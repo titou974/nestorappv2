@@ -331,7 +331,7 @@ export interface EmailTicketProps {
 
 export interface RegisterValetWithPhoneNumber {
   name?: string;
-  phoneNumber?: string;
+  phonenumber?: string;
   password?: string;
 }
 
@@ -364,6 +364,12 @@ export interface LoginValetData {
 export interface PlayAnimationInput {
   name: boolean;
   email: boolean;
+  password: boolean;
+}
+
+export interface PlayAnimationInputWithPhone {
+  name: boolean;
+  phonenumber: boolean;
   password: boolean;
 }
 

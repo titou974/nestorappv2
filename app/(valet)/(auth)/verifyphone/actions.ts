@@ -1,19 +1,21 @@
 "use server";
 import { StringsFR } from "@/constants/fr_string";
+import { ROUTES } from "@/constants/routes";
 import { verificationCodeSchema } from "@/constants/validations";
+import prisma from "@/lib/prisma";
 import { auth } from "@/utils/auth/auth";
 import { APIError } from "better-auth/api";
+import { redirect } from "next/navigation";
 
 export default async function verifyPhoneNumber(
   siteId: string,
-  companyId: string | null,
+  userId: string,
   phone: string,
   initialState: any,
   formData: FormData,
 ) {
   const code = formData.get("code");
   const validatedField = verificationCodeSchema.safeParse(code);
-  console.log("code", code, phone);
 
   if (!validatedField.success) {
     return {
@@ -29,12 +31,21 @@ export default async function verifyPhoneNumber(
         phoneNumber: phone,
         code: code as string,
         disableSession: false,
-        updatePhoneNumber: true,
+        updatePhoneNumber: false,
       },
     });
-    console.log("phoneVerif", data);
+
+    if (data.status === true) {
+      await prisma.workSession.create({
+        data: {
+          siteId: siteId,
+          userId: userId,
+          createdAt: new Date(),
+        },
+      });
+    }
   } catch (error) {
-    console.log("error", error.body);
+    console.log("error", error);
     if (error instanceof APIError) {
       if (error?.body?.code === "INVALID_OTP") {
         return {
@@ -60,4 +71,5 @@ export default async function verifyPhoneNumber(
       status: "ERROR" as const,
     };
   }
+  redirect(ROUTES.DASHBOARD);
 }

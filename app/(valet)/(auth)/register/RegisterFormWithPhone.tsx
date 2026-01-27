@@ -15,6 +15,7 @@ import {
   TextField,
   Spinner,
   Input,
+  FieldError,
 } from "@heroui/react";
 import { ArrowRightIcon, PhoneIcon } from "@heroicons/react/20/solid";
 import { StringsFR } from "@/constants/fr_string";
@@ -24,8 +25,14 @@ import { useRouter } from "next/navigation";
 import { ROUTES } from "@/constants/routes";
 import { withCallbacks, toastCallback } from "@/lib/toastCallback";
 import { registerWithPhone } from "./actions";
-import { INITIAL_ANIMATION_STATE, initialState } from "@/constants/states";
-import { PlayAnimationInput, RegisterValetWithPhoneNumber } from "@/types/site";
+import {
+  INITIAL_ANIMATION_STATE_WITH_PHONE,
+  initialState,
+} from "@/constants/states";
+import {
+  PlayAnimationInputWithPhone,
+  RegisterValetWithPhoneNumber,
+} from "@/types/site";
 import CheckAnimation from "@/components/animations/Check";
 
 export default function RegisterFormWithPhone({
@@ -38,9 +45,8 @@ export default function RegisterFormWithPhone({
   const router = useRouter();
   const [formData, setFormData] = useState<RegisterValetWithPhoneNumber>({});
 
-  const [displayAnimation, setDisplayAnimation] = useState<PlayAnimationInput>(
-    INITIAL_ANIMATION_STATE,
-  );
+  const [displayAnimation, setDisplayAnimation] =
+    useState<PlayAnimationInputWithPhone>(INITIAL_ANIMATION_STATE_WITH_PHONE);
 
   const lottieRefName = useRef<LottieRefCurrentProps>(null);
   const lottieRefPhone = useRef<LottieRefCurrentProps>(null);
@@ -48,7 +54,7 @@ export default function RegisterFormWithPhone({
 
   const lottieRefs = {
     name: lottieRefName,
-    email: lottieRefPhone,
+    phonenumber: lottieRefPhone,
     password: lottieRefPassword,
   };
 
@@ -61,7 +67,7 @@ export default function RegisterFormWithPhone({
   );
 
   const handleFieldValidation = (
-    field: keyof PlayAnimationInput,
+    field: keyof PlayAnimationInputWithPhone,
     value: string,
     schema:
       | typeof nameSchema
@@ -69,7 +75,6 @@ export default function RegisterFormWithPhone({
       | typeof passwordSchema,
   ) => {
     const isValid = schema.safeParse(value).success;
-
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -94,28 +99,32 @@ export default function RegisterFormWithPhone({
     }
   };
   return (
-    <Form action={formAction}>
-      <TextField
-        isRequired
-        name="phonenumber"
-        className="w-full"
-        onChange={(e) => handleFieldValidation(e)}
-      >
+    <Form action={formAction} className="space-y-4">
+      <TextField isRequired name="phonenumber" className="w-full">
         <Label>{StringsFR.phoneNumber}</Label>
-        <InputGroup>
-          <InputGroup.Prefix className="text-foreground border-r-2 border-foreground/20 mr-2">
-            +33
-          </InputGroup.Prefix>
-          <InputGroup.Input
-            className="w-full"
-            type="tel"
-            value={phoneNumber}
-            name="phonenumber"
-          />
-          <InputGroup.Suffix>
-            <PhoneIcon className="text-foreground/60 w-4 h-4" />
-          </InputGroup.Suffix>
-        </InputGroup>
+        <div className="relative w-full">
+          <InputGroup>
+            <InputGroup.Prefix className="text-foreground border-r-2 border-foreground/20 mr-2">
+              +33
+            </InputGroup.Prefix>
+            <InputGroup.Input
+              className="w-full"
+              type="tel"
+              value={formData.phonenumber}
+              onChange={(e) =>
+                handleFieldValidation(
+                  "phonenumber",
+                  e.target.value,
+                  frenchPhoneNumberSchema,
+                )
+              }
+              name="phonenumber"
+            />
+            {displayAnimation.phonenumber && (
+              <CheckAnimation lottieRef={lottieRefName} />
+            )}
+          </InputGroup>
+        </div>
       </TextField>
       <TextField
         name="name"

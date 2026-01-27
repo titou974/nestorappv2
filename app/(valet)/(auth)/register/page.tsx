@@ -17,7 +17,7 @@ export default async function RegisterPage({
     headers: await headers(),
   });
 
-  if (session) {
+  if (session && !session.user.phoneNumber) {
     redirect(ROUTES.DASHBOARD);
   }
 

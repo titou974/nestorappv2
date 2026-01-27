@@ -97,11 +97,6 @@ export const auth = betterAuth({
           );
         }
       },
-      signUpOnVerification: {
-        getTempEmail: (phoneNumber) => {
-          return `${phoneNumber}@nestorappvalet.com`;
-        },
-      },
     }),
   ],
 });

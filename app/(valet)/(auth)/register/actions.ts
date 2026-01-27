@@ -12,12 +12,19 @@ import { buildRouteWithParams } from "@/lib/buildroutewithparams";
 import prisma from "@/lib/prisma";
 import { auth } from "@/utils/auth/auth";
 import { APIError } from "better-auth/api";
+import { phoneNumber } from "better-auth/plugins";
 import { redirect } from "next/navigation";
 import z from "zod";
 
-const schema = z.object({
+const schemaRegisterWithMail = z.object({
   name: nameSchema,
   email: emailSchema,
+  password: passwordSchema,
+});
+
+const schemaRegisterWithPhone = z.object({
+  name: nameSchema,
+  phone: frenchPhoneNumberSchema,
   password: passwordSchema,
 });
 
@@ -29,7 +36,7 @@ export async function register(
 ) {
   const data = Object.fromEntries(formData.entries());
 
-  const validatedFields = schema.safeParse(data);
+  const validatedFields = schemaRegisterWithMail.safeParse(data);
 
   if (!validatedFields.success) {
     return {
@@ -87,37 +94,67 @@ export async function registerWithPhone(
   initialState: any,
   formData: FormData,
 ) {
-  const phoneNumber = formData.get("phonenumber");
-  console.log("phonenumber", phoneNumber);
-  // const validatedFields = frenchPhoneNumberSchema.safeParse(phoneNumber);
+  const data = Object.fromEntries(formData.entries());
+
+  // const validatedFields = schemaRegisterWithMail.safeParse(data);
+
   // if (!validatedFields.success) {
   //   return {
-  //     title: StringsFR.phoneNumberError,
-  //     content: StringsFR.phoneNumberErrorDescription,
+  //     title: StringsFR.fieldError,
+  //     content: StringsFR.fieldErrorDescription,
   //     errors: z.flattenError(validatedFields.error),
   //   };
   // }
 
   try {
-    const data = await auth.api.sendPhoneNumberOTP({
+    const { response: responseRegister } = await auth.api.signUpEmail({
+      returnHeaders: true,
       body: {
-        phoneNumber: phoneNumber as string, // required
+        email: `${data.phonenumber}@nestorappvalet.com`,
+        phoneNumber: data.phonenumber as string,
+        name: data.name as string,
+        password: data.password as string,
+        companyId,
       },
     });
-    console.log("data", data);
+
+    if (!responseRegister.user) {
+      return {
+        title: StringsFR.oupsError,
+        content: StringsFR.registerErrorDescription,
+        status: "ERROR" as const,
+      };
+    }
+
+    await sendOtp(data.phonenumber as string);
   } catch (error) {
     console.log("error", error);
+    return {
+      title: StringsFR.oupsError,
+      content: StringsFR.registerErrorDescription,
+      status: "ERROR" as const,
+    };
+  }
+  redirect(
+    buildRouteWithParams(ROUTES.VERIFY_PHONE, {
+      site: siteId,
+    }),
+  );
+}
+
+export async function sendOtp(phoneNumber: string) {
+  try {
+    await auth.api.sendPhoneNumberOTP({
+      body: {
+        phoneNumber: phoneNumber, // required
+      },
+    });
+  } catch (error) {
     throw new Error(
       "erreur sur l'inscription avec le numéro",
       error as ErrorOptions,
     );
   }
-  redirect(
-    buildRouteWithParams(ROUTES.VERIFY_PHONE, {
-      site: siteId,
-      phone: phoneNumber,
-    }),
-  );
 }
 
 async function checkIfUserExist(

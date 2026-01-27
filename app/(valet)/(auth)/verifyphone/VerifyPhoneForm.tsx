@@ -17,18 +17,18 @@ import verifyPhoneNumber from "./actions";
 import { initialState } from "@/constants/states";
 
 export default function VerifyPhoneForm({
-  companyId,
+  userId,
   siteId,
   phone,
 }: {
-  companyId: string | null;
+  userId: string;
   siteId: string;
   phone: string;
 }) {
   const [code, setCode] = useState("");
   const [state, formAction, pending] = useActionState(
     withCallbacks(
-      verifyPhoneNumber.bind(null, siteId, companyId, phone),
+      verifyPhoneNumber.bind(null, siteId, userId, phone),
       toastCallback(() => {}),
     ),
     initialState,
@@ -37,9 +37,9 @@ export default function VerifyPhoneForm({
   return (
     <Form className="flex w-full flex-col gap-4" action={formAction}>
       <div className="flex flex-col gap-2">
-        <Label>Vérifier votre compte</Label>
+        <Label>{StringsFR.verifyYourAccount}</Label>
         <Description>
-          Nous avons envoyé un code à votre numéro: {phone}
+          {StringsFR.weHaveSentACodeAtYourPhoneNumber} {phone}
         </Description>
         <InputOTP
           maxLength={6}
@@ -61,9 +61,11 @@ export default function VerifyPhoneForm({
         </InputOTP>
       </div>
       <div className="flex items-center gap-[5px] px-1 pt-1">
-        <p className="text-sm text-muted">Vous n&apos;avez pas reçu le code?</p>
+        <p className="text-sm text-muted">
+          {StringsFR.youDidntReceivedTheCode}
+        </p>
         <Link className="text-foreground underline" href="#">
-          Renvoyer
+          {StringsFR.resend}
         </Link>
       </div>
       <FooterBarLayout>

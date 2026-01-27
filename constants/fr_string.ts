@@ -138,4 +138,8 @@ export const StringsFR = {
     "Le code rentré ne correspond pas à celui envoyé par sms",
   codeExpiratedError: "Le code est expiré",
   codeExpiratedErrorDescription: "Veuillez renvoyer un nouveau code",
+  verifyYourAccount: "Vérifier votre compte",
+  weHaveSentACodeAtYourPhoneNumber: "Nous avons envoyé un code à votre numéro",
+  youDidntReceivedTheCode: "Vous n'avez pas reçu le code?",
+  resend: "Renvoyer",
 };

@@ -14,17 +14,17 @@ export default async function VerifyPhonePage({
     headers: await headers(),
   });
 
-  if (session) {
-    redirect(ROUTES.DASHBOARD);
+  if (!session) {
+    redirect(ROUTES.REGISTER);
   }
 
-  const { site, phone } = await searchParams;
+  const { site } = await searchParams;
   const siteData = await getSite(site);
   return (
     <VerifyPhone
-      companyId={siteData.companyId}
+      userId={session?.user.id}
       siteId={siteData.id}
-      phone={phone}
+      phone={session?.user.phoneNumber as string}
     />
   );
 }

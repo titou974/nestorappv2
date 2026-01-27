@@ -3,18 +3,18 @@ import { StringsFR } from "@/constants/fr_string";
 import VerifyPhoneForm from "./VerifyPhoneForm";
 
 export default function VerifyPhone({
-  companyId,
+  userId,
   siteId,
   phone,
 }: {
-  companyId: string | null;
+  userId: string;
   siteId: string;
   phone: string;
 }) {
   return (
     <>
       <Navbar subtitle={StringsFR.enterCode} title={StringsFR.receivedBySms} />
-      <VerifyPhoneForm companyId={companyId} siteId={siteId} phone={phone} />
+      <VerifyPhoneForm siteId={siteId} phone={phone} userId={userId} />
     </>
   );
 }
