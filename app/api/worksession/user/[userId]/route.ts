@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ userId: string }> }
+  { params }: { params: Promise<{ userId: string }> },
 ) {
   const { userId } = await params;
   try {
@@ -20,6 +20,7 @@ export async function GET(
           select: {
             name: true,
             enableValetResponsibilityModal: true,
+            enableSmsRetrieval: true,
           },
         },
       },

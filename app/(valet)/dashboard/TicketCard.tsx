@@ -7,6 +7,7 @@ import formatHour from "@/lib/formatHour";
 import { TicketPatchData } from "@/types/site";
 import { ClockIcon, ArrowRightCircleIcon } from "@heroicons/react/20/solid";
 import {
+  Alert,
   Button,
   Card,
   Description,
@@ -24,6 +25,7 @@ export default function TicketCard({
   ticket,
   triggerImmatriculation,
   setIsOpenModalCarRetrieve,
+  shouldAlert = true,
 }: {
   ticket: Ticket;
   triggerImmatriculation: TriggerWithArgs<
@@ -38,11 +40,12 @@ export default function TicketCard({
       id: string | null;
     }>
   >;
+  shouldAlert?: boolean;
 }) {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
   const [immatriculation, setImmatriculation] = useState<string>(
-    ticket.immatriculation || ""
+    ticket.immatriculation || "",
   );
 
   const [displayAnimation, setDisplayAnimation] = useState<boolean>(false);
@@ -64,7 +67,7 @@ export default function TicketCard({
         createToast(
           StringsFR.aErrorOccured,
           StringsFR.ourServerHasProblems,
-          false
+          false,
         );
       }
     }
@@ -82,7 +85,9 @@ export default function TicketCard({
   };
 
   return (
-    <Card className="col-span-12 w-full">
+    <Card
+      className={`col-span-12 w-full ${shouldAlert ? "animate-pulse border-2 border-accent shadow shadow-accent" : ""}`}
+    >
       <Card.Header className="gap-3">
         <div className="w-full flex justify-between">
           <TextField
@@ -135,6 +140,19 @@ export default function TicketCard({
           {StringsFR.retrievedCar} <ArrowRightCircleIcon />
         </Button>
       </Card.Footer>
+      {shouldAlert && (
+        <Alert
+          status="warning"
+          className="absolute bg-background p-2 font-bold max-w-60 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        >
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Title>
+              Le client veut récupérer sa voiture dans 5min
+            </Alert.Title>
+          </Alert.Content>
+        </Alert>
+      )}
     </Card>
   );
 }
