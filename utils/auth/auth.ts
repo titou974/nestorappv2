@@ -7,6 +7,7 @@ import { nextCookies } from "better-auth/next-js";
 import { phoneNumber } from "better-auth/plugins";
 import twilio from "twilio";
 import { StringsFR } from "@/constants/fr_string";
+import { createWorkSession } from "@/app/(valet)/(auth)/actions";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -62,12 +63,7 @@ export const auth = betterAuth({
           }
 
           if (siteId) {
-            await prisma.workSession.create({
-              data: {
-                siteId: siteId,
-                userId: ctx.context.newSession?.user.id,
-              },
-            });
+            createWorkSession(siteId, ctx.context.newSession?.user.id);
           }
         }
       }

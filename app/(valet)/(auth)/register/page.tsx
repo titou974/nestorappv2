@@ -7,6 +7,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { ROUTES } from "@/constants/routes";
 import RegisterWithPhone from "./RegisterWithPhone";
+import { phoneNumber } from "better-auth/plugins";
 
 export default async function RegisterPage({
   searchParams,
@@ -17,7 +18,13 @@ export default async function RegisterPage({
     headers: await headers(),
   });
 
-  if (session && !session.user.phoneNumber) {
+  const phoneNumberDisabled =
+    !session?.user.phoneNumber && !session?.user.phoneNumberVerified;
+
+  const phoneNumberVerified =
+    session?.user.phoneNumber && session.user.phoneNumberVerified;
+
+  if (session && (phoneNumberDisabled || phoneNumberVerified)) {
     redirect(ROUTES.DASHBOARD);
   }
 

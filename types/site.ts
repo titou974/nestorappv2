@@ -329,9 +329,9 @@ export interface EmailTicketProps {
   companyCgu?: CguPart[] | null;
 }
 
-export interface RegisterValetWithPhoneNumber {
+export interface RegisterValetWithPhone {
   name?: string;
-  phonenumber?: string;
+  phone?: string;
   password?: string;
 }
 
@@ -354,6 +354,11 @@ export interface LoginValet {
   password?: string;
 }
 
+export interface LoginValetWithPhone {
+  phone?: string;
+  password?: string;
+}
+
 export interface LoginValetData {
   email: string;
   password: string;
@@ -361,16 +366,26 @@ export interface LoginValetData {
   siteId: string;
 }
 
-export interface PlayAnimationInput {
-  name: boolean;
-  email: boolean;
-  password: boolean;
+export interface PlayAnimationInputRegister {
+  name: string;
+  email: string;
+  password: string;
 }
 
-export interface PlayAnimationInputWithPhone {
-  name: boolean;
-  phonenumber: boolean;
-  password: boolean;
+export interface PlayAnimationInputLogin {
+  email: string;
+  password: string;
+}
+
+export interface PlayAnimationInputRegisterWithPhone {
+  name: string;
+  phone: string;
+  password: string;
+}
+
+export interface PlayAnimationInputLoginWithPhone {
+  phone: string;
+  password: string;
 }
 
 export interface LottieRefsRegister {

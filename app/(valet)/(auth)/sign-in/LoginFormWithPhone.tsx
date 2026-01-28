@@ -1,81 +1,70 @@
 "use client";
-import { useState, useRef, useActionState } from "react";
-import { LottieRefCurrentProps } from "lottie-react";
+import FooterBarLayout from "@/components/layouts/footerbarlayout";
+import { StringsFR } from "@/constants/fr_string";
 import {
-  frenchPhoneNumberSchema,
-  nameSchema,
-  passwordSchema,
-} from "@/constants/validations";
+  LoginValetWithPhone,
+  PlayAnimationInputLoginWithPhone,
+} from "@/types/site";
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import {
-  Form,
   Button,
+  FieldError,
+  Input,
   InputGroup,
   Label,
-  TextField,
   Spinner,
-  Input,
-  FieldError,
+  TextField,
 } from "@heroui/react";
-import { ArrowRightIcon } from "@heroicons/react/20/solid";
-import { StringsFR } from "@/constants/fr_string";
-import FooterBarLayout from "@/components/layouts/footerbarlayout";
-import { buildRouteWithParams } from "@/lib/buildroutewithparams";
-import { useRouter } from "next/navigation";
-import { ROUTES } from "@/constants/routes";
-import { withCallbacks, toastCallback } from "@/lib/toastCallback";
-import { registerWithPhone } from "./actions";
+import { useActionState, useRef, useState } from "react";
+import { Form } from "@heroui/react";
+import { LottieRefCurrentProps } from "lottie-react";
+import CheckAnimation from "@/components/animations/Check";
 import {
-  INITIAL_ANIMATION_STATE_REGISTER_WITH_PHONE,
+  passwordSchema,
+  frenchPhoneNumberSchema,
+} from "@/constants/validations";
+import {
+  INITIAL_ANIMATION_STATE_LOGIN_WITH_PHONE,
   initialState,
 } from "@/constants/states";
-import {
-  PlayAnimationInputRegisterWithPhone,
-  RegisterValetWithPhone,
-} from "@/types/site";
-import CheckAnimation from "@/components/animations/Check";
+import { login } from "./actions";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/constants/routes";
+import { buildRouteWithParams } from "@/lib/buildroutewithparams";
+import { withCallbacks, toastCallback } from "@/lib/toastCallback";
 
-export default function RegisterFormWithPhone({
-  companyId,
-  siteId,
-}: {
-  companyId: string | null;
-  siteId: string;
-}) {
+export default function LoginFormWithPhone({ siteId }: { siteId: string }) {
   const router = useRouter();
-  const [formData, setFormData] = useState<RegisterValetWithPhone>({});
 
+  const [formData, setFormData] = useState<LoginValetWithPhone>({});
   const [displayAnimation, setDisplayAnimation] =
-    useState<PlayAnimationInputRegisterWithPhone>(
-      INITIAL_ANIMATION_STATE_REGISTER_WITH_PHONE,
+    useState<PlayAnimationInputLoginWithPhone>(
+      INITIAL_ANIMATION_STATE_LOGIN_WITH_PHONE,
     );
 
-  const lottieRefName = useRef<LottieRefCurrentProps>(null);
   const lottieRefPhone = useRef<LottieRefCurrentProps>(null);
   const lottieRefPassword = useRef<LottieRefCurrentProps>(null);
 
   const lottieRefs = {
-    name: lottieRefName,
     phone: lottieRefPhone,
     password: lottieRefPassword,
   };
 
   const [state, formAction, pending] = useActionState(
     withCallbacks(
-      registerWithPhone.bind(null, siteId, companyId),
+      login.bind(null, siteId),
       toastCallback(() => {}),
     ),
     initialState,
   );
 
   const handleFieldValidation = (
-    field: keyof PlayAnimationInputRegisterWithPhone,
+    field: keyof PlayAnimationInputLoginWithPhone,
     value: string,
-    schema:
-      | typeof nameSchema
-      | typeof frenchPhoneNumberSchema
-      | typeof passwordSchema,
+    schema: typeof frenchPhoneNumberSchema | typeof passwordSchema,
   ) => {
     const isValid = schema.safeParse(value).success;
+
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -99,8 +88,9 @@ export default function RegisterFormWithPhone({
       });
     }
   };
+
   return (
-    <Form action={formAction} className="space-y-4">
+    <Form className="space-y-4" action={formAction}>
       <TextField isRequired name="phone" type="tel" className="w-full">
         <Label>{StringsFR.phoneNumber}</Label>
         <div className="relative w-full">
@@ -111,7 +101,7 @@ export default function RegisterFormWithPhone({
             <InputGroup.Input
               className="w-full"
               type="tel"
-              defaultValue={formData.phone}
+              value={formData.phone}
               onChange={(e) =>
                 handleFieldValidation(
                   "phone",
@@ -126,30 +116,6 @@ export default function RegisterFormWithPhone({
             )}
           </InputGroup>
         </div>
-      </TextField>
-      <TextField
-        name="name"
-        isRequired
-        isInvalid={
-          (!!formData.name && !nameSchema.safeParse(formData.name).success) ||
-          !!state?.errors?.fieldErrors.name
-        }
-      >
-        <Label className="inline-flex items-center">{StringsFR.name}</Label>
-        <div className="relative w-full">
-          <Input
-            className="w-full"
-            placeholder={StringsFR.namePlaceholder}
-            value={formData.name}
-            onChange={(e) =>
-              handleFieldValidation("name", e.target.value, nameSchema)
-            }
-          />
-          {displayAnimation.name && (
-            <CheckAnimation lottieRef={lottieRefName} />
-          )}
-        </div>
-        <FieldError>{StringsFR.nameError}</FieldError>
       </TextField>
       <TextField
         isRequired
@@ -182,12 +148,12 @@ export default function RegisterFormWithPhone({
           {({ isPending }) =>
             isPending ? (
               <>
-                <p>{StringsFR.isRegistering}</p>
+                <p>{StringsFR.isLoggedIn}</p>
                 <Spinner color="current" size="sm" />
               </>
             ) : (
               <>
-                <p>{StringsFR.createYourAccount}</p>
+                <p>{StringsFR.login}</p>
                 <ArrowRightIcon width={20} />
               </>
             )
@@ -198,13 +164,13 @@ export default function RegisterFormWithPhone({
           variant="ghost"
           onClick={() =>
             router.push(
-              buildRouteWithParams(ROUTES.SIGNIN, {
+              buildRouteWithParams(ROUTES.REGISTER, {
                 site: siteId,
               }),
             )
           }
         >
-          {StringsFR.login}
+          {StringsFR.createYourAccount}
           <ArrowRightIcon width={20} />
         </Button>
       </FooterBarLayout>

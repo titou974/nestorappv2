@@ -15,6 +15,7 @@ import { APIError } from "better-auth/api";
 import { phoneNumber } from "better-auth/plugins";
 import { redirect } from "next/navigation";
 import z from "zod";
+import { createWorkSession, sendOtp } from "../actions";
 
 const schemaRegisterWithMail = z.object({
   name: nameSchema,
@@ -60,14 +61,7 @@ export async function register(
     });
 
     if (responseRegister.user) {
-      const userId = responseRegister.user.id;
-      await prisma.workSession.create({
-        data: {
-          siteId: siteId,
-          userId: userId,
-          createdAt: new Date(),
-        },
-      });
+      await createWorkSession(siteId, responseRegister.user.id);
     }
   } catch (error) {
     if (error instanceof APIError) {
@@ -110,8 +104,8 @@ export async function registerWithPhone(
     const { response: responseRegister } = await auth.api.signUpEmail({
       returnHeaders: true,
       body: {
-        email: `${data.phonenumber}@nestorappvalet.com`,
-        phoneNumber: data.phonenumber as string,
+        email: `${data.name}@nestorappvalet.com`,
+        phoneNumber: data.phone as string,
         name: data.name as string,
         password: data.password as string,
         companyId,
@@ -126,7 +120,7 @@ export async function registerWithPhone(
       };
     }
 
-    await sendOtp(data.phonenumber as string);
+    await sendOtp(data.phone as string);
   } catch (error) {
     console.log("error", error);
     return {
@@ -140,21 +134,6 @@ export async function registerWithPhone(
       site: siteId,
     }),
   );
-}
-
-export async function sendOtp(phoneNumber: string) {
-  try {
-    await auth.api.sendPhoneNumberOTP({
-      body: {
-        phoneNumber: phoneNumber, // required
-      },
-    });
-  } catch (error) {
-    throw new Error(
-      "erreur sur l'inscription avec le numéro",
-      error as ErrorOptions,
-    );
-  }
 }
 
 async function checkIfUserExist(

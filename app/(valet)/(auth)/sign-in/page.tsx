@@ -18,10 +18,15 @@ export default async function LoginPage({
     headers: await headers(),
   });
 
-  if (session) {
+  const phoneNumberDisabled =
+    !session?.user.phoneNumber && !session?.user.phoneNumberVerified;
+
+  const phoneNumberVerified =
+    session?.user.phoneNumber && session.user.phoneNumberVerified;
+
+  if (session && (phoneNumberDisabled || phoneNumberVerified)) {
     redirect(ROUTES.DASHBOARD);
   }
-
   const siteData = await getSite(site);
 
   if (!siteData.name && site) {
@@ -37,6 +42,7 @@ export default async function LoginPage({
       siteId={siteData.id}
       siteName={siteData.name}
       companyId={siteData.companyId}
+      enableSmsRetrieval={!!siteData.enableSmsRetrieval}
     />
   );
 }

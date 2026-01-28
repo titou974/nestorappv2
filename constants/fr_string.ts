@@ -134,7 +134,7 @@ export const StringsFR = {
   phoneNumberVerificationBugError:
     "Une erreur est survenue lors de la vérification de votre numéro",
   phoneNumberVerificationError: "Mauvais code",
-  phoneNumberVerificationErrorDescription:
+  VerificationErrorDescription:
     "Le code rentré ne correspond pas à celui envoyé par sms",
   codeExpiratedError: "Le code est expiré",
   codeExpiratedErrorDescription: "Veuillez renvoyer un nouveau code",
@@ -142,4 +142,5 @@ export const StringsFR = {
   weHaveSentACodeAtYourPhoneNumber: "Nous avons envoyé un code à votre numéro",
   youDidntReceivedTheCode: "Vous n'avez pas reçu le code?",
   resend: "Renvoyer",
+  frenchNumberPrefix: "+33",
 };
