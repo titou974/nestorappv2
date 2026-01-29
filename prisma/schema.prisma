@@ -17,6 +17,7 @@ model User {
   createdAt     DateTime      @default(now()) @map("created_at")
   updatedAt     DateTime      @updatedAt @map("updated_at")
   phoneNumber   String?       @unique
+  phoneNumberVerified Boolean  @default(false)
   password      String?
   email         String?
   resetToken    String?       @unique
@@ -42,6 +43,7 @@ model Ticket {
   ticketNumber    Int          @default(autoincrement())
   retrievedAt          DateTime?
   requestedPickupTime  DateTime?
+  pickupReady          Boolean @default(false)
   workSessionId   String?
   immatriculation String?
   site            Site         @relation(fields: [siteId], references: [id])
@@ -56,6 +58,7 @@ model Site {
   updatedAt    DateTime      @updatedAt
   enableValetResponsibilityModal  Boolean @default(false)
   enableClientReviewModal         Boolean @default(false)
+  enableSmsRetrieval              Boolean @default(false)
   ticketPrice  String?
   companyId    String?
   company      Company?      @relation(fields: [companyId], references: [id])

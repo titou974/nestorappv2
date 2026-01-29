@@ -24,7 +24,7 @@
     --field-radius: calc(var(--radius) * 1.5);
 
     /* Base Colors (from NextUI light) */
-    --background: #e7e7e7; /* NextUI light background */
+    --background: #f7f6f8; /* NextUI light background */
     --foreground: #000000; /* NextUI light foreground */
 
     /* Surface: Used for non-overlay components */

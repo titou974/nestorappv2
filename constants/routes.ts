@@ -6,4 +6,5 @@ export const ROUTES = {
   REGISTER: "/register",
   DASHBOARD: "/dashboard",
   DONE: "/done/[id]",
+  VERIFY_PHONE: "/verifyphone",
 };

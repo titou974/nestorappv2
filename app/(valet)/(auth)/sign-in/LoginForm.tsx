@@ -1,7 +1,7 @@
 "use client";
 import FooterBarLayout from "@/components/layouts/footerbarlayout";
 import { StringsFR } from "@/constants/fr_string";
-import { LoginValet, PlayAnimationInput } from "@/types/site";
+import { LoginValet, PlayAnimationInputLogin } from "@/types/site";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import {
   Button,
@@ -17,9 +17,13 @@ import { Form } from "@heroui/react";
 import { LottieRefCurrentProps } from "lottie-react";
 import CheckAnimation from "@/components/animations/Check";
 import { passwordSchema, emailSchema } from "@/constants/validations";
-import { INITIAL_ANIMATION_STATE, initialState } from "@/constants/states";
+import {
+  INITIAL_ANIMATION_STATE_LOGIN,
+  initialState,
+} from "@/constants/states";
 import { Icon } from "@iconify/react";
-import { login, loginWithGoogle } from "./actions";
+import { login } from "./actions";
+import { loginWithGoogle } from "../../actions";
 import { useRouter } from "next/navigation";
 
 import { ROUTES } from "@/constants/routes";
@@ -36,16 +40,13 @@ export default function LoginForm({
   const router = useRouter();
 
   const [formData, setFormData] = useState<LoginValet>({});
-  const [displayAnimation, setDisplayAnimation] = useState<PlayAnimationInput>(
-    INITIAL_ANIMATION_STATE,
-  );
+  const [displayAnimation, setDisplayAnimation] =
+    useState<PlayAnimationInputLogin>(INITIAL_ANIMATION_STATE_LOGIN);
 
-  const lottieRefName = useRef<LottieRefCurrentProps>(null);
   const lottieRefEmail = useRef<LottieRefCurrentProps>(null);
   const lottieRefPassword = useRef<LottieRefCurrentProps>(null);
 
   const lottieRefs = {
-    name: lottieRefName,
     email: lottieRefEmail,
     password: lottieRefPassword,
   };
@@ -67,7 +68,7 @@ export default function LoginForm({
   );
 
   const handleFieldValidation = (
-    field: keyof PlayAnimationInput,
+    field: keyof PlayAnimationInputLogin,
     value: string,
     schema: typeof emailSchema | typeof passwordSchema,
   ) => {

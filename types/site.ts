@@ -68,7 +68,7 @@ export interface Ticket {
   immatriculation: string | null;
   retrievedAt: string | null;
   requestedPickupTime: string | null;
-  // Relations
+  pickupReady: boolean;
   site: Site;
   workSession?: WorkSession | null;
   user: User;
@@ -80,8 +80,9 @@ export interface Site {
   createdAt: Date;
   updatedAt: Date;
   ticketPrice: string;
-  enableValetResponsibilityModal: Boolean;
-  enableClientReviewModal: Boolean;
+  enableValetResponsibilityModal: boolean;
+  enableClientReviewModal: boolean;
+  enableSmsRetrieval: boolean;
   companyId: string | null;
   // Relations
   workSessions?: WorkSession[];
@@ -240,10 +241,13 @@ export interface ApiTicket {
   ticketNumber: number;
   scannedAt: string;
   immatriculation: string | null;
+  requestedPickupTime: Date | null;
+  retrievedAt: string | null;
   site: {
     id: string;
     name: string;
     ticketPrice: string | null;
+    enableSmsRetrieval: boolean;
   };
   user: ApiUser;
   workSession?: {
@@ -293,6 +297,13 @@ export interface EmailTemplateProps {
   userId: string;
 }
 
+export interface RetrieveCarModalProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  ticketId: string;
+  requestedPickupTimeData: Date | null;
+}
+
 export interface ModalProps {
   isOpen: boolean;
   ticketId: string;
@@ -328,6 +339,12 @@ export interface EmailTicketProps {
   companyCgu?: CguPart[] | null;
 }
 
+export interface RegisterValetWithPhone {
+  name?: string;
+  phone?: string;
+  password?: string;
+}
+
 export interface RegisterValet {
   name?: string;
   email?: string;
@@ -347,6 +364,11 @@ export interface LoginValet {
   password?: string;
 }
 
+export interface LoginValetWithPhone {
+  phone?: string;
+  password?: string;
+}
+
 export interface LoginValetData {
   email: string;
   password: string;
@@ -354,10 +376,26 @@ export interface LoginValetData {
   siteId: string;
 }
 
-export interface PlayAnimationInput {
-  name: boolean;
-  email: boolean;
-  password: boolean;
+export interface PlayAnimationInputRegister {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface PlayAnimationInputLogin {
+  email: string;
+  password: string;
+}
+
+export interface PlayAnimationInputRegisterWithPhone {
+  name: string;
+  phone: string;
+  password: string;
+}
+
+export interface PlayAnimationInputLoginWithPhone {
+  phone: string;
+  password: string;
 }
 
 export interface LottieRefsRegister {
@@ -385,7 +423,7 @@ export function convertPrismaDates<
 export function convertApiDates<
   T extends { createdAt: string; updatedAt: string },
 >(
-  data: T
+  data: T,
 ): Omit<T, "createdAt" | "updatedAt"> & { createdAt: Date; updatedAt: Date } {
   return {
     ...data,

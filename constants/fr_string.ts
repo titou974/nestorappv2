@@ -21,7 +21,7 @@ export const StringsFR = {
   cguTitle: "CONDITIONS GÉNÉRALES D’UTILISATION",
   of: "DE",
   receiveByEmail: "Recevoir par email",
-  problemContactUs: "Un problème ? Contactez-nous ici",
+  problemContactUs: "Un problème ?",
   emailTitle: "Et voilà votre ticket de voiturier 🅿️",
   invoiceDetails: "Justificatif",
   thanksForUsingNestor:
@@ -82,6 +82,9 @@ export const StringsFR = {
   wrongMailorPassword: "Mauvaise adresse mail ou mot de passe",
   wrongMailOrPasswordDescription:
     "L'adresse mail rentrée ou le mot de passe n'est pas le bon",
+  wrongPhoneOrPassword: "Mauvais numéro rentré ou mot de passe",
+  wrongPhoneOrPasswordDescription:
+    "Le numéro de téléphone rentrée ou le mot de passe n'est pas le bon",
   addTheImmatMissingOnTicket:
     "Vous pouvez ajouter les plaques d'immatriculations sur les tickets",
   allTicketsCompleted: "Tout vos tickets sont complétés",
@@ -118,4 +121,45 @@ export const StringsFR = {
   haveToAcceptValetRules: "Conditions requises",
   haveToAcceptValetRulesDescription: "Acceptez les conditions pour continuer.",
   acceptValetConditions: "J'ai compris et j'accepte",
+  smsVerification: "Nestor : Votre code de vérification est ",
+  enter: "Rentrer votre",
+  yourPhoneNumber: "Téléphone",
+  phoneNumber: "Numéro de téléphone",
+  phoneNumberError: "Numéro invalide",
+  phoneNumberErrorDescription:
+    "Le format de votre numéro de téléphone est invalide",
+  enterCode: "Entrer le code",
+  receivedBySms: "Reçu par Sms",
+  verifyYourNumber: "Vérifier votre numéro",
+  verifying: "Vérification...",
+  codeIsLessThan6Characters: "Le code fait moins de 6 caractères",
+  codeIsLessThan6CharactersDescription:
+    "Le code fourni ne respecte pas le bon format",
+  phoneNumberVerificationBugError:
+    "Une erreur est survenue lors de la vérification de votre numéro",
+  phoneNumberVerificationError: "Mauvais code",
+  VerificationErrorDescription:
+    "Le code rentré ne correspond pas à celui envoyé par sms",
+  codeExpiratedError: "Le code est expiré",
+  codeExpiratedErrorDescription: "Veuillez renvoyer un nouveau code",
+  verifyYourAccount: "Vérifier votre compte",
+  weHaveSentACodeAtYourPhoneNumber: "Nous avons envoyé un code à votre numéro",
+  youDidntReceivedTheCode: "Vous n'avez pas reçu le code?",
+  resend: "Renvoyer",
+  frenchNumberPrefix: "+33",
+  // ... vos autres chaînes
+  clientWaitingForCar: "Un client attend sa voiture",
+  clientsWaitingForCars: "clients attendent leurs voitures",
+  urgentCarPickup: "Des clients souhaitent récupérer leur véhicule.",
+  clientWantToPickupHisCar: "Le client veut récupérer sa voiture ",
+  retrieveMyCar: "Récupérer ma voiture",
+  selectTimeLabel: "Voiture prête dans...",
+  selectTimePlaceholder: "Rechercher ou saisir un délai...",
+  selectTimeDescription: "Sélectionnez ou saisissez le délai souhaité",
+  retrieveCarModalTitle: "Récupérer ma voiture",
+  sendToValet: "Envoyer au voiturier",
+  retrieveCarAsked: "C'est noté !",
+  retrieveCarAskedDescription: "Votre voiture sera prête à temps",
+  retrieveCarError: "Erreur lors de l'envoi de la demande",
+  phoneError: "Veuillez rentrer le bon format de numéro français",
 };

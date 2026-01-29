@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Dashboard from "./Dashboard";
 import ResponsabilityModal from "@/components/valet/ResponsabilityModal";
+import DashboardWithRetrieval from "./DashboardWithRetrieval";
 
 export default async function DashboardPage() {
   const session = await auth.api.getSession({
@@ -17,23 +18,23 @@ export default async function DashboardPage() {
 
   const workSession = await getLastWorkSession(session.session.userId);
 
-  console.log("🔍 Server - workSession:", {
-    id: workSession.id,
-    acceptedWorkConditions: workSession.acceptedWorkConditions,
-    enableModal: workSession.site.enableValetResponsibilityModal,
-    shouldShow:
-      workSession.site.enableValetResponsibilityModal &&
-      !workSession.acceptedWorkConditions,
-  });
-
   return (
     <>
-      <Dashboard
-        startedAt={workSession.startedAt}
-        siteId={workSession.siteId}
-        siteName={workSession.site.name}
-        workSessionId={workSession.id}
-      />
+      {workSession.site.enableSmsRetrieval ? (
+        <DashboardWithRetrieval
+          startedAt={workSession.startedAt}
+          siteId={workSession.siteId}
+          siteName={workSession.site.name}
+          workSessionId={workSession.id}
+        />
+      ) : (
+        <Dashboard
+          startedAt={workSession.startedAt}
+          siteId={workSession.siteId}
+          siteName={workSession.site.name}
+          workSessionId={workSession.id}
+        />
+      )}
       {workSession.site.enableValetResponsibilityModal &&
         !workSession.acceptedWorkConditions && (
           <ResponsabilityModal

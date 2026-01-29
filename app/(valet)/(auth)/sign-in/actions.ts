@@ -2,18 +2,19 @@
 
 import { StringsFR } from "@/constants/fr_string";
 import { ROUTES } from "@/constants/routes";
-import { emailSchema, passwordSchema } from "@/constants/validations";
-import { buildRouteWithParams } from "@/lib/buildroutewithparams";
-import prisma from "@/lib/prisma";
+import {
+  emailSchema,
+  passwordSchema,
+  schemaLoginWithEmail,
+  schemaLoginWithPhone,
+  schemaRegisterWithPhone,
+} from "@/constants/validations";
 import { auth } from "@/utils/auth/auth";
 import { APIError } from "better-auth/api";
 import { redirect } from "next/navigation";
 import z from "zod";
-
-const schema = z.object({
-  email: emailSchema,
-  password: passwordSchema,
-});
+import { createWorkSession } from "../../actions";
+import { formatPhoneNumber } from "@/lib/formatPhoneNumber";
 
 export async function login(
   siteId: string,
@@ -22,7 +23,7 @@ export async function login(
 ) {
   const data = Object.fromEntries(formData.entries());
 
-  const validatedFields = schema.safeParse(data);
+  const validatedFields = schemaLoginWithEmail.safeParse(data);
 
   if (!validatedFields.success) {
     return {
@@ -42,14 +43,7 @@ export async function login(
     });
 
     if (responseLogin.user) {
-      const userId = responseLogin.user.id;
-      await prisma.workSession.create({
-        data: {
-          siteId: siteId,
-          userId: userId,
-          createdAt: new Date(),
-        },
-      });
+      await createWorkSession(siteId, responseLogin.user.id);
     }
   } catch (error) {
     if (error instanceof APIError) {
@@ -70,46 +64,51 @@ export async function login(
   redirect(ROUTES.DASHBOARD);
 }
 
-export async function loginWithGoogle(
+export async function loginWithPhone(
   siteId: string,
-  companyId: string | null,
+  initialState: any,
+  formData: FormData,
 ) {
-  let redirectGoogleUrl: string;
+  const data = Object.fromEntries(formData.entries());
+  const validatedFields = schemaLoginWithPhone.safeParse(data);
+
+  if (!validatedFields.success) {
+    return {
+      title: StringsFR.fieldError,
+      content: StringsFR.fieldErrorDescription,
+      errors: z.flattenError(validatedFields.error),
+    };
+  }
+
+  const phoneNumber = formatPhoneNumber(data.phone as string);
+
   try {
-    const data = await auth.api.signInSocial({
+    const responseLogin = await auth.api.signInPhoneNumber({
       body: {
-        provider: "google",
-        callbackURL: buildRouteWithParams(ROUTES.DASHBOARD, {
-          siteId: siteId,
-          companyId: companyId,
-        }),
+        phoneNumber,
+        password: data.password as string,
+        rememberMe: true,
       },
-      returnHeaders: true,
     });
-
-    if (!data.response.url) {
-      return {
-        title: StringsFR.oupsError,
-        content: StringsFR.registerErrorDescription,
-        status: "ERROR" as const,
-      };
+    console.log("responseLogin", responseLogin);
+    if (responseLogin.user) {
+      await createWorkSession(siteId, responseLogin.user.id);
     }
-
-    redirectGoogleUrl = data.response.url;
   } catch (error) {
     if (error instanceof APIError) {
-      console.log("errorApiSignUp", error.body);
-      return {
-        title: StringsFR.oupsError,
-        content: StringsFR.registerErrorDescription,
-        status: "ERROR" as const,
-      };
+      if (error.statusCode === 401) {
+        return {
+          title: StringsFR.wrongPhoneOrPassword,
+          content: StringsFR.wrongPhoneOrPasswordDescription,
+          status: "ERROR" as const,
+        };
+      }
     }
     return {
       title: StringsFR.oupsError,
-      content: StringsFR.registerErrorDescription,
+      content: StringsFR.loginErrorDescription,
       status: "ERROR" as const,
     };
   }
-  redirect(redirectGoogleUrl);
+  redirect(ROUTES.DASHBOARD);
 }

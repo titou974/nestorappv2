@@ -4,6 +4,7 @@ import { StringsFR } from "@/constants/fr_string";
 import { ROUTES } from "@/constants/routes";
 import {
   emailSchema,
+  frenchPhoneNumberSchema,
   nameSchema,
   passwordSchema,
 } from "@/constants/validations";
@@ -11,16 +12,25 @@ import { buildRouteWithParams } from "@/lib/buildroutewithparams";
 import prisma from "@/lib/prisma";
 import { auth } from "@/utils/auth/auth";
 import { APIError } from "better-auth/api";
+import { phoneNumber } from "better-auth/plugins";
 import { redirect } from "next/navigation";
 import z from "zod";
+import { createWorkSession, sendOtp } from "../../actions";
+import { formatPhoneNumber } from "@/lib/formatPhoneNumber";
 
-const schema = z.object({
+const schemaRegisterWithMail = z.object({
   name: nameSchema,
   email: emailSchema,
   password: passwordSchema,
 });
 
-export default async function register(
+const schemaRegisterWithPhone = z.object({
+  name: nameSchema,
+  phone: frenchPhoneNumberSchema,
+  password: passwordSchema,
+});
+
+export async function register(
   siteId: string,
   companyId: string | null,
   initialState: any,
@@ -28,7 +38,7 @@ export default async function register(
 ) {
   const data = Object.fromEntries(formData.entries());
 
-  const validatedFields = schema.safeParse(data);
+  const validatedFields = schemaRegisterWithMail.safeParse(data);
 
   if (!validatedFields.success) {
     return {
@@ -52,14 +62,7 @@ export default async function register(
     });
 
     if (responseRegister.user) {
-      const userId = responseRegister.user.id;
-      await prisma.workSession.create({
-        data: {
-          siteId: siteId,
-          userId: userId,
-          createdAt: new Date(),
-        },
-      });
+      await createWorkSession(siteId, responseRegister.user.id);
     }
   } catch (error) {
     if (error instanceof APIError) {
@@ -78,6 +81,62 @@ export default async function register(
     };
   }
   redirect(ROUTES.DASHBOARD);
+}
+
+export async function registerWithPhone(
+  siteId: string,
+  companyId: string | null,
+  initialState: any,
+  formData: FormData,
+) {
+  const data = Object.fromEntries(formData.entries());
+
+  const validatedFields = schemaRegisterWithPhone.safeParse(data);
+
+  if (!validatedFields.success) {
+    return {
+      title: StringsFR.fieldError,
+      content: StringsFR.fieldErrorDescription,
+      errors: z.flattenError(validatedFields.error),
+    };
+  }
+
+  const phoneNumber = formatPhoneNumber(data.phone as string);
+
+  try {
+    const { response: responseRegister } = await auth.api.signUpEmail({
+      returnHeaders: true,
+      body: {
+        email: `${phoneNumber}@nestorappvalet.com`,
+        phoneNumber,
+        name: data.name as string,
+        password: data.password as string,
+        companyId,
+      },
+    });
+
+    if (!responseRegister.user) {
+      return {
+        title: StringsFR.oupsError,
+        content: StringsFR.registerErrorDescription,
+        status: "ERROR" as const,
+      };
+    }
+
+    await sendOtp(phoneNumber as string);
+  } catch (error) {
+    console.log("error", error);
+    return {
+      title: StringsFR.oupsError,
+      content: StringsFR.registerErrorDescription,
+      status: "ERROR" as const,
+    };
+  }
+  redirect(
+    buildRouteWithParams(ROUTES.VERIFY_PHONE, {
+      site: siteId,
+    }),
+  );
 }
 
 async function checkIfUserExist(

@@ -16,7 +16,7 @@ import {
 } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
-import sendTicketByEmail from "@/app/(client)/ticket/actions";
+import { sendTicketByEmail } from "@/app/(client)/ticket/actions";
 import { resetFieldError } from "@/lib/resetFieldError";
 import { emailSchema } from "@/constants/validations";
 import { withCallbacks, toastCallback } from "@/lib/toastCallback";
@@ -48,9 +48,9 @@ export default function EmailModal({
         ticketNumber,
         companyCgu,
       }),
-      toastCallback(() => setIsOpen(false))
+      toastCallback(() => setIsOpen(false)),
     ),
-    initialState
+    initialState,
   );
 
   const handleFieldValidation = (value: string) => {

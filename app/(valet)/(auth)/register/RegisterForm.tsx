@@ -1,7 +1,7 @@
 "use client";
 import FooterBarLayout from "@/components/layouts/footerbarlayout";
 import { StringsFR } from "@/constants/fr_string";
-import { RegisterValet, PlayAnimationInput } from "@/types/site";
+import { RegisterValet, PlayAnimationInputRegister } from "@/types/site";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import {
   Button,
@@ -21,9 +21,12 @@ import {
   passwordSchema,
   emailSchema,
 } from "@/constants/validations";
-import { INITIAL_ANIMATION_STATE, initialState } from "@/constants/states";
-import register from "./actions";
-import { loginWithGoogle } from "../sign-in/actions";
+import {
+  INITIAL_ANIMATION_STATE_REGISTER,
+  initialState,
+} from "@/constants/states";
+import { register } from "./actions";
+import { loginWithGoogle } from "../../actions";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/constants/routes";
@@ -40,9 +43,8 @@ export default function RegisterForm({
   const router = useRouter();
 
   const [formData, setFormData] = useState<RegisterValet>({});
-  const [displayAnimation, setDisplayAnimation] = useState<PlayAnimationInput>(
-    INITIAL_ANIMATION_STATE,
-  );
+  const [displayAnimation, setDisplayAnimation] =
+    useState<PlayAnimationInputRegister>(INITIAL_ANIMATION_STATE_REGISTER);
 
   const lottieRefName = useRef<LottieRefCurrentProps>(null);
   const lottieRefEmail = useRef<LottieRefCurrentProps>(null);
@@ -71,7 +73,7 @@ export default function RegisterForm({
   );
 
   const handleFieldValidation = (
-    field: keyof PlayAnimationInput,
+    field: keyof PlayAnimationInputRegister,
     value: string,
     schema: typeof nameSchema | typeof emailSchema | typeof passwordSchema,
   ) => {

@@ -3,8 +3,12 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { createAuthMiddleware, oneTap } from "better-auth/plugins";
 import prisma from "@/lib/prisma";
 import { UserRole } from "@/types/site";
-import { inferAdditionalFields } from "better-auth/client/plugins";
 import { nextCookies } from "better-auth/next-js";
+import { phoneNumber } from "better-auth/plugins";
+import twilio from "twilio";
+import { StringsFR } from "@/constants/fr_string";
+import { createWorkSession } from "@/app/(valet)/actions";
+import sendSms from "@/app/actions";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -28,7 +32,7 @@ export const auth = betterAuth({
         input: true,
       },
       role: {
-        type: "string", // Better Auth uses string type
+        type: "string",
         required: true,
         defaultValue: UserRole.VALET,
         input: false,
@@ -60,12 +64,7 @@ export const auth = betterAuth({
           }
 
           if (siteId) {
-            await prisma.workSession.create({
-              data: {
-                siteId: siteId,
-                userId: ctx.context.newSession?.user.id,
-              },
-            });
+            createWorkSession(siteId, ctx.context.newSession?.user.id);
           }
         }
       }
@@ -77,20 +76,16 @@ export const auth = betterAuth({
   },
   plugins: [
     oneTap(),
-    inferAdditionalFields({
-      user: {
-        companyId: {
-          type: "string",
-          required: false,
-          input: true,
-        },
-        phone: {
-          type: "string",
-          required: false,
-          input: true,
-        },
+    nextCookies(),
+    phoneNumber({
+      sendOTP: async ({ phoneNumber, code }, ctx) => {
+        try {
+          await sendSms(phoneNumber, StringsFR.smsVerification + code);
+        } catch (error) {
+          console.log(error, "errors");
+          throw new Error("error", error as ErrorOptions);
+        }
       },
     }),
-    nextCookies(),
   ],
 });
