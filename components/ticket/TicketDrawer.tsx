@@ -13,7 +13,7 @@ const TicketDrawer = ({
   companyData,
 }: {
   ticketData: ApiTicket;
-  companyData: Company;
+  companyData?: Company;
 }) => {
   return (
     <Accordion
@@ -59,7 +59,11 @@ const TicketDrawer = ({
         </Accordion.Heading>
         <Accordion.Panel>
           <Accordion.Body className="pb-5 text-background">
-            <p className="pb-5">{StringsFR.cguTitle}</p>
+            <p className="pb-5">
+              {StringsFR.cguTitle}
+              {companyData &&
+                " " + StringsFR.of + " " + companyData?.name.toUpperCase()}
+            </p>
             {companyData?.cgu
               ? companyData?.cgu.map((part, index) => (
                   <div key={index} className="pb-5">
