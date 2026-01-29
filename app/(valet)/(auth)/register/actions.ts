@@ -15,7 +15,7 @@ import { APIError } from "better-auth/api";
 import { phoneNumber } from "better-auth/plugins";
 import { redirect } from "next/navigation";
 import z from "zod";
-import { createWorkSession, sendOtp } from "../actions";
+import { createWorkSession, sendOtp } from "../../actions";
 
 const schemaRegisterWithMail = z.object({
   name: nameSchema,
@@ -90,7 +90,7 @@ export async function registerWithPhone(
 ) {
   const data = Object.fromEntries(formData.entries());
 
-  // const validatedFields = schemaRegisterWithMail.safeParse(data);
+  const validatedFields = schemaRegisterWithPhone.safeParse(data);
 
   // if (!validatedFields.success) {
   //   return {

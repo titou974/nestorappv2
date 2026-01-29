@@ -143,4 +143,18 @@ export const StringsFR = {
   youDidntReceivedTheCode: "Vous n'avez pas reçu le code?",
   resend: "Renvoyer",
   frenchNumberPrefix: "+33",
+  // ... vos autres chaînes
+  clientWaitingForCar: "Un client attend sa voiture",
+  clientsWaitingForCars: "clients attendent leurs voitures",
+  urgentCarPickup: "Des clients souhaitent récupérer leur véhicule.",
+  clientWantToPickupHisCar: "Le client veut récupérer sa voiture ",
+  retrieveMyCar: "Récupérer ma voiture",
+  selectTimeLabel: "Voiture prête dans...",
+  selectTimePlaceholder: "Rechercher ou saisir un délai...",
+  selectTimeDescription: "Sélectionnez ou saisissez le délai souhaité",
+  retrieveCarModalTitle: "Récupérer ma voiture",
+  sendToValet: "Envoyer au voiturier",
+  retrieveCarAsked: "C'est noté !",
+  retrieveCarAskedDescription: "Votre voiture sera prête à temps",
+  retrieveCarError: "Erreur lors de l'envoi de la demande",
 };

@@ -2,19 +2,18 @@
 
 import { StringsFR } from "@/constants/fr_string";
 import { ROUTES } from "@/constants/routes";
-import { emailSchema, passwordSchema } from "@/constants/validations";
-import { buildRouteWithParams } from "@/lib/buildroutewithparams";
-import prisma from "@/lib/prisma";
+import {
+  emailSchema,
+  passwordSchema,
+  schemaLoginWithEmail,
+  schemaLoginWithPhone,
+  schemaRegisterWithPhone,
+} from "@/constants/validations";
 import { auth } from "@/utils/auth/auth";
 import { APIError } from "better-auth/api";
 import { redirect } from "next/navigation";
 import z from "zod";
-import { createWorkSession } from "../actions";
-
-const schema = z.object({
-  email: emailSchema,
-  password: passwordSchema,
-});
+import { createWorkSession } from "../../actions";
 
 export async function login(
   siteId: string,
@@ -23,7 +22,7 @@ export async function login(
 ) {
   const data = Object.fromEntries(formData.entries());
 
-  const validatedFields = schema.safeParse(data);
+  const validatedFields = schemaLoginWithEmail.safeParse(data);
 
   if (!validatedFields.success) {
     return {
@@ -42,6 +41,53 @@ export async function login(
       },
     });
 
+    if (responseLogin.user) {
+      await createWorkSession(siteId, responseLogin.user.id);
+    }
+  } catch (error) {
+    if (error instanceof APIError) {
+      if (error.statusCode === 401) {
+        return {
+          title: StringsFR.wrongMailorPassword,
+          content: StringsFR.wrongMailOrPasswordDescription,
+          status: "ERROR" as const,
+        };
+      }
+    }
+    return {
+      title: StringsFR.oupsError,
+      content: StringsFR.loginErrorDescription,
+      status: "ERROR" as const,
+    };
+  }
+  redirect(ROUTES.DASHBOARD);
+}
+
+export async function loginWithPhone(
+  siteId: string,
+  initialState: any,
+  formData: FormData,
+) {
+  const data = Object.fromEntries(formData.entries());
+  const validatedFields = schemaLoginWithPhone.safeParse(data);
+
+  // if (!validatedFields.success) {
+  //   return {
+  //     title: StringsFR.fieldError,
+  //     content: StringsFR.fieldErrorDescription,
+  //     errors: z.flattenError(validatedFields.error),
+  //   };
+  // }
+
+  try {
+    const responseLogin = await auth.api.signInPhoneNumber({
+      body: {
+        phoneNumber: data.phone as string,
+        password: data.password as string,
+        rememberMe: true,
+      },
+    });
+    console.log("responseLogin", responseLogin);
     if (responseLogin.user) {
       await createWorkSession(siteId, responseLogin.user.id);
     }

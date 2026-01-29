@@ -27,7 +27,7 @@ import {
   INITIAL_ANIMATION_STATE_LOGIN_WITH_PHONE,
   initialState,
 } from "@/constants/states";
-import { login } from "./actions";
+import { login, loginWithPhone } from "./actions";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/constants/routes";
 import { buildRouteWithParams } from "@/lib/buildroutewithparams";
@@ -52,7 +52,7 @@ export default function LoginFormWithPhone({ siteId }: { siteId: string }) {
 
   const [state, formAction, pending] = useActionState(
     withCallbacks(
-      login.bind(null, siteId),
+      loginWithPhone.bind(null, siteId),
       toastCallback(() => {}),
     ),
     initialState,
@@ -101,7 +101,7 @@ export default function LoginFormWithPhone({ siteId }: { siteId: string }) {
             <InputGroup.Input
               className="w-full"
               type="tel"
-              value={formData.phone}
+              defaultValue={formData.phone}
               onChange={(e) =>
                 handleFieldValidation(
                   "phone",

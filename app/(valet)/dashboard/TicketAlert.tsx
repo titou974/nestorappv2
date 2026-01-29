@@ -14,8 +14,12 @@ export default function TicketAlert({
   startedAt: Date;
   workSessionId: string;
 }) {
-  const { isTicketsLoading, numberOfTicketsToCompleteImmat, isValidating } =
-    useTicketsOfSession(siteId, startedAt, workSessionId);
+  const {
+    isTicketsLoading,
+    numberOfTicketsToCompleteImmat,
+    numberOfCarsToPickup,
+    isValidating,
+  } = useTicketsOfSession(siteId, startedAt, workSessionId);
 
   if (isTicketsLoading) {
     return <Skeleton className="w-full rounded-3xl min-h-[76px]" />;
@@ -27,27 +31,60 @@ export default function TicketAlert({
     exit: { opacity: 0, y: -10 },
   };
 
+  const getAlertType = () => {
+    if (numberOfCarsToPickup >= 1) return "pickup";
+    if (numberOfTicketsToCompleteImmat > 0) return "immat";
+    return "success";
+  };
+
+  const alertType = getAlertType();
+
   return (
     <AnimatePresence mode="wait">
-      {numberOfTicketsToCompleteImmat === 0 ? (
+      {alertType === "pickup" && (
         <motion.div
-          key="success"
+          key="pickup"
           variants={fadeInVariants}
           initial="initial"
           animate="animate"
           exit="exit"
           transition={{ duration: 0.3 }}
         >
-          <Alert status="success">
+          <Alert status="warning">
             <Alert.Indicator />
             <Alert.Content>
-              <Alert.Title>{StringsFR.allTicketsCompleted}</Alert.Title>
+              <Alert.Title>
+                {numberOfCarsToPickup > 1
+                  ? `${numberOfCarsToPickup} ${StringsFR.clientsWaitingForCars || "clients attendent leurs voitures"}`
+                  : `${StringsFR.clientWaitingForCar || "Un client attend sa voiture"}`}
+              </Alert.Title>
+              <Alert.Description>
+                {StringsFR.urgentCarPickup ||
+                  "Des clients souhaitent récupérer leur véhicule rapidement"}
+              </Alert.Description>
             </Alert.Content>
+            <Button
+              isDisabled
+              className="hidden sm:block"
+              size="sm"
+              variant="primary"
+              isPending={isValidating}
+            >
+              {({ isPending }) =>
+                isPending ? (
+                  <ArrowPathIcon width={20} className="animate-spin" />
+                ) : (
+                  <ArrowPathIcon width={20} />
+                )
+              }
+            </Button>
           </Alert>
         </motion.div>
-      ) : (
+      )}
+
+      {alertType === "immat" && (
         <motion.div
-          key="accent"
+          key="immat"
           variants={fadeInVariants}
           initial="initial"
           animate="animate"
@@ -83,6 +120,24 @@ export default function TicketAlert({
                 )
               }
             </Button>
+          </Alert>
+        </motion.div>
+      )}
+
+      {alertType === "success" && (
+        <motion.div
+          key="success"
+          variants={fadeInVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ duration: 0.3 }}
+        >
+          <Alert status="success">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>{StringsFR.allTicketsCompleted}</Alert.Title>
+            </Alert.Content>
           </Alert>
         </motion.div>
       )}

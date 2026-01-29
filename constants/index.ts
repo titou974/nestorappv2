@@ -41,6 +41,19 @@ export const cguContent = [
   },
 ];
 
+export const PICKUP_TIME_OPTIONS = [
+  { id: "now", value: "Dès que possible", minutes: 0 },
+  { id: "5", value: "5 minutes", minutes: 5 },
+  { id: "10", value: "10 minutes", minutes: 10 },
+  { id: "15", value: "15 minutes", minutes: 15 },
+  { id: "20", value: "20 minutes", minutes: 20 },
+  { id: "25", value: "25 minutes", minutes: 25 },
+  { id: "30", value: "30 minutes", minutes: 30 },
+  { id: "45", value: "45 minutes", minutes: 45 },
+  { id: "60", value: "1 heure", minutes: 60 },
+  { id: "90", value: "1h30", minutes: 90 },
+] as const;
+
 export const main = {
   fontFamily: '"Helvetica Neue",Helvetica,Arial,sans-serif',
   backgroundColor: "#ffffff",

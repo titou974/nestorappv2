@@ -23,7 +23,7 @@ import {
 } from "@/constants/states";
 import { Icon } from "@iconify/react";
 import { login } from "./actions";
-import { loginWithGoogle } from "../actions";
+import { loginWithGoogle } from "../../actions";
 import { useRouter } from "next/navigation";
 
 import { ROUTES } from "@/constants/routes";

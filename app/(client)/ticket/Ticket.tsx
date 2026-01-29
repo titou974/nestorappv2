@@ -4,10 +4,11 @@ import TicketDrawer from "@/components/ticket/TicketDrawer";
 import { StringsFR } from "@/constants/fr_string";
 import ConfettiAnimation from "@/components/animations/Confetti";
 import FooterTicket from "@/components/ticket/FooterTicket";
+import FooterTicketWithSms from "@/components/ticket/FooterTicketWithSms";
 
 export default async function Ticket(
   ticketData: ApiTicket,
-  companyData: Company
+  companyData: Company,
 ) {
   return (
     <>
@@ -18,7 +19,11 @@ export default async function Ticket(
       />
       <ConfettiAnimation />
       <TicketDrawer ticketData={ticketData} companyData={companyData} />
-      <FooterTicket ticketData={ticketData} cgu={companyData?.cgu} />
+      {ticketData.site.enableSmsRetrieval ? (
+        <FooterTicketWithSms ticketData={ticketData} cgu={companyData?.cgu} />
+      ) : (
+        <FooterTicket ticketData={ticketData} cgu={companyData?.cgu} />
+      )}
     </>
   );
 }

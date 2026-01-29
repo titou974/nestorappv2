@@ -26,7 +26,7 @@ import {
   initialState,
 } from "@/constants/states";
 import { register } from "./actions";
-import { loginWithGoogle } from "../actions";
+import { loginWithGoogle } from "../../actions";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/constants/routes";

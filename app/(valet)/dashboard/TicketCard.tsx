@@ -3,7 +3,7 @@ import { StringsFR } from "@/constants/fr_string";
 import { licensePlateSchema } from "@/constants/validations";
 import { Ticket } from "@/generated/prisma/client";
 import createToast from "@/lib/createToast";
-import formatHour from "@/lib/formatHour";
+import { formatHour, getMinutesUntil } from "@/lib/formatHour";
 import { TicketPatchData } from "@/types/site";
 import { ClockIcon, ArrowRightCircleIcon } from "@heroicons/react/20/solid";
 import {
@@ -16,6 +16,7 @@ import {
   TextField,
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
+import { animate } from "framer-motion";
 import { LottieRefCurrentProps } from "lottie-react";
 import { useState, useRef } from "react";
 import React from "react";
@@ -25,7 +26,6 @@ export default function TicketCard({
   ticket,
   triggerImmatriculation,
   setIsOpenModalCarRetrieve,
-  shouldAlert = true,
 }: {
   ticket: Ticket;
   triggerImmatriculation: TriggerWithArgs<
@@ -40,7 +40,6 @@ export default function TicketCard({
       id: string | null;
     }>
   >;
-  shouldAlert?: boolean;
 }) {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
@@ -49,6 +48,20 @@ export default function TicketCard({
   );
 
   const [displayAnimation, setDisplayAnimation] = useState<boolean>(false);
+
+  const timeInMinutesUntil = () => {
+    if (ticket.requestedPickupTime) {
+      if (getMinutesUntil(ticket.requestedPickupTime) > 1) {
+        return `dans ${getMinutesUntil(ticket.requestedPickupTime)} minutes`;
+      }
+      if (getMinutesUntil(ticket.requestedPickupTime) === 1) {
+        return `dans ${getMinutesUntil(ticket.requestedPickupTime)} minute`;
+      }
+      return "maintenant";
+    } else {
+      return null;
+    }
+  };
 
   const handleImmatriculationBlur = async () => {
     if (immatriculation && immatriculation !== ticket.immatriculation) {
@@ -86,7 +99,7 @@ export default function TicketCard({
 
   return (
     <Card
-      className={`col-span-12 w-full ${shouldAlert ? "animate-pulse border-2 border-accent shadow shadow-accent" : ""}`}
+      className={`col-span-12 w-full ${ticket.requestedPickupTime && "animate-pulse border-2 border-accent shadow shadow-accent"}`}
     >
       <Card.Header className="gap-3">
         <div className="w-full flex justify-between">
@@ -130,26 +143,39 @@ export default function TicketCard({
             {StringsFR.createdAt} {formatHour(ticket.createdAt)}
           </p>
         </div>
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={() =>
-            setIsOpenModalCarRetrieve({ id: ticket.id, isOpen: true })
-          }
-        >
-          {StringsFR.retrievedCar} <ArrowRightCircleIcon />
-        </Button>
+        {!ticket.requestedPickupTime && (
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() =>
+              setIsOpenModalCarRetrieve({ id: ticket.id, isOpen: true })
+            }
+          >
+            {StringsFR.retrievedCar} <ArrowRightCircleIcon />
+          </Button>
+        )}
       </Card.Footer>
-      {shouldAlert && (
+      {ticket.requestedPickupTime && (
         <Alert
           status="warning"
-          className="absolute bg-background p-2 font-bold max-w-60 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          className="absolute bg-background p-2 font-bold max-w-70 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 rounded-3xl"
         >
           <Alert.Indicator />
-          <Alert.Content>
+          <Alert.Content className="space-y-2">
             <Alert.Title>
-              Le client veut récupérer sa voiture dans 5min
+              {StringsFR.clientWantToPickupHisCar} {timeInMinutesUntil()} (à{" "}
+              {formatHour(ticket.requestedPickupTime)})
             </Alert.Title>
+            <Button
+              className="self-end"
+              variant="primary"
+              size="sm"
+              onClick={() =>
+                setIsOpenModalCarRetrieve({ id: ticket.id, isOpen: true })
+              }
+            >
+              {StringsFR.retrievedCar} <ArrowRightCircleIcon />
+            </Button>
           </Alert.Content>
         </Alert>
       )}

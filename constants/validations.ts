@@ -26,3 +26,26 @@ export const verificationCodeSchema = z
   .string()
   .length(6, "Le code doit contenir exactement 6 chiffres")
   .regex(/^\d{6}$/, "Le code doit contenir uniquement des chiffres");
+
+export const schemaRegisterWithMail = z.object({
+  name: nameSchema,
+  email: emailSchema,
+  password: passwordSchema,
+});
+
+export const schemaRegisterWithPhone = z.object({
+  name: nameSchema,
+  phone: frenchPhoneNumberSchema,
+  password: passwordSchema,
+});
+
+export const schemaLoginWithEmail = z.object({
+  email: emailSchema,
+  password: passwordSchema,
+});
+
+export const schemaLoginWithPhone = z.object({
+  name: nameSchema,
+  phone: frenchPhoneNumberSchema,
+  password: passwordSchema,
+});

@@ -7,7 +7,8 @@ import { nextCookies } from "better-auth/next-js";
 import { phoneNumber } from "better-auth/plugins";
 import twilio from "twilio";
 import { StringsFR } from "@/constants/fr_string";
-import { createWorkSession } from "@/app/(valet)/(auth)/actions";
+import { createWorkSession } from "@/app/(valet)/actions";
+import sendSms from "@/app/actions";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -74,23 +75,10 @@ export const auth = betterAuth({
     nextCookies(),
     phoneNumber({
       sendOTP: async ({ phoneNumber, code }, ctx) => {
-        const accountSid = process.env.TWILIO_ACCOUNT_SID;
-        const authToken = process.env.TWILIO_AUTH_TOKEN;
-        const twilioNumber = process.env.TWILIO_PHONE_NUMBER;
-
-        const client = twilio(accountSid, authToken);
-
         try {
-          await client.messages.create({
-            body: StringsFR.smsVerification + code,
-            from: twilioNumber,
-            to: phoneNumber,
-          });
+          await sendSms(phoneNumber, StringsFR.smsVerification + code);
         } catch (error) {
-          throw new Error(
-            "Erreur lors de la validation du numéro",
-            error as ErrorOptions,
-          );
+          throw new Error("error", error as ErrorOptions);
         }
       },
     }),

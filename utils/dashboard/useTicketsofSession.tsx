@@ -6,7 +6,7 @@ import { Ticket } from "@/generated/prisma/client";
 export function useTicketsOfSession(
   siteId: string,
   startedAt: Date,
-  workSessionId: string
+  workSessionId: string,
 ) {
   const swrKey = `${APIROUTES.TICKETS_OF_WORK_SESSION}?siteId=${siteId}&startedAt=${startedAt.toString()}&workSessionId=${workSessionId}`;
 
@@ -15,7 +15,11 @@ export function useTicketsOfSession(
   });
 
   const numberOfTicketsToCompleteImmat = data?.tickets?.filter(
-    (ticket: Ticket) => !ticket.immatriculation
+    (ticket: Ticket) => !ticket.immatriculation,
+  ).length;
+
+  const numberOfCarsToPickup = data?.tickets?.filter(
+    (ticket: Ticket) => !!ticket.requestedPickupTime,
   ).length;
 
   return {
@@ -24,6 +28,7 @@ export function useTicketsOfSession(
     isTicketsError: error,
     isValidating,
     numberOfTicketsToCompleteImmat: numberOfTicketsToCompleteImmat,
+    numberOfCarsToPickup: numberOfCarsToPickup,
     swrKey,
   };
 }

@@ -80,9 +80,9 @@ export interface Site {
   createdAt: Date;
   updatedAt: Date;
   ticketPrice: string;
-  enableValetResponsibilityModal: Boolean;
-  enableClientReviewModal: Boolean;
-  enableSmsRetrieval: Boolean;
+  enableValetResponsibilityModal: boolean;
+  enableClientReviewModal: boolean;
+  enableSmsRetrieval: boolean;
   companyId: string | null;
   // Relations
   workSessions?: WorkSession[];
@@ -241,10 +241,12 @@ export interface ApiTicket {
   ticketNumber: number;
   scannedAt: string;
   immatriculation: string | null;
+  requestedPickupTime: Date | null;
   site: {
     id: string;
     name: string;
     ticketPrice: string | null;
+    enableSmsRetrieval: boolean;
   };
   user: ApiUser;
   workSession?: {
@@ -292,6 +294,13 @@ export interface EmailTemplateProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   userId: string;
+}
+
+export interface RetrieveCarModalProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  ticketId: string;
+  requestedPickupTimeData: Date | null;
 }
 
 export interface ModalProps {
