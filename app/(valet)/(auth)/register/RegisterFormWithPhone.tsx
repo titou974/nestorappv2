@@ -101,7 +101,17 @@ export default function RegisterFormWithPhone({
   };
   return (
     <Form action={formAction} className="space-y-4">
-      <TextField isRequired name="phone" type="tel" className="w-full">
+      <TextField
+        isRequired
+        name="phone"
+        type="tel"
+        className="w-full"
+        isInvalid={
+          (!!formData.phone &&
+            !frenchPhoneNumberSchema.safeParse(formData.phone).success) ||
+          !!state?.errors?.fieldErrors.phone
+        }
+      >
         <Label>{StringsFR.phoneNumber}</Label>
         <div className="relative w-full">
           <InputGroup>
@@ -126,6 +136,7 @@ export default function RegisterFormWithPhone({
             )}
           </InputGroup>
         </div>
+        <FieldError>{StringsFR.phoneError}</FieldError>
       </TextField>
       <TextField
         name="name"

@@ -50,7 +50,7 @@ export default async function verifyPhoneNumber(
       if (error?.body?.code === "INVALID_OTP") {
         return {
           title: StringsFR.phoneNumberVerificationError,
-          content: StringsFR.phoneNumberVerificationErrorDescription,
+          content: StringsFR.phoneNumberErrorDescription,
           status: "ERROR" as const,
         };
       }

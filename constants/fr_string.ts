@@ -21,7 +21,7 @@ export const StringsFR = {
   cguTitle: "CONDITIONS GÉNÉRALES D’UTILISATION",
   of: "DE",
   receiveByEmail: "Recevoir par email",
-  problemContactUs: "Un problème ? Contactez-nous ici",
+  problemContactUs: "Un problème ?",
   emailTitle: "Et voilà votre ticket de voiturier 🅿️",
   invoiceDetails: "Justificatif",
   thanksForUsingNestor:
@@ -82,6 +82,9 @@ export const StringsFR = {
   wrongMailorPassword: "Mauvaise adresse mail ou mot de passe",
   wrongMailOrPasswordDescription:
     "L'adresse mail rentrée ou le mot de passe n'est pas le bon",
+  wrongPhoneOrPassword: "Mauvais numéro rentré ou mot de passe",
+  wrongPhoneOrPasswordDescription:
+    "Le numéro de téléphone rentrée ou le mot de passe n'est pas le bon",
   addTheImmatMissingOnTicket:
     "Vous pouvez ajouter les plaques d'immatriculations sur les tickets",
   allTicketsCompleted: "Tout vos tickets sont complétés",
@@ -158,4 +161,5 @@ export const StringsFR = {
   retrieveCarAsked: "C'est noté !",
   retrieveCarAskedDescription: "Votre voiture sera prête à temps",
   retrieveCarError: "Erreur lors de l'envoi de la demande",
+  phoneError: "Veuillez rentrer le bon format de numéro français",
 };

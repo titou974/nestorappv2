@@ -91,7 +91,17 @@ export default function LoginFormWithPhone({ siteId }: { siteId: string }) {
 
   return (
     <Form className="space-y-4" action={formAction}>
-      <TextField isRequired name="phone" type="tel" className="w-full">
+      <TextField
+        isRequired
+        name="phone"
+        type="tel"
+        className="w-full"
+        isInvalid={
+          (!!formData.phone &&
+            !frenchPhoneNumberSchema.safeParse(formData.phone).success) ||
+          !!state?.errors?.fieldErrors.phone
+        }
+      >
         <Label>{StringsFR.phoneNumber}</Label>
         <div className="relative w-full">
           <InputGroup>
@@ -116,6 +126,7 @@ export default function LoginFormWithPhone({ siteId }: { siteId: string }) {
             )}
           </InputGroup>
         </div>
+        <FieldError>{StringsFR.phoneError}</FieldError>
       </TextField>
       <TextField
         isRequired

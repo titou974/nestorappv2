@@ -19,14 +19,6 @@ export default function FooterTicket({
   return (
     <>
       <FooterBarLayout>
-        <Link
-          href="https://tally.so/r/3qKl18"
-          target="_blank"
-          underline="none"
-          className="text-center text-sm text-success transition-all hover:bg-default/80 bg-default w-full justify-center py-2 rounded-full"
-        >
-          {StringsFR.problemContactUs}
-        </Link>
         <Button
           onClick={() => setEmailModal(true)}
           className="fill-primary-foreground w-full"

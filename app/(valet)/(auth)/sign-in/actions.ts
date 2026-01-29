@@ -14,6 +14,7 @@ import { APIError } from "better-auth/api";
 import { redirect } from "next/navigation";
 import z from "zod";
 import { createWorkSession } from "../../actions";
+import { formatPhoneNumber } from "@/lib/formatPhoneNumber";
 
 export async function login(
   siteId: string,
@@ -71,18 +72,20 @@ export async function loginWithPhone(
   const data = Object.fromEntries(formData.entries());
   const validatedFields = schemaLoginWithPhone.safeParse(data);
 
-  // if (!validatedFields.success) {
-  //   return {
-  //     title: StringsFR.fieldError,
-  //     content: StringsFR.fieldErrorDescription,
-  //     errors: z.flattenError(validatedFields.error),
-  //   };
-  // }
+  if (!validatedFields.success) {
+    return {
+      title: StringsFR.fieldError,
+      content: StringsFR.fieldErrorDescription,
+      errors: z.flattenError(validatedFields.error),
+    };
+  }
+
+  const phoneNumber = formatPhoneNumber(data.phone as string);
 
   try {
     const responseLogin = await auth.api.signInPhoneNumber({
       body: {
-        phoneNumber: data.phone as string,
+        phoneNumber,
         password: data.password as string,
         rememberMe: true,
       },
@@ -95,8 +98,8 @@ export async function loginWithPhone(
     if (error instanceof APIError) {
       if (error.statusCode === 401) {
         return {
-          title: StringsFR.wrongMailorPassword,
-          content: StringsFR.wrongMailOrPasswordDescription,
+          title: StringsFR.wrongPhoneOrPassword,
+          content: StringsFR.wrongPhoneOrPasswordDescription,
           status: "ERROR" as const,
         };
       }

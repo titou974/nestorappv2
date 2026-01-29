@@ -242,6 +242,7 @@ export interface ApiTicket {
   scannedAt: string;
   immatriculation: string | null;
   requestedPickupTime: Date | null;
+  retrievedAt: string | null;
   site: {
     id: string;
     name: string;

@@ -70,9 +70,10 @@ export async function sendOtp(phoneNumber: string) {
       },
     });
   } catch (error) {
-    throw new Error(
-      "erreur sur l'inscription avec le numéro",
-      error as ErrorOptions,
-    );
+    return {
+      title: StringsFR.oupsError,
+      content: StringsFR.registerErrorDescription,
+      status: "ERROR" as const,
+    };
   }
 }

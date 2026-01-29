@@ -82,6 +82,7 @@ export const auth = betterAuth({
         try {
           await sendSms(phoneNumber, StringsFR.smsVerification + code);
         } catch (error) {
+          console.log(error, "errors");
           throw new Error("error", error as ErrorOptions);
         }
       },

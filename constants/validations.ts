@@ -6,8 +6,28 @@ export const nameSchema = z.string().min(3);
 
 export const frenchPhoneNumberSchema = z
   .string()
-  .regex(/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/)
-  .transform((val) => val.replace(/[\s.-]/g, ""));
+  .regex(/^(?:(?:\+|00)33|0)?[67](?:[\s.-]*\d{2}){4}$/, {
+    message: "Le numéro doit être un mobile français valide (06 ou 07)",
+  })
+  .transform((val) => {
+    // Enlever tous les espaces, tirets, points
+    let cleaned = val.replace(/[\s.-]/g, "");
+
+    // Si le numéro commence par 0, on l'enlève
+    if (cleaned.startsWith("0")) {
+      cleaned = cleaned.substring(1);
+    }
+
+    // Si le numéro commence par +33 ou 0033, on garde seulement les 9 derniers chiffres
+    if (cleaned.startsWith("+33")) {
+      cleaned = cleaned.substring(3);
+    } else if (cleaned.startsWith("0033")) {
+      cleaned = cleaned.substring(4);
+    }
+
+    // Ajouter le préfixe +33
+    return `+33${cleaned}`;
+  });
 
 export const passwordSchema = z.string().min(6);
 

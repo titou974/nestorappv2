@@ -16,6 +16,7 @@ import { phoneNumber } from "better-auth/plugins";
 import { redirect } from "next/navigation";
 import z from "zod";
 import { createWorkSession, sendOtp } from "../../actions";
+import { formatPhoneNumber } from "@/lib/formatPhoneNumber";
 
 const schemaRegisterWithMail = z.object({
   name: nameSchema,
@@ -92,20 +93,22 @@ export async function registerWithPhone(
 
   const validatedFields = schemaRegisterWithPhone.safeParse(data);
 
-  // if (!validatedFields.success) {
-  //   return {
-  //     title: StringsFR.fieldError,
-  //     content: StringsFR.fieldErrorDescription,
-  //     errors: z.flattenError(validatedFields.error),
-  //   };
-  // }
+  if (!validatedFields.success) {
+    return {
+      title: StringsFR.fieldError,
+      content: StringsFR.fieldErrorDescription,
+      errors: z.flattenError(validatedFields.error),
+    };
+  }
+
+  const phoneNumber = formatPhoneNumber(data.phone as string);
 
   try {
     const { response: responseRegister } = await auth.api.signUpEmail({
       returnHeaders: true,
       body: {
-        email: `${data.name}@nestorappvalet.com`,
-        phoneNumber: data.phone as string,
+        email: `${phoneNumber}@nestorappvalet.com`,
+        phoneNumber,
         name: data.name as string,
         password: data.password as string,
         companyId,
@@ -120,7 +123,7 @@ export async function registerWithPhone(
       };
     }
 
-    await sendOtp(data.phone as string);
+    await sendOtp(phoneNumber as string);
   } catch (error) {
     console.log("error", error);
     return {
