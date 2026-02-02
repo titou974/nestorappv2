@@ -12,7 +12,7 @@ import {
   Spinner,
   TextField,
 } from "@heroui/react";
-import { useActionState, useRef, useState } from "react";
+import { startTransition, useActionState, useRef, useState } from "react";
 import { Form } from "@heroui/react";
 import { LottieRefCurrentProps } from "lottie-react";
 import CheckAnimation from "@/components/animations/Check";
@@ -193,7 +193,7 @@ export default function LoginForm({
       <Button
         className="w-full"
         variant="tertiary"
-        onClick={() => connectWithGoogle()}
+        onClick={() => startTransition(connectWithGoogle)}
       >
         <Icon icon="devicon:google" />
         {StringsFR.continueWithGoogle}

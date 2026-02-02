@@ -9,9 +9,11 @@ export default async function sendSms(phoneNumber: string, message: string) {
 
   const client = twilio(accountSid, authToken);
 
-  await client.messages.create({
+  const response = await client.messages.create({
     body: message,
     from: twilioNumber,
     to: phoneNumber,
   });
+
+  console.log("responsephone", response);
 }
