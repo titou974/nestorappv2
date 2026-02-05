@@ -70,6 +70,7 @@ export async function sendOtp(phoneNumber: string) {
       },
     });
   } catch (error) {
+    console.log("error", error);
     return {
       title: StringsFR.oupsError,
       content: StringsFR.registerErrorDescription,

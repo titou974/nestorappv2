@@ -71,8 +71,8 @@ export const auth = betterAuth({
     }),
   },
   session: {
-    expiresIn: 60 * 60 * 2,
-    updateAge: 60 * 60,
+    expiresIn: 60 * 60 * 4,
+    updateAge: 60 * 30,
   },
   plugins: [
     oneTap(),
