@@ -151,7 +151,7 @@ export const StringsFR = {
   clientWaitingForCar: "Un client attend sa voiture",
   clientsWaitingForCars: "clients attendent leurs voitures",
   urgentCarPickup: "Des clients souhaitent récupérer leur véhicule.",
-  clientWantToPickupHisCar: "Le client veut récupérer sa voiture ",
+  clientWantToPickupHisCar: "Le client veut récupérer sa voiture maintenant",
   retrieveMyCar: "Récupérer ma voiture",
   selectTimeLabel: "Voiture prête dans...",
   selectTimePlaceholder: "Rechercher ou saisir un délai...",
