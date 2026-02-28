@@ -27,7 +27,7 @@ export const StringsFR = {
   thanksForUsingNestor:
     "Merci d'avoir utilisé Nestor. L'application française des voituriers 🇫🇷",
   email: "EMAIL",
-  invoiceDate: "DATE DE LA JUSTIFICATIF",
+  invoiceDate: "DATE DU JUSTIFICATIF",
   ticketId: "TICKET ID",
   hashtag: "#",
   place: "Lieu",
