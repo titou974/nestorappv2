@@ -8,7 +8,6 @@ import {
   FieldError,
   Input,
   Label,
-  Separator,
   Spinner,
   TextField,
 } from "@heroui/react";

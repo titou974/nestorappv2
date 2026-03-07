@@ -26,6 +26,7 @@ export default async function DashboardPage() {
           siteId={workSession.siteId}
           siteName={workSession.site.name}
           workSessionId={workSession.id}
+          hasPhoneNumber={!!session.user.phoneNumber}
         />
       ) : (
         <Dashboard

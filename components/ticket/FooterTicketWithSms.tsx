@@ -1,5 +1,5 @@
 "use client";
-import { Button, Link } from "@heroui/react";
+import { Button } from "@heroui/react";
 import FooterBarLayout from "../layouts/footerbarlayout";
 import { StringsFR } from "@/constants/fr_string";
 import { EnvelopeIcon, KeyIcon } from "@heroicons/react/20/solid";

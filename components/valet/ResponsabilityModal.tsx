@@ -24,18 +24,12 @@ export default function ResponsabilityModal({
   const [acceptValetConditions, setAcceptValetConditions] = useState(false);
   const [isOpen, setIsOpen] = useState(!acceptedWorkConditions);
 
-  console.log("🔍 Client - Modal:", {
-    workSessionId,
-    acceptedWorkConditions,
-    isOpen,
-  });
-
   const handleAcceptOfValetConditions = () => {
     if (!acceptValetConditions) {
       createToast(
         StringsFR.haveToAcceptValetRules,
         StringsFR.haveToAcceptValetRulesDescription,
-        false
+        false,
       );
       return;
     }

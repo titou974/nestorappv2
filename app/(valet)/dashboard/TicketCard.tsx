@@ -16,7 +16,6 @@ import {
   TextField,
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import { animate } from "framer-motion";
 import { LottieRefCurrentProps } from "lottie-react";
 import { useState, useRef } from "react";
 import React from "react";
@@ -137,37 +136,15 @@ export default function TicketCard({
         </div>
       </Card.Header>
       <Card.Footer className="mt-6 w-full flex justify-between">
-        <div className="flex items-center justify-start gap-1 text-foreground/80 text-sm">
-          <ClockIcon className="h-4 w-4 text-foreground/80" />
-          <p>
-            {StringsFR.createdAt} {formatHour(ticket.createdAt)}
-          </p>
-        </div>
         {!ticket.requestedPickupTime && (
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() =>
-              setIsOpenModalCarRetrieve({ id: ticket.id, isOpen: true })
-            }
-          >
-            {StringsFR.retrievedCar} <ArrowRightCircleIcon />
-          </Button>
-        )}
-      </Card.Footer>
-      {ticket.requestedPickupTime && (
-        <Alert
-          status="warning"
-          className="absolute bg-background p-2 font-bold max-w-70 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 rounded-3xl"
-        >
-          <Alert.Indicator />
-          <Alert.Content className="space-y-2">
-            <Alert.Title>
-              {StringsFR.clientWantToPickupHisCar} {timeInMinutesUntil()} (à{" "}
-              {formatHour(ticket.requestedPickupTime)})
-            </Alert.Title>
+          <>
+            <div className="flex items-center justify-start gap-1 text-foreground/80 text-sm">
+              <ClockIcon className="h-4 w-4 text-foreground/80" />
+              <p>
+                {StringsFR.createdAt} {formatHour(ticket.createdAt)}
+              </p>
+            </div>
             <Button
-              className="self-end"
               variant="primary"
               size="sm"
               onClick={() =>
@@ -176,9 +153,38 @@ export default function TicketCard({
             >
               {StringsFR.retrievedCar} <ArrowRightCircleIcon />
             </Button>
-          </Alert.Content>
-        </Alert>
-      )}
+          </>
+        )}
+        {ticket.requestedPickupTime && (
+          <Alert
+            status="warning"
+            className="bg-background p-2 font-bold z-20 rounded-3xl basis-full"
+          >
+            <Alert.Indicator />
+            <Alert.Content className="space-y-2">
+              <Alert.Title>
+                {StringsFR.clientWantToPickupHisCar}{" "}
+                {(() => {
+                  const label = timeInMinutesUntil();
+                  if (!label || label === "maintenant")
+                    return `maintenant (à ${formatHour(ticket.requestedPickupTime)})`;
+                  return `${label} (à ${formatHour(ticket.requestedPickupTime)})`;
+                })()}
+              </Alert.Title>
+              <Button
+                className="self-end"
+                variant="primary"
+                size="sm"
+                onClick={() =>
+                  setIsOpenModalCarRetrieve({ id: ticket.id, isOpen: true })
+                }
+              >
+                {StringsFR.retrievedCar} <ArrowRightCircleIcon />
+              </Button>
+            </Alert.Content>
+          </Alert>
+        )}
+      </Card.Footer>
     </Card>
   );
 }
