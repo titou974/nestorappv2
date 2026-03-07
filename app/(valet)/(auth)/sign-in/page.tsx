@@ -42,7 +42,6 @@ export default async function LoginPage({
       siteId={siteData.id}
       siteName={siteData.name}
       companyId={siteData.companyId}
-      enableSmsRetrieval={!!siteData.enableSmsRetrieval}
     />
   );
 }

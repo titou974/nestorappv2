@@ -15,5 +15,5 @@ export default async function sendSms(phoneNumber: string, message: string) {
     to: phoneNumber,
   });
 
-  console.log("responsephone", response);
+  return response;
 }

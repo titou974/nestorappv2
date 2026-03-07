@@ -5,7 +5,6 @@ import prisma from "@/lib/prisma";
 import { UserRole } from "@/types/site";
 import { nextCookies } from "better-auth/next-js";
 import { phoneNumber } from "better-auth/plugins";
-import twilio from "twilio";
 import { StringsFR } from "@/constants/fr_string";
 import { createWorkSession } from "@/app/(valet)/actions";
 import sendSms from "@/app/actions";
@@ -82,7 +81,6 @@ export const auth = betterAuth({
         try {
           await sendSms(phoneNumber, StringsFR.smsVerification + code);
         } catch (error) {
-          console.log(error, "errors");
           throw new Error("error", error as ErrorOptions);
         }
       },

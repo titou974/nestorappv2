@@ -36,7 +36,6 @@ export async function loginWithGoogle(
     redirectGoogleUrl = data.response.url;
   } catch (error) {
     if (error instanceof APIError) {
-      console.log("errorApiSignUp", error.body);
       return {
         title: StringsFR.oupsError,
         content: StringsFR.registerErrorDescription,
@@ -70,7 +69,6 @@ export async function sendOtp(phoneNumber: string) {
       },
     });
   } catch (error) {
-    console.log("error", error);
     return {
       title: StringsFR.oupsError,
       content: StringsFR.registerErrorDescription,

@@ -1,16 +1,19 @@
+import AddPhoneNumberModal from "./AddPhoneNumberModal";
 import FeedTickets from "./FeedTickets";
 import NavbarDashboard from "./NavbarDashboard";
 
-export default function Dashboard({
+export default function DashboardWithRetrieval({
   startedAt,
   siteId,
   siteName,
   workSessionId,
+  hasPhoneNumber,
 }: {
   startedAt: Date;
   siteId: string;
   siteName: string;
   workSessionId: string;
+  hasPhoneNumber: boolean;
 }) {
   return (
     <>
@@ -26,6 +29,9 @@ export default function Dashboard({
         workSessionId={workSessionId}
         siteName={siteName}
       />
+      {!hasPhoneNumber && (
+        <AddPhoneNumberModal hasPhoneNumber={hasPhoneNumber} />
+      )}
     </>
   );
 }

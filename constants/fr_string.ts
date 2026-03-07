@@ -151,7 +151,7 @@ export const StringsFR = {
   clientWaitingForCar: "Un client attend sa voiture",
   clientsWaitingForCars: "clients attendent leurs voitures",
   urgentCarPickup: "Des clients souhaitent récupérer leur véhicule.",
-  clientWantToPickupHisCar: "Le client veut récupérer sa voiture maintenant",
+  clientWantToPickupHisCar: "Le client veut récupérer sa voiture",
   retrieveMyCar: "Récupérer ma voiture",
   selectTimeLabel: "Voiture prête dans...",
   selectTimePlaceholder: "Rechercher ou saisir un délai...",
@@ -162,4 +162,15 @@ export const StringsFR = {
   retrieveCarAskedDescription: "Votre voiture sera prête à temps",
   retrieveCarError: "Erreur lors de l'envoi de la demande",
   phoneError: "Veuillez rentrer le bon format de numéro français",
+  titleAddPhoneModal: "Ajoutez votre numéro",
+  descriptionAddPhoneModal:
+    "Renseignez votre numéro de téléphone pour recevoir les notifications des clients par SMS.",
+  sendCode: "Envoyer le code",
+  sendingCode: "Envoi en cours...",
+  phoneNumberVerified: "Numéro vérifié !",
+  phoneNumberVerifiedDescription:
+    "Votre numéro de téléphone a bien été vérifié",
+  phoneNumberAlreadyExists: "Numéro déjà utilisé",
+  phoneNumberAlreadyExistsDescription:
+    "Ce numéro de téléphone est déjà associé à un autre compte",
 };

@@ -5,7 +5,7 @@ import { StringsFR } from "@/constants/fr_string";
 import ConfettiAnimation from "@/components/animations/Confetti";
 import FooterTicket from "@/components/ticket/FooterTicket";
 import FooterTicketWithSms from "@/components/ticket/FooterTicketWithSms";
-import { Button, Link } from "@heroui/react";
+import { Link } from "@heroui/react";
 
 export default async function Ticket(
   ticketData: ApiTicket,

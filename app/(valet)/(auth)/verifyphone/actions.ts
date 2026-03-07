@@ -45,7 +45,6 @@ export default async function verifyPhoneNumber(
       });
     }
   } catch (error) {
-    console.log("error", error);
     if (error instanceof APIError) {
       if (error?.body?.code === "INVALID_OTP") {
         return {

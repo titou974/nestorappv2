@@ -81,13 +81,13 @@ export async function askToPickupCar(
   ticketId: string,
   requestedPickupTime: string,
 ) {
+  let messageResponse;
   const selectedOption = PICKUP_TIME_OPTIONS.find(
     (opt) =>
       opt.id === requestedPickupTime || opt.value === requestedPickupTime,
   );
-  const minutesToAdd = selectedOption?.minutes ?? 10; // Fallback 10min
+  const minutesToAdd = selectedOption?.minutes ?? 10;
 
-  // ✅ Calculer la date de pickup
   const dateRequestToPickupCar = new Date(
     Date.now() + minutesToAdd * 60 * 1000,
   );
@@ -100,23 +100,25 @@ export async function askToPickupCar(
         requestedPickupTime: dateRequestToPickupCar,
       },
     });
-    const sms = await sendAMessageToValet(
+    messageResponse = await sendAMessageToValet(
       ticket.siteId,
       ticket.ticketNumber,
       ticket.immatriculation,
     );
-    console.log("sms envoyéééé", sms);
-    revalidatePath(ROUTES.NEW_TICKET);
-    return {
-      title: StringsFR.retrieveCarAsked,
-      content: StringsFR.retrieveCarAskedDescription,
-      status: "SUCCESS" as const,
-    };
   } catch (error) {
     return {
       title: StringsFR.oupsError,
       content: StringsFR.retrieveCarError,
       status: "ERROR" as const,
+    };
+  }
+
+  if (messageResponse.from) {
+    revalidatePath(ROUTES.NEW_TICKET);
+    return {
+      title: StringsFR.retrieveCarAsked,
+      content: StringsFR.retrieveCarAskedDescription,
+      status: "SUCCESS" as const,
     };
   }
 }
@@ -144,8 +146,10 @@ async function sendAMessageToValet(
     },
   });
 
-  await sendSms(
+  const response = await sendSms(
     workSession?.user.phoneNumber as string,
     `Un client souhaite récupérer sa voiture: le ticket ${ticketNumber} ${immatriculation ? `avec la plaque ${immatriculation}` : "."}`,
   );
+
+  return response;
 }

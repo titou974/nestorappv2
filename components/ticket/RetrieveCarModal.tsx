@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Dialog,
-  DialogDescription,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useState, useActionState, useRef } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -13,12 +8,11 @@ import { RetrieveCarModalProps } from "@/types/site";
 import { StringsFR } from "@/constants/fr_string";
 import {
   Button,
-  Input,
   Label,
   Spinner,
-  ComboBox,
   Description,
   ListBox,
+  Select,
 } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
@@ -132,18 +126,20 @@ export default function RetrieveCarModal({
                       action={formAction}
                       className="flex flex-col space-y-6 w-full items-center justify-center h-full min-h-60 gap-6"
                     >
-                      <ComboBox
-                        allowsCustomValue
+                      <Select
                         className="w-full max-w-[256px]"
-                        inputValue={requestedPickupTime}
-                        onInputChange={setRequestedPickupTime}
+                        placeholder="Sélectionnez un délai..."
+                        value={requestedPickupTime}
+                        onChange={(value) =>
+                          setRequestedPickupTime(value as string)
+                        }
                       >
                         <Label>{StringsFR.selectTimeLabel}</Label>
-                        <ComboBox.InputGroup>
-                          <Input placeholder="Sélectionnez un délai..." />
-                          <ComboBox.Trigger />
-                        </ComboBox.InputGroup>
-                        <ComboBox.Popover>
+                        <Select.Trigger>
+                          <Select.Value />
+                          <Select.Indicator />
+                        </Select.Trigger>
+                        <Select.Popover>
                           <ListBox>
                             {PICKUP_TIME_OPTIONS.map((option) => (
                               <ListBox.Item
@@ -156,12 +152,11 @@ export default function RetrieveCarModal({
                               </ListBox.Item>
                             ))}
                           </ListBox>
-                        </ComboBox.Popover>
+                        </Select.Popover>
                         <Description>
                           {StringsFR.selectTimeDescription}
                         </Description>
-                      </ComboBox>
-
+                      </Select>
                       <Button
                         type="submit"
                         isPending={pending}
