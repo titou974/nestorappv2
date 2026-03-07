@@ -165,7 +165,7 @@ export const StringsFR = {
   titleAddPhoneModal: "Ajoutez votre numéro",
   descriptionAddPhoneModal:
     "Renseignez votre numéro de téléphone pour recevoir les notifications des clients par SMS.",
-  sendCode: "Envoyer le code",
+  sendCode: "Vérifier mon numéro",
   sendingCode: "Envoi en cours...",
   phoneNumberVerified: "Numéro vérifié !",
   phoneNumberVerifiedDescription:
