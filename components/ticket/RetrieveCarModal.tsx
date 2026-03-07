@@ -153,9 +153,6 @@ export default function RetrieveCarModal({
                             ))}
                           </ListBox>
                         </Select.Popover>
-                        <Description>
-                          {StringsFR.selectTimeDescription}
-                        </Description>
                       </Select>
                       <Button
                         type="submit"
