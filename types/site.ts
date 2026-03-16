@@ -63,6 +63,7 @@ export interface Ticket {
   scannedAt: Date;
   createdAt: Date;
   updatedAt: Date;
+  emailSentHour: Date | null;
   ticketNumber: number;
   workSessionId: string | null;
   immatriculation: string | null;
@@ -238,18 +239,26 @@ export interface ApiUser {
 
 export interface ApiTicket {
   id: string;
+  ticketId: string;
   ticketNumber: number;
   scannedAt: string;
   immatriculation: string | null;
   requestedPickupTime: Date | null;
+  emailSentHour: Date | null;
   retrievedAt: string | null;
   site: {
     id: string;
     name: string;
     ticketPrice: string | null;
     enableSmsRetrieval: boolean;
+    enableClientReviewModal: boolean;
   };
   user: ApiUser;
+  review?: {
+    id: string;
+    rating: number;
+    comment: string | null;
+  } | null;
   workSession?: {
     id: string;
     startedAt: string;
@@ -291,11 +300,23 @@ export interface EmailTemplateProps {
   scannedAt: string;
   ticketPrice: string;
   ticketNumber: number;
+  ticketId: string;
+  emailSentHour: Date | null;
   companyCgu?: CguPart[] | null;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   userId: string;
 }
+
+export interface Review {
+  id: string;
+  ticketId: string;
+  rating: number;
+  comment: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 
 export interface RetrieveCarModalProps {
   isOpen: boolean;
@@ -327,7 +348,9 @@ export interface EmailTicketActionProps {
   scannedAt: string;
   ticketPrice: string;
   ticketNumber: number;
+  ticketId: string;
   companyCgu?: CguPart[] | null;
+  emailSentHour: Date | null;
 }
 
 export interface EmailTicketProps {

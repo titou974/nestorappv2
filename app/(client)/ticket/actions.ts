@@ -10,8 +10,7 @@ import { Resend } from "resend";
 import z from "zod";
 import sendSms from "@/app/actions";
 import { PICKUP_TIME_OPTIONS } from "@/constants";
-import { revalidatePath } from "next/cache";
-import { ROUTES } from "@/constants/routes";
+import { revalidateTag } from "next/cache";
 
 const resend = new Resend(process.env.RESEND_KEY);
 
@@ -21,10 +20,18 @@ export async function sendTicketByEmail(
   initialState: any,
   formData: FormData,
 ) {
+  let success;
   const email = formData.get("email");
 
-  const { siteName, scannedAt, ticketPrice, ticketNumber, companyCgu } =
-    emailContent;
+  const {
+    siteName,
+    scannedAt,
+    ticketPrice,
+    ticketNumber,
+    companyCgu,
+    ticketId,
+    emailSentHour,
+  } = emailContent;
 
   const validatedFields = emailSchema.safeParse(email);
 
@@ -63,16 +70,30 @@ export async function sendTicketByEmail(
         },
       ),
     });
-    return {
-      title: StringsFR.emailTicketSent,
-      content: StringsFR.emailTicketSentDescription,
-      status: "SUCCESS" as const,
-    };
-  } catch (error) {
+    if (!emailSentHour) {
+      await prisma.ticket.update({
+        where: {
+          id: ticketId,
+        },
+        data: {
+          emailSentHour: new Date(),
+        },
+      });
+    }
+    success = true;
+  } catch {
     return {
       title: StringsFR.oupsError,
       content: StringsFR.emailTicketError,
       status: "ERROR" as const,
+    };
+  }
+  if (success) {
+    revalidateTag("ticket", "max");
+    return {
+      title: StringsFR.emailTicketSent,
+      content: StringsFR.emailTicketSentDescription,
+      status: "SUCCESS" as const,
     };
   }
 }
@@ -105,7 +126,7 @@ export async function askToPickupCar(
       ticket.ticketNumber,
       ticket.immatriculation,
     );
-  } catch (error) {
+  } catch {
     return {
       title: StringsFR.oupsError,
       content: StringsFR.retrieveCarError,
@@ -114,13 +135,42 @@ export async function askToPickupCar(
   }
 
   if (messageResponse.from) {
-    revalidatePath(ROUTES.NEW_TICKET);
+    revalidateTag("ticket", "max");
     return {
       title: StringsFR.retrieveCarAsked,
       content: StringsFR.retrieveCarAskedDescription,
       status: "SUCCESS" as const,
     };
   }
+}
+
+export async function submitReview(
+  ticketId: string,
+  rating: boolean,
+  comment: string,
+) {
+  try {
+    await prisma.review.create({
+      data: {
+        ticketId,
+        rating,
+        comment: comment || null,
+      },
+    });
+  } catch {
+    return {
+      title: StringsFR.oupsError,
+      content: StringsFR.satisfactionError,
+      status: "ERROR" as const,
+    };
+  }
+
+  revalidateTag("ticket", "max");
+  return {
+    title: StringsFR.satisfactionSuccess,
+    content: StringsFR.satisfactionSuccessDescription,
+    status: "SUCCESS" as const,
+  };
 }
 
 async function sendAMessageToValet(

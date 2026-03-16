@@ -13,6 +13,7 @@ import {
   Description,
   ListBox,
   Select,
+  Skeleton,
 } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
@@ -85,11 +86,15 @@ export default function RetrieveCarModal({
                       <DialogTitle className="text-lg font-semibold text-foreground">
                         Le voiturier prépare votre véhicule !
                       </DialogTitle>
-                      <Description className="text-sm text-muted-foreground">
+                      <Description className="text-sm text-muted-foreground flex items-center gap-1 mx-auto w-fit">
                         Votre voiture sera prête pour{" "}
                         <span className="font-semibold text-foreground">
-                          {formatHour(requestedPickupTimeData as Date)}
+                          {requestedPickupTime &&
+                            formatHour(requestedPickupTimeData as Date)}
                         </span>
+                        {!requestedPickupTime && (
+                          <Skeleton className="w-12 h-4" />
+                        )}
                       </Description>
                     </div>
 

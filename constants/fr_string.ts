@@ -173,4 +173,17 @@ export const StringsFR = {
   phoneNumberAlreadyExists: "Numéro déjà utilisé",
   phoneNumberAlreadyExistsDescription:
     "Ce numéro de téléphone est déjà associé à un autre compte",
+  satisfactionModalTitle: "Merci d'avoir utilisé Nestor !",
+  satisfactionQuestion:
+    "Comment avez-vous trouvé votre expérience avec Nestor ?",
+  satisfactionCommentLabel: "Des suggestions d'amélioration ?",
+  satisfactionCommentPlaceholder:
+    "Laissez-nous un commentaire/des idées d'amélioration",
+  satisfactionGood: "Super",
+  satisfactionBad: "J'aime pas",
+  satisfactionSubmit: "Envoyer mon avis",
+  satisfactionSubmitting: "Envoi...",
+  satisfactionSuccess: "Merci pour votre avis !",
+  satisfactionSuccessDescription: "Votre retour nous aide à améliorer Nestor",
+  satisfactionError: "Erreur lors de l'envoi de votre avis",
 };

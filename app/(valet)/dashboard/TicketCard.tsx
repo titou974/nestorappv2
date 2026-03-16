@@ -66,8 +66,6 @@ export default function TicketCard({
     if (immatriculation && immatriculation !== ticket.immatriculation) {
       try {
         await triggerImmatriculation({ id: ticket.id, immatriculation });
-        const modalContent = `${StringsFR.theImmat} ${immatriculation.toUpperCase()} ${StringsFR.savedForTheTicket} ${ticket.ticketNumber}`;
-        createToast(StringsFR.immatriculationSaved, modalContent, true);
         if (!displayAnimation) {
           setDisplayAnimation(true);
           queueMicrotask(() => {
