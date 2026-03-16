@@ -9,7 +9,7 @@ export default function ValetLayout({
   children: ReactNode;
 }>) {
   return (
-    <div
+    <body
       data-theme="nestor-dark"
       className="min-h-screen bg-background text-foreground dark"
     >
@@ -20,6 +20,6 @@ export default function ValetLayout({
       >
         {children}
       </div>
-    </div>
+    </body>
   );
 }

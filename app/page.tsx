@@ -12,5 +12,9 @@ export default async function Home() {
   if (session) {
     redirect(ROUTES.DASHBOARD);
   }
-  return <HomeSection />;
+  return (
+    <body data-theme="nestor" className="bg-background text-foreground">
+      <HomeSection />
+    </body>
+  );
 }

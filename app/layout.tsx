@@ -33,8 +33,8 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="fr" className="bg-background">
-      <body className={`${montserrat.className} antialiased`}>{children}</body>
+    <html lang="fr" className={`${montserrat.className} antialiased`}>
+      {children}
     </html>
   );
 }
