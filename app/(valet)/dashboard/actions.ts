@@ -162,6 +162,102 @@ export async function verifyAddedPhone(
   }
 }
 
+export async function completeTicket(formData: FormData) {
+  const ticketId = formData.get("ticketId") as string;
+  const immatriculation = formData.get("immatriculation") as string;
+  const photosJson = formData.get("photos") as string;
+  const photos: File[] = formData.getAll("photoFiles") as File[];
+
+  if (!ticketId) {
+    return {
+      status: "ERROR" as const,
+      title: StringsFR.aErrorOccured,
+      content: StringsFR.ourServerHasProblems,
+    };
+  }
+
+  try {
+    const uploadedUrls: string[] = [];
+
+    if (photos.length > 0) {
+      const { supabase } = await import("@/lib/supabase");
+      const BUCKET = "ticket-photos";
+
+      for (const file of photos) {
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const ext = file.name.split(".").pop() || "jpg";
+        const fileName = `${ticketId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
+        const { error } = await supabase.storage
+          .from(BUCKET)
+          .upload(fileName, buffer, { contentType: file.type, upsert: false });
+
+        if (error) {
+          return {
+            status: "ERROR" as const,
+            title: StringsFR.aErrorOccured,
+            content: error.message,
+          };
+        }
+
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from(BUCKET).getPublicUrl(fileName);
+        uploadedUrls.push(publicUrl);
+      }
+    }
+
+    // Existing photos already saved (URLs from Supabase)
+    const existingPhotos: string[] = photosJson ? JSON.parse(photosJson) : [];
+
+    await prisma.ticket.update({
+      where: { id: ticketId },
+      data: {
+        ...(immatriculation ? { immatriculation } : {}),
+        photos: [...existingPhotos, ...uploadedUrls],
+      },
+    });
+
+    return {
+      status: "SUCCESS" as const,
+      title: StringsFR.immatriculationSaved,
+      content: StringsFR.immatriculationSavedDescription,
+    };
+  } catch {
+    return {
+      status: "ERROR" as const,
+      title: StringsFR.aErrorOccured,
+      content: StringsFR.ourServerHasProblems,
+    };
+  }
+}
+
+export async function deleteTicketPhoto(ticketId: string, url: string) {
+  try {
+    const { supabase } = await import("@/lib/supabase");
+    const BUCKET = "ticket-photos";
+
+    const urlObj = new URL(url);
+    const pathParts = urlObj.pathname.split(`/${BUCKET}/`);
+    const filePath = pathParts[1];
+    if (filePath) {
+      await supabase.storage.from(BUCKET).remove([filePath]);
+    }
+
+    const ticket = await prisma.ticket.findUnique({ where: { id: ticketId } });
+    const updatedPhotos = (ticket?.photos || []).filter((p) => p !== url);
+
+    await prisma.ticket.update({
+      where: { id: ticketId },
+      data: { photos: updatedPhotos },
+    });
+
+    return { status: "SUCCESS" as const, photos: updatedPhotos };
+  } catch {
+    return { status: "ERROR" as const, photos: [] };
+  }
+}
+
 export async function acceptWorkConditions({
   workSessionId,
 }: {

@@ -21,6 +21,7 @@ export async function GET(
             name: true,
             enableValetResponsibilityModal: true,
             enableSmsRetrieval: true,
+            enablePhysicalTicket: true,
           },
         },
       },
