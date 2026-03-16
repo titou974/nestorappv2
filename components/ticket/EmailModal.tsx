@@ -32,8 +32,10 @@ export default function EmailModal({
   scannedAt,
   ticketPrice,
   ticketNumber,
+  ticketId,
   userId,
   companyCgu,
+  emailSentHour,
 }: EmailTemplateProps) {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
   const [displayAnimation, setDisplayAnimation] = useState<boolean>(false);
@@ -47,6 +49,8 @@ export default function EmailModal({
         ticketPrice,
         ticketNumber,
         companyCgu,
+        ticketId,
+        emailSentHour,
       }),
       toastCallback(() => setIsOpen(false)),
     ),

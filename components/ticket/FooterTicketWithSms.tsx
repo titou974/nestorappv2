@@ -57,7 +57,9 @@ export default function FooterTicketWithSms({
         scannedAt={ticketData?.scannedAt}
         ticketPrice={ticketData?.site.ticketPrice || "0"}
         ticketNumber={ticketData?.ticketNumber}
+        ticketId={ticketData?.id}
         userId={ticketData?.user.id}
+        emailSentHour={ticketData?.emailSentHour}
       />
     </>
   );

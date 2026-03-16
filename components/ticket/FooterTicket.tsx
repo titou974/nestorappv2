@@ -37,6 +37,8 @@ export default function FooterTicket({
         ticketPrice={ticketData?.site.ticketPrice || "0"}
         ticketNumber={ticketData?.ticketNumber}
         userId={ticketData?.user.id}
+        ticketId={ticketData?.id}
+        emailSentHour={ticketData?.emailSentHour}
       />
     </>
   );
