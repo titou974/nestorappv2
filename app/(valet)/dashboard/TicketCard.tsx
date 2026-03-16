@@ -5,7 +5,11 @@ import { Ticket } from "@/generated/prisma/client";
 import createToast from "@/lib/createToast";
 import { formatHour, getMinutesUntil } from "@/lib/formatHour";
 import { TicketPatchData } from "@/types/site";
-import { ClockIcon, ArrowRightCircleIcon } from "@heroicons/react/20/solid";
+import {
+  ClockIcon,
+  ArrowRightCircleIcon,
+  PlusIcon,
+} from "@heroicons/react/20/solid";
 import {
   Alert,
   Button,
@@ -23,11 +27,14 @@ import { TriggerWithArgs } from "swr/dist/mutation";
 
 export default function TicketCard({
   ticket,
-  triggerImmatriculation,
+  enablePhysicalTicket,
+  triggerUpdate,
   setIsOpenModalCarRetrieve,
+  setIsOpenModalCompleteTicket,
 }: {
   ticket: Ticket;
-  triggerImmatriculation: TriggerWithArgs<
+  enablePhysicalTicket: boolean;
+  triggerUpdate: TriggerWithArgs<
     Response,
     unknown,
     string,
@@ -39,11 +46,19 @@ export default function TicketCard({
       id: string | null;
     }>
   >;
+  setIsOpenModalCompleteTicket: React.Dispatch<
+    React.SetStateAction<{
+      isOpen: boolean;
+      id: string | null;
+    }>
+  >;
 }) {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
-  const [immatriculation, setImmatriculation] = useState<string>(
-    ticket.immatriculation || "",
+  const [fieldValue, setFieldValue] = useState<string>(
+    enablePhysicalTicket
+      ? ticket.physicalTicketNumber || ""
+      : ticket.immatriculation || "",
   );
 
   const [displayAnimation, setDisplayAnimation] = useState<boolean>(false);
@@ -62,17 +77,23 @@ export default function TicketCard({
     }
   };
 
-  const handleImmatriculationBlur = async () => {
-    if (immatriculation && immatriculation !== ticket.immatriculation) {
+  const handleFieldBlur = async () => {
+    const currentValue = enablePhysicalTicket
+      ? ticket.physicalTicketNumber
+      : ticket.immatriculation;
+
+    if (fieldValue && fieldValue !== currentValue) {
       try {
-        await triggerImmatriculation({ id: ticket.id, immatriculation });
+        const patchData: { id: string } & TicketPatchData = enablePhysicalTicket
+          ? { id: ticket.id, physicalTicketNumber: fieldValue }
+          : { id: ticket.id, immatriculation: fieldValue };
+        await triggerUpdate(patchData);
         if (!displayAnimation) {
           setDisplayAnimation(true);
           queueMicrotask(() => {
             lottieRef.current?.play();
           });
         }
-        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
       } catch (error: unknown) {
         createToast(
           StringsFR.aErrorOccured,
@@ -83,8 +104,8 @@ export default function TicketCard({
     }
   };
 
-  const handleFieldValidation = (value: string) => {
-    setImmatriculation(value);
+  const handleFieldChange = (value: string) => {
+    setFieldValue(value);
 
     if (displayAnimation) {
       setDisplayAnimation(false);
@@ -94,39 +115,77 @@ export default function TicketCard({
     }
   };
 
+  const isInvalid = enablePhysicalTicket
+    ? false
+    : !!fieldValue && !licensePlateSchema.safeParse(fieldValue).success;
+
   return (
     <Card
       className={`col-span-12 w-full ${ticket.requestedPickupTime && "animate-pulse border-2 border-accent shadow shadow-accent"}`}
     >
       <Card.Header className="gap-3">
         <div className="w-full flex justify-between">
-          <TextField
-            name="name"
-            isInvalid={
-              !!immatriculation &&
-              !licensePlateSchema.safeParse(immatriculation)
-            }
-          >
-            <Label className="inline-flex items-center">
-              {StringsFR.immatriculation}
-            </Label>
-            <div className="relative w-full">
-              <Input
-                className="w-full uppercase"
-                placeholder={StringsFR.immatriculationPlaceholder}
-                value={immatriculation}
-                onBlur={handleImmatriculationBlur}
-                onChange={(e) => handleFieldValidation(e.target.value)}
-              />
-              {displayAnimation && <CheckAnimation lottieRef={lottieRef} />}
+          {enablePhysicalTicket ? (
+            <div className="flex flex-col items-start gap-4">
+              <TextField name="ticketPhysicalNumber">
+                <Label className="inline-flex items-center text-sm">
+                  {StringsFR.physicalTicketNumber}
+                </Label>
+                <div className="relative w-full">
+                  <Input
+                    className="w-full uppercase max-w-31"
+                    placeholder={StringsFR.physicalTicketNumberPlaceholder}
+                    value={fieldValue}
+                    onBlur={handleFieldBlur}
+                    onChange={(e) => handleFieldChange(e.target.value)}
+                  />
+                  {displayAnimation && <CheckAnimation lottieRef={lottieRef} />}
+                </div>
+                {!fieldValue && (
+                  <Description className="flex items-center gap-1 text-accent">
+                    <Icon icon="jam:alert" />
+                    <p>{StringsFR.toComplete}</p>
+                  </Description>
+                )}
+              </TextField>
+              <Button
+                className="w-full border border-foreground/40 max-w-fit"
+                variant="tertiary"
+                size="sm"
+                onClick={() =>
+                  setIsOpenModalCompleteTicket({
+                    isOpen: true,
+                    id: ticket.id,
+                  })
+                }
+              >
+                {StringsFR.completeTicket}
+                <PlusIcon className="size-4" />
+              </Button>
             </div>
-            {!immatriculation && (
-              <Description className="flex items-center gap-1 text-accent">
-                <Icon icon="jam:alert" />
-                <p>{StringsFR.toComplete}</p>
-              </Description>
-            )}
-          </TextField>
+          ) : (
+            <TextField name="immatriculation" isInvalid={isInvalid}>
+              <Label className="inline-flex items-center">
+                {StringsFR.immatriculation}
+              </Label>
+              <div className="relative w-full">
+                <Input
+                  className="w-full uppercase"
+                  placeholder={StringsFR.immatriculationPlaceholder}
+                  value={fieldValue}
+                  onBlur={handleFieldBlur}
+                  onChange={(e) => handleFieldChange(e.target.value)}
+                />
+                {displayAnimation && <CheckAnimation lottieRef={lottieRef} />}
+              </div>
+              {!fieldValue && (
+                <Description className="flex items-center gap-1 text-accent">
+                  <Icon icon="jam:alert" />
+                  <p>{StringsFR.toComplete}</p>
+                </Description>
+              )}
+            </TextField>
+          )}
           <div className="h-fit rounded-md border-2 border-solid border-foreground bg-surface/80 px-2 py-1 shadow-xl text-sm">
             {StringsFR.numero}
             {ticket.ticketNumber}

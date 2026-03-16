@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Dashboard from "./Dashboard";
 import ResponsabilityModal from "@/components/valet/ResponsabilityModal";
-import DashboardWithRetrieval from "./DashboardWithRetrieval";
+import AddPhoneNumberModal from "./AddPhoneNumberModal";
 
 export default async function DashboardPage() {
   const session = await auth.api.getSession({
@@ -20,21 +20,15 @@ export default async function DashboardPage() {
 
   return (
     <>
-      {workSession.site.enableSmsRetrieval ? (
-        <DashboardWithRetrieval
-          startedAt={workSession.startedAt}
-          siteId={workSession.siteId}
-          siteName={workSession.site.name}
-          workSessionId={workSession.id}
-          hasPhoneNumber={!!session.user.phoneNumber}
-        />
-      ) : (
-        <Dashboard
-          startedAt={workSession.startedAt}
-          siteId={workSession.siteId}
-          siteName={workSession.site.name}
-          workSessionId={workSession.id}
-        />
+      <Dashboard
+        startedAt={workSession.startedAt}
+        siteId={workSession.siteId}
+        siteName={workSession.site.name}
+        workSessionId={workSession.id}
+        enablePhysicalTicket={workSession.site.enablePhysicalTicket}
+      />
+      {workSession.site.enableSmsRetrieval && !session.user.phoneNumber && (
+        <AddPhoneNumberModal hasPhoneNumber={!!session.user.phoneNumber} />
       )}
       {workSession.site.enableValetResponsibilityModal &&
         !workSession.acceptedWorkConditions && (

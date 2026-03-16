@@ -13,11 +13,13 @@ export default function FeedTickets({
   startedAt,
   workSessionId,
   siteName,
+  enablePhysicalTicket,
 }: {
   siteId: string;
   startedAt: Date;
   workSessionId: string;
   siteName: string;
+  enablePhysicalTicket: boolean;
 }) {
   // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
   const [state, action, pending] = useActionState(
@@ -35,6 +37,7 @@ export default function FeedTickets({
         siteId={siteId}
         startedAt={startedAt}
         workSessionId={workSessionId}
+        enablePhysicalTicket={enablePhysicalTicket}
       />
       <FooterBarLayout>
         <ModalQrCode siteName={siteName} siteId={siteId} />

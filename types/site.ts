@@ -67,6 +67,8 @@ export interface Ticket {
   ticketNumber: number;
   workSessionId: string | null;
   immatriculation: string | null;
+  physicalTicketNumber: string | null;
+  photos: string[];
   retrievedAt: string | null;
   requestedPickupTime: string | null;
   pickupReady: boolean;
@@ -84,6 +86,7 @@ export interface Site {
   enableValetResponsibilityModal: boolean;
   enableClientReviewModal: boolean;
   enableSmsRetrieval: boolean;
+  enablePhysicalTicket: boolean;
   companyId: string | null;
   // Relations
   workSessions?: WorkSession[];
@@ -429,6 +432,8 @@ export interface LottieRefsRegister {
 
 export type TicketPatchData = {
   immatriculation?: string;
+  physicalTicketNumber?: string;
+  photos?: string[];
   retrievedAt?: Date;
 };
 

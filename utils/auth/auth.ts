@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { createAuthMiddleware, oneTap } from "better-auth/plugins";
+import { oneTap } from "better-auth/plugins";
+import { createAuthMiddleware } from "better-auth/api";
 import prisma from "@/lib/prisma";
 import { UserRole } from "@/types/site";
 import { nextCookies } from "better-auth/next-js";
