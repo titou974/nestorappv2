@@ -1,7 +1,7 @@
 import CheckAnimation from "@/components/animations/Check";
 import { StringsFR } from "@/constants/fr_string";
 import { licensePlateSchema } from "@/constants/validations";
-import { Ticket } from "@/generated/prisma/client";
+import { Ticket } from "@/prisma/generated/prisma/client";
 import createToast from "@/lib/createToast";
 import { formatHour, getMinutesUntil } from "@/lib/formatHour";
 import { TicketPatchData } from "@/types/site";

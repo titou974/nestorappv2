@@ -1,5 +1,5 @@
 "use client";
-import { Ticket } from "@/generated/prisma/client";
+import { Ticket } from "@/prisma/generated/prisma/client";
 import { useTicketsOfSession } from "@/utils/dashboard/useTicketsofSession";
 import { AnimatePresence, motion } from "framer-motion";
 import TicketCard from "./TicketCard";

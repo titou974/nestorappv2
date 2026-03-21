@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { APIROUTES } from "@/constants/api_routes";
 import { fetcher } from "@/lib/fetcher";
-import { Ticket } from "@/generated/prisma/client";
+import { Ticket } from "@/prisma/generated/prisma/client";
 
 export function useTicketsOfSession(
   siteId: string,

@@ -12,7 +12,7 @@ import {
   TicketCreateNestedManyWithoutUserInput,
   UserCreateNestedOneWithoutTicketsInput,
   AccountCreateNestedManyWithoutUserInput,
-} from "@/generated/prisma/models";
+} from "@/prisma/generated/prisma/models";
 import { LottieRefCurrentProps } from "lottie-react";
 import { TriggerWithArgs } from "swr/dist/mutation";
 
@@ -319,7 +319,6 @@ export interface Review {
   createdAt: Date;
   updatedAt: Date;
 }
-
 
 export interface RetrieveCarModalProps {
   isOpen: boolean;
