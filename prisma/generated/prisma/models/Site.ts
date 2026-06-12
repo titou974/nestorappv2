@@ -33,6 +33,7 @@ export type SiteMinAggregateOutputType = {
   enableClientReviewModal: boolean | null
   enableSmsRetrieval: boolean | null
   enablePhysicalTicket: boolean | null
+  enablePayment: boolean | null
   ticketPrice: string | null
   companyId: string | null
 }
@@ -46,6 +47,7 @@ export type SiteMaxAggregateOutputType = {
   enableClientReviewModal: boolean | null
   enableSmsRetrieval: boolean | null
   enablePhysicalTicket: boolean | null
+  enablePayment: boolean | null
   ticketPrice: string | null
   companyId: string | null
 }
@@ -59,6 +61,7 @@ export type SiteCountAggregateOutputType = {
   enableClientReviewModal: number
   enableSmsRetrieval: number
   enablePhysicalTicket: number
+  enablePayment: number
   ticketPrice: number
   companyId: number
   _all: number
@@ -74,6 +77,7 @@ export type SiteMinAggregateInputType = {
   enableClientReviewModal?: true
   enableSmsRetrieval?: true
   enablePhysicalTicket?: true
+  enablePayment?: true
   ticketPrice?: true
   companyId?: true
 }
@@ -87,6 +91,7 @@ export type SiteMaxAggregateInputType = {
   enableClientReviewModal?: true
   enableSmsRetrieval?: true
   enablePhysicalTicket?: true
+  enablePayment?: true
   ticketPrice?: true
   companyId?: true
 }
@@ -100,6 +105,7 @@ export type SiteCountAggregateInputType = {
   enableClientReviewModal?: true
   enableSmsRetrieval?: true
   enablePhysicalTicket?: true
+  enablePayment?: true
   ticketPrice?: true
   companyId?: true
   _all?: true
@@ -186,6 +192,7 @@ export type SiteGroupByOutputType = {
   enableClientReviewModal: boolean
   enableSmsRetrieval: boolean
   enablePhysicalTicket: boolean
+  enablePayment: boolean
   ticketPrice: string | null
   companyId: string | null
   _count: SiteCountAggregateOutputType | null
@@ -220,6 +227,7 @@ export type SiteWhereInput = {
   enableClientReviewModal?: Prisma.BoolFilter<"Site"> | boolean
   enableSmsRetrieval?: Prisma.BoolFilter<"Site"> | boolean
   enablePhysicalTicket?: Prisma.BoolFilter<"Site"> | boolean
+  enablePayment?: Prisma.BoolFilter<"Site"> | boolean
   ticketPrice?: Prisma.StringNullableFilter<"Site"> | string | null
   companyId?: Prisma.StringNullableFilter<"Site"> | string | null
   company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
@@ -236,6 +244,7 @@ export type SiteOrderByWithRelationInput = {
   enableClientReviewModal?: Prisma.SortOrder
   enableSmsRetrieval?: Prisma.SortOrder
   enablePhysicalTicket?: Prisma.SortOrder
+  enablePayment?: Prisma.SortOrder
   ticketPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   companyId?: Prisma.SortOrderInput | Prisma.SortOrder
   company?: Prisma.CompanyOrderByWithRelationInput
@@ -255,6 +264,7 @@ export type SiteWhereUniqueInput = Prisma.AtLeast<{
   enableClientReviewModal?: Prisma.BoolFilter<"Site"> | boolean
   enableSmsRetrieval?: Prisma.BoolFilter<"Site"> | boolean
   enablePhysicalTicket?: Prisma.BoolFilter<"Site"> | boolean
+  enablePayment?: Prisma.BoolFilter<"Site"> | boolean
   ticketPrice?: Prisma.StringNullableFilter<"Site"> | string | null
   companyId?: Prisma.StringNullableFilter<"Site"> | string | null
   company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
@@ -271,6 +281,7 @@ export type SiteOrderByWithAggregationInput = {
   enableClientReviewModal?: Prisma.SortOrder
   enableSmsRetrieval?: Prisma.SortOrder
   enablePhysicalTicket?: Prisma.SortOrder
+  enablePayment?: Prisma.SortOrder
   ticketPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   companyId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SiteCountOrderByAggregateInput
@@ -290,6 +301,7 @@ export type SiteScalarWhereWithAggregatesInput = {
   enableClientReviewModal?: Prisma.BoolWithAggregatesFilter<"Site"> | boolean
   enableSmsRetrieval?: Prisma.BoolWithAggregatesFilter<"Site"> | boolean
   enablePhysicalTicket?: Prisma.BoolWithAggregatesFilter<"Site"> | boolean
+  enablePayment?: Prisma.BoolWithAggregatesFilter<"Site"> | boolean
   ticketPrice?: Prisma.StringNullableWithAggregatesFilter<"Site"> | string | null
   companyId?: Prisma.StringNullableWithAggregatesFilter<"Site"> | string | null
 }
@@ -303,6 +315,7 @@ export type SiteCreateInput = {
   enableClientReviewModal?: boolean
   enableSmsRetrieval?: boolean
   enablePhysicalTicket?: boolean
+  enablePayment?: boolean
   ticketPrice?: string | null
   company?: Prisma.CompanyCreateNestedOneWithoutSitesInput
   tickets?: Prisma.TicketCreateNestedManyWithoutSiteInput
@@ -318,6 +331,7 @@ export type SiteUncheckedCreateInput = {
   enableClientReviewModal?: boolean
   enableSmsRetrieval?: boolean
   enablePhysicalTicket?: boolean
+  enablePayment?: boolean
   ticketPrice?: string | null
   companyId?: string | null
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutSiteInput
@@ -333,6 +347,7 @@ export type SiteUpdateInput = {
   enableClientReviewModal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enableSmsRetrieval?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enablePhysicalTicket?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enablePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ticketPrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   company?: Prisma.CompanyUpdateOneWithoutSitesNestedInput
   tickets?: Prisma.TicketUpdateManyWithoutSiteNestedInput
@@ -348,6 +363,7 @@ export type SiteUncheckedUpdateInput = {
   enableClientReviewModal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enableSmsRetrieval?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enablePhysicalTicket?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enablePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ticketPrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutSiteNestedInput
@@ -363,6 +379,7 @@ export type SiteCreateManyInput = {
   enableClientReviewModal?: boolean
   enableSmsRetrieval?: boolean
   enablePhysicalTicket?: boolean
+  enablePayment?: boolean
   ticketPrice?: string | null
   companyId?: string | null
 }
@@ -376,6 +393,7 @@ export type SiteUpdateManyMutationInput = {
   enableClientReviewModal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enableSmsRetrieval?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enablePhysicalTicket?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enablePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ticketPrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -388,6 +406,7 @@ export type SiteUncheckedUpdateManyInput = {
   enableClientReviewModal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enableSmsRetrieval?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enablePhysicalTicket?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enablePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ticketPrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -406,6 +425,7 @@ export type SiteCountOrderByAggregateInput = {
   enableClientReviewModal?: Prisma.SortOrder
   enableSmsRetrieval?: Prisma.SortOrder
   enablePhysicalTicket?: Prisma.SortOrder
+  enablePayment?: Prisma.SortOrder
   ticketPrice?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
 }
@@ -419,6 +439,7 @@ export type SiteMaxOrderByAggregateInput = {
   enableClientReviewModal?: Prisma.SortOrder
   enableSmsRetrieval?: Prisma.SortOrder
   enablePhysicalTicket?: Prisma.SortOrder
+  enablePayment?: Prisma.SortOrder
   ticketPrice?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
 }
@@ -432,6 +453,7 @@ export type SiteMinOrderByAggregateInput = {
   enableClientReviewModal?: Prisma.SortOrder
   enableSmsRetrieval?: Prisma.SortOrder
   enablePhysicalTicket?: Prisma.SortOrder
+  enablePayment?: Prisma.SortOrder
   ticketPrice?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
 }
@@ -525,6 +547,7 @@ export type SiteCreateWithoutTicketsInput = {
   enableClientReviewModal?: boolean
   enableSmsRetrieval?: boolean
   enablePhysicalTicket?: boolean
+  enablePayment?: boolean
   ticketPrice?: string | null
   company?: Prisma.CompanyCreateNestedOneWithoutSitesInput
   workSessions?: Prisma.WorkSessionCreateNestedManyWithoutSiteInput
@@ -539,6 +562,7 @@ export type SiteUncheckedCreateWithoutTicketsInput = {
   enableClientReviewModal?: boolean
   enableSmsRetrieval?: boolean
   enablePhysicalTicket?: boolean
+  enablePayment?: boolean
   ticketPrice?: string | null
   companyId?: string | null
   workSessions?: Prisma.WorkSessionUncheckedCreateNestedManyWithoutSiteInput
@@ -569,6 +593,7 @@ export type SiteUpdateWithoutTicketsInput = {
   enableClientReviewModal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enableSmsRetrieval?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enablePhysicalTicket?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enablePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ticketPrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   company?: Prisma.CompanyUpdateOneWithoutSitesNestedInput
   workSessions?: Prisma.WorkSessionUpdateManyWithoutSiteNestedInput
@@ -583,6 +608,7 @@ export type SiteUncheckedUpdateWithoutTicketsInput = {
   enableClientReviewModal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enableSmsRetrieval?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enablePhysicalTicket?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enablePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ticketPrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workSessions?: Prisma.WorkSessionUncheckedUpdateManyWithoutSiteNestedInput
@@ -597,6 +623,7 @@ export type SiteCreateWithoutWorkSessionsInput = {
   enableClientReviewModal?: boolean
   enableSmsRetrieval?: boolean
   enablePhysicalTicket?: boolean
+  enablePayment?: boolean
   ticketPrice?: string | null
   company?: Prisma.CompanyCreateNestedOneWithoutSitesInput
   tickets?: Prisma.TicketCreateNestedManyWithoutSiteInput
@@ -611,6 +638,7 @@ export type SiteUncheckedCreateWithoutWorkSessionsInput = {
   enableClientReviewModal?: boolean
   enableSmsRetrieval?: boolean
   enablePhysicalTicket?: boolean
+  enablePayment?: boolean
   ticketPrice?: string | null
   companyId?: string | null
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutSiteInput
@@ -641,6 +669,7 @@ export type SiteUpdateWithoutWorkSessionsInput = {
   enableClientReviewModal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enableSmsRetrieval?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enablePhysicalTicket?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enablePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ticketPrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   company?: Prisma.CompanyUpdateOneWithoutSitesNestedInput
   tickets?: Prisma.TicketUpdateManyWithoutSiteNestedInput
@@ -655,6 +684,7 @@ export type SiteUncheckedUpdateWithoutWorkSessionsInput = {
   enableClientReviewModal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enableSmsRetrieval?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enablePhysicalTicket?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enablePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ticketPrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutSiteNestedInput
@@ -669,6 +699,7 @@ export type SiteCreateWithoutCompanyInput = {
   enableClientReviewModal?: boolean
   enableSmsRetrieval?: boolean
   enablePhysicalTicket?: boolean
+  enablePayment?: boolean
   ticketPrice?: string | null
   tickets?: Prisma.TicketCreateNestedManyWithoutSiteInput
   workSessions?: Prisma.WorkSessionCreateNestedManyWithoutSiteInput
@@ -683,6 +714,7 @@ export type SiteUncheckedCreateWithoutCompanyInput = {
   enableClientReviewModal?: boolean
   enableSmsRetrieval?: boolean
   enablePhysicalTicket?: boolean
+  enablePayment?: boolean
   ticketPrice?: string | null
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutSiteInput
   workSessions?: Prisma.WorkSessionUncheckedCreateNestedManyWithoutSiteInput
@@ -726,6 +758,7 @@ export type SiteScalarWhereInput = {
   enableClientReviewModal?: Prisma.BoolFilter<"Site"> | boolean
   enableSmsRetrieval?: Prisma.BoolFilter<"Site"> | boolean
   enablePhysicalTicket?: Prisma.BoolFilter<"Site"> | boolean
+  enablePayment?: Prisma.BoolFilter<"Site"> | boolean
   ticketPrice?: Prisma.StringNullableFilter<"Site"> | string | null
   companyId?: Prisma.StringNullableFilter<"Site"> | string | null
 }
@@ -739,6 +772,7 @@ export type SiteCreateManyCompanyInput = {
   enableClientReviewModal?: boolean
   enableSmsRetrieval?: boolean
   enablePhysicalTicket?: boolean
+  enablePayment?: boolean
   ticketPrice?: string | null
 }
 
@@ -751,6 +785,7 @@ export type SiteUpdateWithoutCompanyInput = {
   enableClientReviewModal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enableSmsRetrieval?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enablePhysicalTicket?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enablePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ticketPrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tickets?: Prisma.TicketUpdateManyWithoutSiteNestedInput
   workSessions?: Prisma.WorkSessionUpdateManyWithoutSiteNestedInput
@@ -765,6 +800,7 @@ export type SiteUncheckedUpdateWithoutCompanyInput = {
   enableClientReviewModal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enableSmsRetrieval?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enablePhysicalTicket?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enablePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ticketPrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutSiteNestedInput
   workSessions?: Prisma.WorkSessionUncheckedUpdateManyWithoutSiteNestedInput
@@ -779,6 +815,7 @@ export type SiteUncheckedUpdateManyWithoutCompanyInput = {
   enableClientReviewModal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enableSmsRetrieval?: Prisma.BoolFieldUpdateOperationsInput | boolean
   enablePhysicalTicket?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enablePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ticketPrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -831,6 +868,7 @@ export type SiteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   enableClientReviewModal?: boolean
   enableSmsRetrieval?: boolean
   enablePhysicalTicket?: boolean
+  enablePayment?: boolean
   ticketPrice?: boolean
   companyId?: boolean
   company?: boolean | Prisma.Site$companyArgs<ExtArgs>
@@ -848,6 +886,7 @@ export type SiteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   enableClientReviewModal?: boolean
   enableSmsRetrieval?: boolean
   enablePhysicalTicket?: boolean
+  enablePayment?: boolean
   ticketPrice?: boolean
   companyId?: boolean
   company?: boolean | Prisma.Site$companyArgs<ExtArgs>
@@ -862,6 +901,7 @@ export type SiteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   enableClientReviewModal?: boolean
   enableSmsRetrieval?: boolean
   enablePhysicalTicket?: boolean
+  enablePayment?: boolean
   ticketPrice?: boolean
   companyId?: boolean
   company?: boolean | Prisma.Site$companyArgs<ExtArgs>
@@ -876,11 +916,12 @@ export type SiteSelectScalar = {
   enableClientReviewModal?: boolean
   enableSmsRetrieval?: boolean
   enablePhysicalTicket?: boolean
+  enablePayment?: boolean
   ticketPrice?: boolean
   companyId?: boolean
 }
 
-export type SiteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt" | "enableValetResponsibilityModal" | "enableClientReviewModal" | "enableSmsRetrieval" | "enablePhysicalTicket" | "ticketPrice" | "companyId", ExtArgs["result"]["site"]>
+export type SiteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt" | "enableValetResponsibilityModal" | "enableClientReviewModal" | "enableSmsRetrieval" | "enablePhysicalTicket" | "enablePayment" | "ticketPrice" | "companyId", ExtArgs["result"]["site"]>
 export type SiteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   company?: boolean | Prisma.Site$companyArgs<ExtArgs>
   tickets?: boolean | Prisma.Site$ticketsArgs<ExtArgs>
@@ -910,6 +951,7 @@ export type $SitePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     enableClientReviewModal: boolean
     enableSmsRetrieval: boolean
     enablePhysicalTicket: boolean
+    enablePayment: boolean
     ticketPrice: string | null
     companyId: string | null
   }, ExtArgs["result"]["site"]>
@@ -1346,6 +1388,7 @@ export interface SiteFieldRefs {
   readonly enableClientReviewModal: Prisma.FieldRef<"Site", 'Boolean'>
   readonly enableSmsRetrieval: Prisma.FieldRef<"Site", 'Boolean'>
   readonly enablePhysicalTicket: Prisma.FieldRef<"Site", 'Boolean'>
+  readonly enablePayment: Prisma.FieldRef<"Site", 'Boolean'>
   readonly ticketPrice: Prisma.FieldRef<"Site", 'String'>
   readonly companyId: Prisma.FieldRef<"Site", 'String'>
 }

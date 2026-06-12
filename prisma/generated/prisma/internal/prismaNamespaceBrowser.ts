@@ -109,6 +109,9 @@ export const TicketScalarFieldEnum = {
   requestedPickupTime: 'requestedPickupTime',
   emailSentHour: 'emailSentHour',
   pickupReady: 'pickupReady',
+  paidAt: 'paidAt',
+  sumupCheckoutId: 'sumupCheckoutId',
+  sumupTransactionCode: 'sumupTransactionCode',
   workSessionId: 'workSessionId',
   immatriculation: 'immatriculation',
   physicalTicketNumber: 'physicalTicketNumber',
@@ -127,6 +130,7 @@ export const SiteScalarFieldEnum = {
   enableClientReviewModal: 'enableClientReviewModal',
   enableSmsRetrieval: 'enableSmsRetrieval',
   enablePhysicalTicket: 'enablePhysicalTicket',
+  enablePayment: 'enablePayment',
   ticketPrice: 'ticketPrice',
   companyId: 'companyId'
 } as const

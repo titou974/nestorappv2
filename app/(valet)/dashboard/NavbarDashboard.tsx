@@ -20,10 +20,10 @@ export default function NavbarDashboard({
   const { tickets, isTicketsLoading } = useTicketsOfSession(
     siteId,
     startedAt,
-    workSessionId
+    workSessionId,
   );
 
-  if (isTicketsLoading || !tickets?.tickets) {
+  if (isTicketsLoading) {
     return (
       <NavbarLoading
         withBottomContent={true}
@@ -40,7 +40,7 @@ export default function NavbarDashboard({
   return (
     <Navbar
       subtitle={StringsFR.youHave}
-      title={`${tickets?.tickets.length} ticket${tickets?.tickets.length > 1 ? "s" : ""}`}
+      title={`${!!tickets ? tickets?.length : 0} ticket${!!tickets && tickets?.length > 1 ? "s" : ""}`}
       endContent={
         <div className="bg-surface rounded-xl p-2 self-start text-sm mt-4 flex items-center gap-2">
           <BuildingStorefrontIcon width={16} />

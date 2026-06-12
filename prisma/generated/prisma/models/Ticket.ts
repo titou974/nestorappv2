@@ -46,6 +46,9 @@ export type TicketMinAggregateOutputType = {
   requestedPickupTime: Date | null
   emailSentHour: Date | null
   pickupReady: boolean | null
+  paidAt: Date | null
+  sumupCheckoutId: string | null
+  sumupTransactionCode: string | null
   workSessionId: string | null
   immatriculation: string | null
   physicalTicketNumber: string | null
@@ -63,6 +66,9 @@ export type TicketMaxAggregateOutputType = {
   requestedPickupTime: Date | null
   emailSentHour: Date | null
   pickupReady: boolean | null
+  paidAt: Date | null
+  sumupCheckoutId: string | null
+  sumupTransactionCode: string | null
   workSessionId: string | null
   immatriculation: string | null
   physicalTicketNumber: string | null
@@ -80,6 +86,9 @@ export type TicketCountAggregateOutputType = {
   requestedPickupTime: number
   emailSentHour: number
   pickupReady: number
+  paidAt: number
+  sumupCheckoutId: number
+  sumupTransactionCode: number
   workSessionId: number
   immatriculation: number
   physicalTicketNumber: number
@@ -108,6 +117,9 @@ export type TicketMinAggregateInputType = {
   requestedPickupTime?: true
   emailSentHour?: true
   pickupReady?: true
+  paidAt?: true
+  sumupCheckoutId?: true
+  sumupTransactionCode?: true
   workSessionId?: true
   immatriculation?: true
   physicalTicketNumber?: true
@@ -125,6 +137,9 @@ export type TicketMaxAggregateInputType = {
   requestedPickupTime?: true
   emailSentHour?: true
   pickupReady?: true
+  paidAt?: true
+  sumupCheckoutId?: true
+  sumupTransactionCode?: true
   workSessionId?: true
   immatriculation?: true
   physicalTicketNumber?: true
@@ -142,6 +157,9 @@ export type TicketCountAggregateInputType = {
   requestedPickupTime?: true
   emailSentHour?: true
   pickupReady?: true
+  paidAt?: true
+  sumupCheckoutId?: true
+  sumupTransactionCode?: true
   workSessionId?: true
   immatriculation?: true
   physicalTicketNumber?: true
@@ -247,6 +265,9 @@ export type TicketGroupByOutputType = {
   requestedPickupTime: Date | null
   emailSentHour: Date | null
   pickupReady: boolean
+  paidAt: Date | null
+  sumupCheckoutId: string | null
+  sumupTransactionCode: string | null
   workSessionId: string | null
   immatriculation: string | null
   physicalTicketNumber: string | null
@@ -288,6 +309,9 @@ export type TicketWhereInput = {
   requestedPickupTime?: Prisma.DateTimeNullableFilter<"Ticket"> | Date | string | null
   emailSentHour?: Prisma.DateTimeNullableFilter<"Ticket"> | Date | string | null
   pickupReady?: Prisma.BoolFilter<"Ticket"> | boolean
+  paidAt?: Prisma.DateTimeNullableFilter<"Ticket"> | Date | string | null
+  sumupCheckoutId?: Prisma.StringNullableFilter<"Ticket"> | string | null
+  sumupTransactionCode?: Prisma.StringNullableFilter<"Ticket"> | string | null
   workSessionId?: Prisma.StringNullableFilter<"Ticket"> | string | null
   immatriculation?: Prisma.StringNullableFilter<"Ticket"> | string | null
   physicalTicketNumber?: Prisma.StringNullableFilter<"Ticket"> | string | null
@@ -310,6 +334,9 @@ export type TicketOrderByWithRelationInput = {
   requestedPickupTime?: Prisma.SortOrderInput | Prisma.SortOrder
   emailSentHour?: Prisma.SortOrderInput | Prisma.SortOrder
   pickupReady?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  sumupCheckoutId?: Prisma.SortOrderInput | Prisma.SortOrder
+  sumupTransactionCode?: Prisma.SortOrderInput | Prisma.SortOrder
   workSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
   immatriculation?: Prisma.SortOrderInput | Prisma.SortOrder
   physicalTicketNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -335,6 +362,9 @@ export type TicketWhereUniqueInput = Prisma.AtLeast<{
   requestedPickupTime?: Prisma.DateTimeNullableFilter<"Ticket"> | Date | string | null
   emailSentHour?: Prisma.DateTimeNullableFilter<"Ticket"> | Date | string | null
   pickupReady?: Prisma.BoolFilter<"Ticket"> | boolean
+  paidAt?: Prisma.DateTimeNullableFilter<"Ticket"> | Date | string | null
+  sumupCheckoutId?: Prisma.StringNullableFilter<"Ticket"> | string | null
+  sumupTransactionCode?: Prisma.StringNullableFilter<"Ticket"> | string | null
   workSessionId?: Prisma.StringNullableFilter<"Ticket"> | string | null
   immatriculation?: Prisma.StringNullableFilter<"Ticket"> | string | null
   physicalTicketNumber?: Prisma.StringNullableFilter<"Ticket"> | string | null
@@ -357,6 +387,9 @@ export type TicketOrderByWithAggregationInput = {
   requestedPickupTime?: Prisma.SortOrderInput | Prisma.SortOrder
   emailSentHour?: Prisma.SortOrderInput | Prisma.SortOrder
   pickupReady?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  sumupCheckoutId?: Prisma.SortOrderInput | Prisma.SortOrder
+  sumupTransactionCode?: Prisma.SortOrderInput | Prisma.SortOrder
   workSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
   immatriculation?: Prisma.SortOrderInput | Prisma.SortOrder
   physicalTicketNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -383,6 +416,9 @@ export type TicketScalarWhereWithAggregatesInput = {
   requestedPickupTime?: Prisma.DateTimeNullableWithAggregatesFilter<"Ticket"> | Date | string | null
   emailSentHour?: Prisma.DateTimeNullableWithAggregatesFilter<"Ticket"> | Date | string | null
   pickupReady?: Prisma.BoolWithAggregatesFilter<"Ticket"> | boolean
+  paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Ticket"> | Date | string | null
+  sumupCheckoutId?: Prisma.StringNullableWithAggregatesFilter<"Ticket"> | string | null
+  sumupTransactionCode?: Prisma.StringNullableWithAggregatesFilter<"Ticket"> | string | null
   workSessionId?: Prisma.StringNullableWithAggregatesFilter<"Ticket"> | string | null
   immatriculation?: Prisma.StringNullableWithAggregatesFilter<"Ticket"> | string | null
   physicalTicketNumber?: Prisma.StringNullableWithAggregatesFilter<"Ticket"> | string | null
@@ -399,6 +435,9 @@ export type TicketCreateInput = {
   requestedPickupTime?: Date | string | null
   emailSentHour?: Date | string | null
   pickupReady?: boolean
+  paidAt?: Date | string | null
+  sumupCheckoutId?: string | null
+  sumupTransactionCode?: string | null
   immatriculation?: string | null
   physicalTicketNumber?: string | null
   photos?: Prisma.TicketCreatephotosInput | string[]
@@ -420,6 +459,9 @@ export type TicketUncheckedCreateInput = {
   requestedPickupTime?: Date | string | null
   emailSentHour?: Date | string | null
   pickupReady?: boolean
+  paidAt?: Date | string | null
+  sumupCheckoutId?: string | null
+  sumupTransactionCode?: string | null
   workSessionId?: string | null
   immatriculation?: string | null
   physicalTicketNumber?: string | null
@@ -437,6 +479,9 @@ export type TicketUpdateInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photos?: Prisma.TicketUpdatephotosInput | string[]
@@ -458,6 +503,9 @@ export type TicketUncheckedUpdateInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -477,6 +525,9 @@ export type TicketCreateManyInput = {
   requestedPickupTime?: Date | string | null
   emailSentHour?: Date | string | null
   pickupReady?: boolean
+  paidAt?: Date | string | null
+  sumupCheckoutId?: string | null
+  sumupTransactionCode?: string | null
   workSessionId?: string | null
   immatriculation?: string | null
   physicalTicketNumber?: string | null
@@ -493,6 +544,9 @@ export type TicketUpdateManyMutationInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photos?: Prisma.TicketUpdatephotosInput | string[]
@@ -510,6 +564,9 @@ export type TicketUncheckedUpdateManyInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -546,6 +603,9 @@ export type TicketCountOrderByAggregateInput = {
   requestedPickupTime?: Prisma.SortOrder
   emailSentHour?: Prisma.SortOrder
   pickupReady?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
+  sumupCheckoutId?: Prisma.SortOrder
+  sumupTransactionCode?: Prisma.SortOrder
   workSessionId?: Prisma.SortOrder
   immatriculation?: Prisma.SortOrder
   physicalTicketNumber?: Prisma.SortOrder
@@ -568,6 +628,9 @@ export type TicketMaxOrderByAggregateInput = {
   requestedPickupTime?: Prisma.SortOrder
   emailSentHour?: Prisma.SortOrder
   pickupReady?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
+  sumupCheckoutId?: Prisma.SortOrder
+  sumupTransactionCode?: Prisma.SortOrder
   workSessionId?: Prisma.SortOrder
   immatriculation?: Prisma.SortOrder
   physicalTicketNumber?: Prisma.SortOrder
@@ -585,6 +648,9 @@ export type TicketMinOrderByAggregateInput = {
   requestedPickupTime?: Prisma.SortOrder
   emailSentHour?: Prisma.SortOrder
   pickupReady?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
+  sumupCheckoutId?: Prisma.SortOrder
+  sumupTransactionCode?: Prisma.SortOrder
   workSessionId?: Prisma.SortOrder
   immatriculation?: Prisma.SortOrder
   physicalTicketNumber?: Prisma.SortOrder
@@ -770,6 +836,9 @@ export type TicketCreateWithoutUserInput = {
   requestedPickupTime?: Date | string | null
   emailSentHour?: Date | string | null
   pickupReady?: boolean
+  paidAt?: Date | string | null
+  sumupCheckoutId?: string | null
+  sumupTransactionCode?: string | null
   immatriculation?: string | null
   physicalTicketNumber?: string | null
   photos?: Prisma.TicketCreatephotosInput | string[]
@@ -789,6 +858,9 @@ export type TicketUncheckedCreateWithoutUserInput = {
   requestedPickupTime?: Date | string | null
   emailSentHour?: Date | string | null
   pickupReady?: boolean
+  paidAt?: Date | string | null
+  sumupCheckoutId?: string | null
+  sumupTransactionCode?: string | null
   workSessionId?: string | null
   immatriculation?: string | null
   physicalTicketNumber?: string | null
@@ -837,6 +909,9 @@ export type TicketScalarWhereInput = {
   requestedPickupTime?: Prisma.DateTimeNullableFilter<"Ticket"> | Date | string | null
   emailSentHour?: Prisma.DateTimeNullableFilter<"Ticket"> | Date | string | null
   pickupReady?: Prisma.BoolFilter<"Ticket"> | boolean
+  paidAt?: Prisma.DateTimeNullableFilter<"Ticket"> | Date | string | null
+  sumupCheckoutId?: Prisma.StringNullableFilter<"Ticket"> | string | null
+  sumupTransactionCode?: Prisma.StringNullableFilter<"Ticket"> | string | null
   workSessionId?: Prisma.StringNullableFilter<"Ticket"> | string | null
   immatriculation?: Prisma.StringNullableFilter<"Ticket"> | string | null
   physicalTicketNumber?: Prisma.StringNullableFilter<"Ticket"> | string | null
@@ -853,6 +928,9 @@ export type TicketCreateWithoutSiteInput = {
   requestedPickupTime?: Date | string | null
   emailSentHour?: Date | string | null
   pickupReady?: boolean
+  paidAt?: Date | string | null
+  sumupCheckoutId?: string | null
+  sumupTransactionCode?: string | null
   immatriculation?: string | null
   physicalTicketNumber?: string | null
   photos?: Prisma.TicketCreatephotosInput | string[]
@@ -872,6 +950,9 @@ export type TicketUncheckedCreateWithoutSiteInput = {
   requestedPickupTime?: Date | string | null
   emailSentHour?: Date | string | null
   pickupReady?: boolean
+  paidAt?: Date | string | null
+  sumupCheckoutId?: string | null
+  sumupTransactionCode?: string | null
   workSessionId?: string | null
   immatriculation?: string | null
   physicalTicketNumber?: string | null
@@ -915,6 +996,9 @@ export type TicketCreateWithoutWorkSessionInput = {
   requestedPickupTime?: Date | string | null
   emailSentHour?: Date | string | null
   pickupReady?: boolean
+  paidAt?: Date | string | null
+  sumupCheckoutId?: string | null
+  sumupTransactionCode?: string | null
   immatriculation?: string | null
   physicalTicketNumber?: string | null
   photos?: Prisma.TicketCreatephotosInput | string[]
@@ -935,6 +1019,9 @@ export type TicketUncheckedCreateWithoutWorkSessionInput = {
   requestedPickupTime?: Date | string | null
   emailSentHour?: Date | string | null
   pickupReady?: boolean
+  paidAt?: Date | string | null
+  sumupCheckoutId?: string | null
+  sumupTransactionCode?: string | null
   immatriculation?: string | null
   physicalTicketNumber?: string | null
   photos?: Prisma.TicketCreatephotosInput | string[]
@@ -977,6 +1064,9 @@ export type TicketCreateWithoutReviewInput = {
   requestedPickupTime?: Date | string | null
   emailSentHour?: Date | string | null
   pickupReady?: boolean
+  paidAt?: Date | string | null
+  sumupCheckoutId?: string | null
+  sumupTransactionCode?: string | null
   immatriculation?: string | null
   physicalTicketNumber?: string | null
   photos?: Prisma.TicketCreatephotosInput | string[]
@@ -997,6 +1087,9 @@ export type TicketUncheckedCreateWithoutReviewInput = {
   requestedPickupTime?: Date | string | null
   emailSentHour?: Date | string | null
   pickupReady?: boolean
+  paidAt?: Date | string | null
+  sumupCheckoutId?: string | null
+  sumupTransactionCode?: string | null
   workSessionId?: string | null
   immatriculation?: string | null
   physicalTicketNumber?: string | null
@@ -1029,6 +1122,9 @@ export type TicketUpdateWithoutReviewInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photos?: Prisma.TicketUpdatephotosInput | string[]
@@ -1049,6 +1145,9 @@ export type TicketUncheckedUpdateWithoutReviewInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1066,6 +1165,9 @@ export type TicketCreateManyUserInput = {
   requestedPickupTime?: Date | string | null
   emailSentHour?: Date | string | null
   pickupReady?: boolean
+  paidAt?: Date | string | null
+  sumupCheckoutId?: string | null
+  sumupTransactionCode?: string | null
   workSessionId?: string | null
   immatriculation?: string | null
   physicalTicketNumber?: string | null
@@ -1082,6 +1184,9 @@ export type TicketUpdateWithoutUserInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photos?: Prisma.TicketUpdatephotosInput | string[]
@@ -1101,6 +1206,9 @@ export type TicketUncheckedUpdateWithoutUserInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1119,6 +1227,9 @@ export type TicketUncheckedUpdateManyWithoutUserInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1136,6 +1247,9 @@ export type TicketCreateManySiteInput = {
   requestedPickupTime?: Date | string | null
   emailSentHour?: Date | string | null
   pickupReady?: boolean
+  paidAt?: Date | string | null
+  sumupCheckoutId?: string | null
+  sumupTransactionCode?: string | null
   workSessionId?: string | null
   immatriculation?: string | null
   physicalTicketNumber?: string | null
@@ -1152,6 +1266,9 @@ export type TicketUpdateWithoutSiteInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photos?: Prisma.TicketUpdatephotosInput | string[]
@@ -1171,6 +1288,9 @@ export type TicketUncheckedUpdateWithoutSiteInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1189,6 +1309,9 @@ export type TicketUncheckedUpdateManyWithoutSiteInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1207,6 +1330,9 @@ export type TicketCreateManyWorkSessionInput = {
   requestedPickupTime?: Date | string | null
   emailSentHour?: Date | string | null
   pickupReady?: boolean
+  paidAt?: Date | string | null
+  sumupCheckoutId?: string | null
+  sumupTransactionCode?: string | null
   immatriculation?: string | null
   physicalTicketNumber?: string | null
   photos?: Prisma.TicketCreatephotosInput | string[]
@@ -1222,6 +1348,9 @@ export type TicketUpdateWithoutWorkSessionInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photos?: Prisma.TicketUpdatephotosInput | string[]
@@ -1242,6 +1371,9 @@ export type TicketUncheckedUpdateWithoutWorkSessionInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photos?: Prisma.TicketUpdatephotosInput | string[]
@@ -1260,6 +1392,9 @@ export type TicketUncheckedUpdateManyWithoutWorkSessionInput = {
   requestedPickupTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSentHour?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickupReady?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sumupCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sumupTransactionCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   immatriculation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   physicalTicketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photos?: Prisma.TicketUpdatephotosInput | string[]
@@ -1279,6 +1414,9 @@ export type TicketSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   requestedPickupTime?: boolean
   emailSentHour?: boolean
   pickupReady?: boolean
+  paidAt?: boolean
+  sumupCheckoutId?: boolean
+  sumupTransactionCode?: boolean
   workSessionId?: boolean
   immatriculation?: boolean
   physicalTicketNumber?: boolean
@@ -1301,6 +1439,9 @@ export type TicketSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   requestedPickupTime?: boolean
   emailSentHour?: boolean
   pickupReady?: boolean
+  paidAt?: boolean
+  sumupCheckoutId?: boolean
+  sumupTransactionCode?: boolean
   workSessionId?: boolean
   immatriculation?: boolean
   physicalTicketNumber?: boolean
@@ -1322,6 +1463,9 @@ export type TicketSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   requestedPickupTime?: boolean
   emailSentHour?: boolean
   pickupReady?: boolean
+  paidAt?: boolean
+  sumupCheckoutId?: boolean
+  sumupTransactionCode?: boolean
   workSessionId?: boolean
   immatriculation?: boolean
   physicalTicketNumber?: boolean
@@ -1343,13 +1487,16 @@ export type TicketSelectScalar = {
   requestedPickupTime?: boolean
   emailSentHour?: boolean
   pickupReady?: boolean
+  paidAt?: boolean
+  sumupCheckoutId?: boolean
+  sumupTransactionCode?: boolean
   workSessionId?: boolean
   immatriculation?: boolean
   physicalTicketNumber?: boolean
   photos?: boolean
 }
 
-export type TicketOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "siteId" | "scannedAt" | "createdAt" | "updatedAt" | "ticketNumber" | "retrievedAt" | "requestedPickupTime" | "emailSentHour" | "pickupReady" | "workSessionId" | "immatriculation" | "physicalTicketNumber" | "photos", ExtArgs["result"]["ticket"]>
+export type TicketOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "siteId" | "scannedAt" | "createdAt" | "updatedAt" | "ticketNumber" | "retrievedAt" | "requestedPickupTime" | "emailSentHour" | "pickupReady" | "paidAt" | "sumupCheckoutId" | "sumupTransactionCode" | "workSessionId" | "immatriculation" | "physicalTicketNumber" | "photos", ExtArgs["result"]["ticket"]>
 export type TicketInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   site?: boolean | Prisma.SiteDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1387,6 +1534,9 @@ export type $TicketPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     requestedPickupTime: Date | null
     emailSentHour: Date | null
     pickupReady: boolean
+    paidAt: Date | null
+    sumupCheckoutId: string | null
+    sumupTransactionCode: string | null
     workSessionId: string | null
     immatriculation: string | null
     physicalTicketNumber: string | null
@@ -1829,6 +1979,9 @@ export interface TicketFieldRefs {
   readonly requestedPickupTime: Prisma.FieldRef<"Ticket", 'DateTime'>
   readonly emailSentHour: Prisma.FieldRef<"Ticket", 'DateTime'>
   readonly pickupReady: Prisma.FieldRef<"Ticket", 'Boolean'>
+  readonly paidAt: Prisma.FieldRef<"Ticket", 'DateTime'>
+  readonly sumupCheckoutId: Prisma.FieldRef<"Ticket", 'String'>
+  readonly sumupTransactionCode: Prisma.FieldRef<"Ticket", 'String'>
   readonly workSessionId: Prisma.FieldRef<"Ticket", 'String'>
   readonly immatriculation: Prisma.FieldRef<"Ticket", 'String'>
   readonly physicalTicketNumber: Prisma.FieldRef<"Ticket", 'String'>

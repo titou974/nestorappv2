@@ -5,6 +5,7 @@ import { formatDateToFrench } from "@/lib/formatdate";
 import style from "@/styles/ticket.module.css";
 import { cguContent } from "@/constants";
 import { HashtagIcon } from "@heroicons/react/20/solid";
+import { Icon } from "@iconify/react";
 import { ApiTicket, Company } from "@/types/site";
 import { StringsFR } from "@/constants/fr_string";
 
@@ -23,15 +24,26 @@ const TicketDrawer = ({
         <Accordion.Heading>
           <Accordion.Trigger className="w-full">
             <div className="flex flex-col gap-2 rounded-md text-primary-foreground w-full">
-              <div className="flex items-center gap-4">
-                <p className="text-xl font-bold">
-                  {StringsFR.yourTicketWithoutEmoji}
-                </p>
-                <div className="font-bold text-base pt-px px-2 !background-transparent border-surface border-2 radius-md inline-flex items-center gap-1 rounded-sm">
-                  {" "}
-                  <HashtagIcon width={14} />
-                  {ticketData?.ticketNumber}
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <p className="text-xl font-bold">
+                    {StringsFR.yourTicketWithoutEmoji}
+                  </p>
+                  <div className="font-bold text-base pt-px px-2 !background-transparent border-surface border-2 radius-md inline-flex items-center gap-1 rounded-sm">
+                    {" "}
+                    <HashtagIcon width={14} />
+                    {ticketData?.ticketNumber}
+                  </div>
                 </div>
+                {ticketData?.site?.enablePayment && (
+                  <div
+                    className="flex shrink-0 items-center gap-1.5 rounded-md bg-white px-2 py-1 shadow-sm"
+                    aria-label={StringsFR.acceptedCards}
+                  >
+                    <Icon icon="logos:visa" className="h-4 w-auto" />
+                    <Icon icon="logos:mastercard" className="h-5 w-auto" />
+                  </div>
+                )}
               </div>
               {!!ticketData?.site?.ticketPrice && (
                 <p className="text-xl font-semibold">

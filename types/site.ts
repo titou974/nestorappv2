@@ -87,6 +87,7 @@ export interface Site {
   enableClientReviewModal: boolean;
   enableSmsRetrieval: boolean;
   enablePhysicalTicket: boolean;
+  enablePayment: boolean;
   companyId: string | null;
   // Relations
   workSessions?: WorkSession[];
@@ -249,12 +250,14 @@ export interface ApiTicket {
   requestedPickupTime: Date | null;
   emailSentHour: Date | null;
   retrievedAt: string | null;
+  paidAt: string | null;
   site: {
     id: string;
     name: string;
     ticketPrice: string | null;
     enableSmsRetrieval: boolean;
     enableClientReviewModal: boolean;
+    enablePayment: boolean;
   };
   user: ApiUser;
   review?: {

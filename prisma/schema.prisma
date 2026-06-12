@@ -45,6 +45,9 @@ model Ticket {
   requestedPickupTime  DateTime?
   emailSentHour   DateTime?
   pickupReady          Boolean @default(false)
+  paidAt               DateTime?
+  sumupCheckoutId      String?
+  sumupTransactionCode String?
   workSessionId   String?
   immatriculation      String?
   physicalTicketNumber String?
@@ -64,6 +67,7 @@ model Site {
   enableClientReviewModal         Boolean @default(false)
   enableSmsRetrieval              Boolean @default(false)
   enablePhysicalTicket            Boolean @default(false)
+  enablePayment                   Boolean @default(false)
   ticketPrice  String?
   companyId    String?
   company      Company?      @relation(fields: [companyId], references: [id])

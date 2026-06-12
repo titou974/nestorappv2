@@ -56,7 +56,7 @@ export default function Tickets({
     },
   );
 
-  const completeTicket = tickets?.tickets?.find(
+  const completeTicket = tickets?.find(
     (t: Ticket) => t.id === isOpenModalCompleteTicket.id,
   );
 
@@ -64,39 +64,29 @@ export default function Tickets({
     return <TicketsLoading />;
   }
   return (
-    <div
-      className="grid min-h-fit grid-cols-1 gap-4 text-white pb-40"
-      data-theme="nestor-dark"
-    >
+    <div className="grid min-h-fit grid-cols-1 gap-4 text-white pb-40">
       <AnimatePresence>
-        {tickets.tickets &&
-          tickets.tickets
-            .slice()
-            .sort(
-              (a: Ticket, b: Ticket) =>
-                new Date(b.scannedAt).getTime() -
-                new Date(a.scannedAt).getTime(),
-            )
-            .map((ticket: Ticket, index: number) => {
-              return (
-                <motion.div
-                  key={ticket.id}
-                  initial="hidden"
-                  whileInView="show"
-                  exit="hidden"
-                  viewport={{ once: false }}
-                  variants={slideIn("left", "tween", index * 0.25, 0.5)}
-                >
-                  <TicketCard
-                    ticket={ticket}
-                    enablePhysicalTicket={enablePhysicalTicket}
-                    triggerUpdate={triggerUpdate}
-                    setIsOpenModalCarRetrieve={setIsOpenModalCarRetrieve}
-                    setIsOpenModalCompleteTicket={setIsOpenModalCompleteTicket}
-                  />
-                </motion.div>
-              );
-            })}
+        {tickets &&
+          tickets.map((ticket: Ticket, index: number) => {
+            return (
+              <motion.div
+                key={ticket.id}
+                initial="hidden"
+                whileInView="show"
+                exit="hidden"
+                viewport={{ once: false }}
+                variants={slideIn("left", "tween", index * 0.25, 0.5)}
+              >
+                <TicketCard
+                  ticket={ticket}
+                  enablePhysicalTicket={enablePhysicalTicket}
+                  triggerUpdate={triggerUpdate}
+                  setIsOpenModalCarRetrieve={setIsOpenModalCarRetrieve}
+                  setIsOpenModalCompleteTicket={setIsOpenModalCompleteTicket}
+                />
+              </motion.div>
+            );
+          })}
       </AnimatePresence>
       <CarRetrieveModal
         ticketId={isOpenModalCarRetrieve.id || ""}

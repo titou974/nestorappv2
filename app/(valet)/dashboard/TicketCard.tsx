@@ -133,8 +133,7 @@ export default function TicketCard({
                 </Label>
                 <div className="relative w-full">
                   <Input
-                    className="w-full uppercase max-w-31"
-                    placeholder={StringsFR.physicalTicketNumberPlaceholder}
+                    className="w-full max-w-31"
                     value={fieldValue}
                     onBlur={handleFieldBlur}
                     onChange={(e) => handleFieldChange(e.target.value)}

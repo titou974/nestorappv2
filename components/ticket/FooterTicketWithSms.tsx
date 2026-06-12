@@ -7,6 +7,7 @@ import EmailModal from "./EmailModal";
 import { ApiTicket, CguPart } from "@/types/site";
 import { useState } from "react";
 import RetrieveCarModal from "./RetrieveCarModal";
+// import PayButton from "./PayButton"; // Paiement par carte — à réactiver quand la feature sera prête.
 
 export default function FooterTicketWithSms({
   ticketData,
@@ -21,6 +22,9 @@ export default function FooterTicketWithSms({
   return (
     <>
       <FooterBarLayout>
+        {/* Paiement par carte — désactivé pour l'instant. À réactiver quand le paiement sera en place.
+            (Penser à garder un seul bouton primary : le bouton Payer deviendra le primary.)
+        {ticketData.site.enablePayment && <PayButton ticketData={ticketData} />} */}
         <Button
           onClick={() => setEmailModal(true)}
           className="fill-primary-foreground w-full"
