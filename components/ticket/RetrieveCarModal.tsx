@@ -97,7 +97,6 @@ export default function RetrieveCarModal({
                         )}
                       </Description>
                     </div>
-
                     <Lottie
                       lottieRef={lottieRef}
                       animationData={blueCar}
@@ -105,7 +104,6 @@ export default function RetrieveCarModal({
                       autoPlay={true}
                       loop={true}
                     />
-
                     <Button
                       onPress={() => setIsOpen(false)}
                       variant="secondary"

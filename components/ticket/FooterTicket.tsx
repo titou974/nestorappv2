@@ -6,6 +6,7 @@ import { EnvelopeIcon } from "@heroicons/react/20/solid";
 import EmailModal from "./EmailModal";
 import { ApiTicket, CguPart } from "@/types/site";
 import { useState } from "react";
+// import PayButton from "./PayButton"; // Paiement par carte — à réactiver quand la feature sera prête.
 
 export default function FooterTicket({
   ticketData,
@@ -19,10 +20,14 @@ export default function FooterTicket({
   return (
     <>
       <FooterBarLayout>
+        {/* Paiement par carte — désactivé pour l'instant. Réactiver et repasser le bouton
+            email en variant="secondary" quand le paiement sera en place.
+        {ticketData.site.enablePayment && <PayButton ticketData={ticketData} />} */}
         <Button
           onClick={() => setEmailModal(true)}
           className="fill-primary-foreground w-full"
           size="lg"
+          variant="primary"
         >
           {StringsFR.receiveByEmail}
           <EnvelopeIcon width={20} />

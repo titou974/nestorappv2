@@ -11,6 +11,7 @@ import z from "zod";
 import sendSms from "@/app/actions";
 import { PICKUP_TIME_OPTIONS } from "@/constants";
 import { revalidateTag } from "next/cache";
+import { createSumUpCheckout, getSumUpCheckout } from "@/lib/sumup";
 
 const resend = new Resend(process.env.RESEND_KEY);
 
@@ -171,6 +172,101 @@ export async function submitReview(
     content: StringsFR.satisfactionSuccessDescription,
     status: "SUCCESS" as const,
   };
+}
+
+export async function createTicketCheckout(ticketId: string) {
+  try {
+    const ticket = await prisma.ticket.findUnique({
+      where: { id: ticketId },
+      include: { site: true },
+    });
+
+    if (!ticket) {
+      return { status: "ERROR" as const, message: StringsFR.paymentUnavailable };
+    }
+
+    // Paiement activé uniquement sur les sites configurés pour (comme les autres features).
+    if (!ticket.site.enablePayment) {
+      return { status: "ERROR" as const, message: StringsFR.paymentUnavailable };
+    }
+
+    if (ticket.paidAt) {
+      return { status: "ALREADY_PAID" as const };
+    }
+
+    // Le montant provient de la base (jamais du client) pour éviter toute falsification.
+    const amount = Number.parseFloat(ticket.site.ticketPrice ?? "0");
+    if (!Number.isFinite(amount) || amount <= 0) {
+      return { status: "ERROR" as const, message: StringsFR.paymentUnavailable };
+    }
+
+    const checkout = await createSumUpCheckout({
+      reference: `ticket-${ticket.id}-${Date.now()}`,
+      amount,
+      currency: "EUR",
+      description: `${StringsFR.valetService} · #${ticket.ticketNumber}`,
+    });
+
+    await prisma.ticket.update({
+      where: { id: ticket.id },
+      data: { sumupCheckoutId: checkout.id },
+    });
+
+    return {
+      status: "OK" as const,
+      checkoutId: checkout.id,
+      amount: amount.toFixed(2),
+    };
+  } catch (error) {
+    console.error("createTicketCheckout", error);
+    return { status: "ERROR" as const, message: StringsFR.paymentUnavailable };
+  }
+}
+
+export async function confirmTicketPayment(
+  ticketId: string,
+  checkoutId: string,
+) {
+  try {
+    // On ne fait jamais confiance au seul callback client : on revérifie auprès de SumUp.
+    const checkout = await getSumUpCheckout(checkoutId);
+
+    if (checkout.status !== "PAID") {
+      return {
+        title: StringsFR.paymentErrorTitle,
+        content: StringsFR.paymentErrorContent,
+        status: "ERROR" as const,
+      };
+    }
+
+    const transactionCode =
+      checkout.transactions?.find((t) => t.status === "SUCCESSFUL")?.id ??
+      checkout.transactions?.[0]?.id ??
+      null;
+
+    await prisma.ticket.update({
+      where: { id: ticketId },
+      data: {
+        paidAt: new Date(),
+        sumupCheckoutId: checkout.id,
+        sumupTransactionCode: transactionCode,
+      },
+    });
+
+    revalidateTag("ticket", "max");
+    return {
+      title: StringsFR.paymentSuccessTitle,
+      content: StringsFR.paymentSuccessContent,
+      status: "SUCCESS" as const,
+    };
+  } catch (error) {
+    console.error("confirmTicketPayment", error);
+    return {
+      title: StringsFR.paymentErrorTitle,
+      content: StringsFR.paymentErrorContent,
+      status: "ERROR" as const,
+    };
+  }
 }
 
 async function sendAMessageToValet(
